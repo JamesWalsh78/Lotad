@@ -8,10 +8,69 @@ body {
 }
 
 h1 {
-    margin-top: 50px;
+    margin-top: 20px;
     color: #333;
 }
 
+h2 {
+    margin-bottom: 10px;
+}
+/* Board layout */
+.board {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.player {
+    background-color: #e0e0e0;
+    padding: 20px;
+    border-radius: 10px;
+    width: 40%;
+}
+
+.tower {
+    margin: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 2px solid #333;
+    border-radius: 5px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tower div {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #0078D7;
+    background-color: #f9f9f9;
+    border-radius: 3px;
+}
+
+/* Buttons */
+.buttons {
+    margin: 20px;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #0078D7;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #005A9E;
+}
 /* Box styles */
 .box {
     display: inline-block;

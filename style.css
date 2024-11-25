@@ -300,4 +300,7 @@ h2 {
 #draw-instruction {
     text-align: center;
     font-weight: bold;
+    margin-top: 10px;
+    color: #243e36;
+    font-size: 14px;
 }

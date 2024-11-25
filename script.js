@@ -42,11 +42,11 @@ function showDrawInstruction() {
     });
 }
 
-// Hide the draw instruction
-function hideDrawInstruction() {
+// Hide the draw instruction and provide feedback
+function hideDrawInstruction(feedback = "") {
     const drawInstruction = document.getElementById("draw-instruction");
-    drawInstruction.textContent = "";
-    drawInstruction.style.display = "none";
+    drawInstruction.textContent = feedback;
+    if (!feedback) drawInstruction.style.display = "none";
 
     // Disable tower highlights
     isDrawActive = false;
@@ -75,8 +75,7 @@ function handleTowerClick(event) {
     if (!isDrawActive) return;
 
     if (deck.length === 0) {
-        alert("The deck is empty!");
-        hideDrawInstruction();
+        hideDrawInstruction("The deck is empty!");
         return;
     }
 
@@ -86,10 +85,7 @@ function handleTowerClick(event) {
     updateDeckDisplay();
 
     // Provide feedback
-    alert(`${card} added to ${towerId.replace("-", " ")}`);
-
-    // Hide the instruction after placing a card
-    hideDrawInstruction();
+    hideDrawInstruction(`${card} added to ${towerId.replace("-", " ")}`);
 }
 
 // Reset the towers

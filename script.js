@@ -26,11 +26,19 @@ function displayDeck() {
 function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
     const cardDiv = document.createElement('div');
-    cardDiv.textContent = card;
-    const cardCount = tower.childElementCount;
-    cardDiv.style.bottom = `${cardCount * 25}px`; // Adjust height based on stack
-    cardDiv.style.position = "absolute";
+    cardDiv.classList.add('card-container'); // Add a container class for styling
+
+    // Add the card image
+    const cardImage = document.createElement('img');
+    cardImage.classList.add('card');
+    cardImage.alt = card;
+    cardImage.src = `assets/${card.toLowerCase()}.png`; // Match image file name
+    cardDiv.appendChild(cardImage);
+
+    // Append the card container to the tower
     tower.appendChild(cardDiv);
+}
+
 }
 
 // Reset the towers

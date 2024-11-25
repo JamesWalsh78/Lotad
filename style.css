@@ -163,3 +163,31 @@ main {
     margin-left: 220px;
     padding: 20px;
 }
+/* Card Gallery on Rules Page */
+.card-gallery {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.rule-card {
+    width: 200px; /* Adjust based on page layout */
+    height: auto; /* Maintain aspect ratio */
+}
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.card {
+    width: 80px; /* Smaller size for game boards */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.tower .card-container {
+    position: relative;
+}

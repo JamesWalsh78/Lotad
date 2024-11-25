@@ -16,8 +16,16 @@
         </ul>
     </div>
     <main>
-        <h1>Lotad Card Game</h1>
-        <div id="game-output" class="output">Deck: (deck will appear here)</div>
+        <!-- Top section: Title, Deck, and Buttons -->
+        <div class="top-section">
+            <h1>Lotad Card Game</h1>
+            <div id="game-output" class="output">Deck: (deck will appear here)</div>
+            <div class="top-buttons">
+                <button id="draw-button">Draw</button>
+                <button id="shuffle-button">Shuffle</button>
+                <button id="reset-button">Reset</button>
+            </div>
+        </div>
 
         <!-- Player boards -->
         <div class="board">
@@ -53,13 +61,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Buttons -->
-        <div class="buttons">
-            <button id="draw-button">Draw</button>
-            <button id="shuffle-button">Shuffle</button>
-            <button id="reset-button">Reset</button>
         </div>
     </main>
     <script src="script.js"></script>

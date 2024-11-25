@@ -1,156 +1,20 @@
-/* General styles */
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    --off-white: #f1f7ed;
-    --dark-green: #243e36;
-    --light-green: #7ca982;
-    --pale-green: #e0eec6;
-    --gold: #c2a83e;
-    --text-dark: #243e36;
-    --text-light: #f1f7ed;
-    --text-gray: #7a7a7a;
-}
-
-h1 {
-    margin-top: 20px;
-    color: #333;
-}
-
-h2 {
-    margin-bottom: 10px;
-    font-size: 20px;
-}
-
-/* Board layout */
-.board {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    margin: 20px auto;
-    padding: 10px;
-    gap: 40px; /* Space between players */
-}
-
-.player {
-    background-color: #e0e0e0;
-    padding: 20px;
-    border-radius: 10px;
-    width: 40%;
-}
-
-.towers {
-    display: flex;
-    justify-content: space-around;
-}
-
-.tower-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.tower-title {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-/* Tower styles */
-.tower {
-    background-color: #ffffff;
-    border: 2px solid #333;
-    border-radius: 5px;
-    width: 120px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
-/* Cards in towers */
-.tower div {
-    width: 100px;
-    margin: 2px 0;
-    padding: 5px;
-    border: 1px solid #0078D7;
-    background-color: #f9f9f9;
-    border-radius: 3px;
-    position: absolute;
-}
-
-/* Dynamically stack cards */
-.tower div:nth-child(1) {
-    bottom: 0;
-}
-
-.tower div:nth-child(2) {
-    bottom: 25px;
-}
-
-.tower div:nth-child(3) {
-    bottom: 50px;
-}
-
-/* Space between players */
-.spacer {
-    width: 20px;
-}
-
-/* Buttons */
-.buttons {
-    margin: 20px;
-}
-
-button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #0078D7;
-    color: white;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #005A9E;
-}
-
-/* Output area styling */
-.output {
-    margin: 20px auto;
-    padding: 10px;
-    font-size: 18px;
-    color: #333;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 80%;
-    text-align: center;
-}
-//* General reset */
 body, html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Banner styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f7ed;
+    color: #333; /* Dark grey */
+}
+
 .banner {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
-    position: relative;
-    z-index: 1000;
+    height: 80px;
 }
 
 .banner-block {
@@ -158,16 +22,9 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
     height: 100%;
+    position: relative;
     background-color: transparent;
-}
-
-.nav-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #243e36; /* Dark green from palette */
 }
 
 .nav-link {
@@ -175,151 +32,21 @@ body, html {
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
-    color: #f1f7ed; /* Off-white from palette */
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: #c2a83e; /* Gold from palette */
-}
-
-/* Colours for each banner block */
-#nav-home { background-color: #f1f7ed; }    /* Off-white */
-#nav-rules { background-color: #243e36; }  /* Dark green */
-.nav-title { background-color: #7ca982; }  /* Light green */
-#nav-basic { background-color: #e0eec6; }  /* Pale green */
-#nav-advanced { background-color: #c2a83e; } /* Gold */
-
-/* Highlight current page */
-.banner-block.active {
-    height: 110%; /* Extend height by 10% */
-}
-
-/* Main Content Styles */
-main {
-    margin-left: 220px;
-    padding: 20px;
-}
-/* Card Gallery on Rules Page */
-.card-gallery {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-    padding: 10px;
-}
-
-.rule-card {
-    width: 200px; /* Adjust based on page layout */
-    height: auto; /* Maintain aspect ratio */
-}
-.card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5px 0;
-}
-
-.card {
-    width: 80px; /* Smaller size for game boards */
-    height: auto; /* Maintain aspect ratio */
-}
-
-.tower .card-container {
-    position: relative;
-}
-/* Scoped styles for Basic Game page */
-.basic-game .top-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 20px;
-    height: 20vh; /* Reserve 20% of page height */
-}
-
-.basic-game h1 {
-    margin: 0;
     color: #333;
 }
 
-.basic-game .output {
-    font-size: 16px;
-    color: #0078D7;
-    background-color: transparent;
-    border: none;
-    text-align: left;
-    margin-left: 20px;
+.nav-link:hover {
+    color: #c2a83e;
 }
 
-.basic-game .top-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.banner-block.active {
+    height: 88px;
+    border-bottom: 4px solid #c2a83e;
 }
 
-.basic-game .top-buttons button {
-    padding: 10px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #0078D7;
-    color: white;
-    transition: background-color 0.3s ease;
-}
-
-.basic-game .top-buttons button:hover {
-    background-color: #005A9E;
-}
-
-.basic-game .board {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    height: 80vh; /* Reserve 80% of page height */
-    margin: 0 auto;
-    padding: 10px;
-    gap: 40px; /* Space between players */
-}
-
-.basic-game .tower {
-    background-color: #ffffff;
-    border: 2px solid #333;
-    border-radius: 5px;
-    width: 120px;
-    height: 200px;
-    position: relative;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    overflow: hidden;
-}
-
-.basic-game .card-container {
-    position: relative;
-    margin: 0;
-}
-
-.basic-game .card {
-    width: 56px; /* Reduced by 30% from 80px */
-    height: auto;
-    margin-top: -20%; /* Overlap with 20% visibility of the card below */
-    z-index: 1;
-}
-/* Update existing elements */
-body {
-    font-family: Arial, sans-serif;
-    background-color: var(--off-white);
-    color: var(--text-dark);
-}
-
-button {
-    background-color: var(--light-green);
-    color: var(--text-light);
-    border: 1px solid var(--dark-green);
-}
-
-button:hover {
-    background-color: var(--dark-green);
-    color: var(--text-light);
+.lotad-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #243e36;
+    text-transform: uppercase;
 }

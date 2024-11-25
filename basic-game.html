@@ -8,29 +8,23 @@
 </head>
 <body>
     <div class="banner">
-    <div class="banner-block">
-        <a href="index.html" class="nav-link" id="nav-home">Home</a>
+        <div class="banner-block">
+            <a href="index.html" class="nav-link" id="nav-home">Home</a>
+        </div>
+        <div class="banner-block">
+            <a href="rules.html" class="nav-link" id="nav-rules">Rules</a>
+        </div>
+        <div class="banner-block lotad-title">
+            <span>Lotad</span>
+        </div>
+        <div class="banner-block active">
+            <a href="basic-game.html" class="nav-link" id="nav-basic">Basic Game</a>
+        </div>
+        <div class="banner-block">
+            <a href="advanced-game.html" class="nav-link" id="nav-advanced">Advanced Game</a>
+        </div>
     </div>
-    <div class="banner-block">
-        <a href="rules.html" class="nav-link" id="nav-rules">Rules</a>
-    </div>
-    <div class="banner-block">
-        <span class="nav-title">Lotad</span>
-    </div>
-    <div class="banner-block">
-        <a href="basic-game.html" class="nav-link" id="nav-basic">Basic Game</a>
-    </div>
-    <div class="banner-block">
-        <a href="advanced-game.html" class="nav-link" id="nav-advanced">Advanced Game</a>
-    </div>
-</div>
-
-<div class="banner-block active">
-    <a href="basic-game.html" class="nav-link" id="nav-basic">Basic Game</a>
-</div>
-
     <main class="basic-game">
-        <!-- Top section: Title, Deck, and Buttons -->
         <div class="top-section">
             <h1>Lotad Card Game</h1>
             <div id="game-output" class="output">Deck: (deck will appear here)</div>
@@ -40,39 +34,19 @@
                 <button id="reset-button">Reset</button>
             </div>
         </div>
-
-        <!-- Player boards -->
         <div class="board">
-            <!-- Player 1 -->
             <div class="player">
                 <h2>Player 1</h2>
                 <div class="towers">
-                    <div class="tower-section">
-                        <div class="tower-title">Left</div>
-                        <div class="tower" id="player-1-left"></div>
-                    </div>
-                    <div class="tower-section">
-                        <div class="tower-title">Right</div>
-                        <div class="tower" id="player-1-right"></div>
-                    </div>
+                    <div class="tower" id="player-1-left"></div>
+                    <div class="tower" id="player-1-right"></div>
                 </div>
             </div>
-
-            <!-- Space between players -->
-            <div class="spacer"></div>
-
-            <!-- Player 2 -->
             <div class="player">
                 <h2>Player 2</h2>
                 <div class="towers">
-                    <div class="tower-section">
-                        <div class="tower-title">Left</div>
-                        <div class="tower" id="player-2-left"></div>
-                    </div>
-                    <div class="tower-section">
-                        <div class="tower-title">Right</div>
-                        <div class="tower" id="player-2-right"></div>
-                    </div>
+                    <div class="tower" id="player-2-left"></div>
+                    <div class="tower" id="player-2-right"></div>
                 </div>
             </div>
         </div>

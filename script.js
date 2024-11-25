@@ -34,11 +34,11 @@ function showDrawInstruction() {
     drawInstruction.textContent = "Select a tower to place the next card.";
     drawInstruction.style.display = "block";
 
-    // Enable tower clicks
+    // Enable tower title clicks
     isDrawActive = true;
-    document.querySelectorAll('.tower').forEach(tower => {
-        tower.classList.add("highlight");
-        tower.addEventListener('click', handleTowerClick, { once: true });
+    document.querySelectorAll('.tower-title').forEach(title => {
+        title.classList.add("highlight");
+        title.addEventListener('click', handleTowerTitleClick, { once: true });
     });
 }
 
@@ -50,8 +50,8 @@ function hideDrawInstruction(feedback = "") {
 
     // Disable tower highlights
     isDrawActive = false;
-    document.querySelectorAll('.tower').forEach(tower => {
-        tower.classList.remove("highlight");
+    document.querySelectorAll('.tower-title').forEach(title => {
+        title.classList.remove("highlight");
     });
 }
 
@@ -71,21 +71,23 @@ function updateTower(towerId, card) {
     tower.appendChild(cardDiv);
 }
 
-// Handle tower click
-function handleTowerClick(event) {
+// Handle tower title click
+function handleTowerTitleClick(event) {
     if (!isDrawActive) return;
+
+    const titleId = event.target.id;
+    const towerId = titleId.replace('-title', ''); // Derive the tower ID
 
     if (deck.length === 0) {
         hideDrawInstruction("The deck is empty!");
         return;
     }
 
-    const towerId = event.currentTarget.id;
     const card = deck.shift();
     updateTower(towerId, card);
     updateDeckDisplay();
 
-    hideDrawInstruction(`${card} added to ${towerId.replace("-", " ")}`);
+    hideDrawInstruction(`${card} added to ${towerId.replace('-', ' ')}`);
 }
 
 // Reset the towers

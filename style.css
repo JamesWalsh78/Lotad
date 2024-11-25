@@ -3,6 +3,7 @@ body, html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow: hidden; /* Prevent scrollbars */
 }
 
 /* General styling */
@@ -59,42 +60,16 @@ h1, h2, h3 {
     text-transform: uppercase;
 }
 
-/* Home Page */
-.home-page h1 {
-    font-size: 36px;
-}
-
-/* Rules Page */
-.rules-page .card-gallery {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-    padding: 10px;
-}
-
-.rules-page .rule-card {
-    width: 200px;
-    height: auto;
-    border: 1px solid #7ca982;
-    border-radius: 10px;
-}
-
-/* Advanced Game Page */
-.advanced-game-page h1 {
-    font-size: 28px;
-    margin-top: 20px;
-}
-
 /* Columns Layout for Basic Game */
 .columns {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     height: calc(100vh - 80px); /* Subtract header height */
-    padding: 0 10px;
+    padding: 0 20px; /* Add padding to the left/right */
     gap: 20px;
     position: relative;
+    overflow: hidden; /* Prevent shifting */
 }
 
 /* Player Sections */
@@ -113,6 +88,7 @@ h1, h2, h3 {
 
 .deck-section {
     width: 10%; /* Narrower deck column */
+    padding: 0;
 }
 
 /* Towers */
@@ -122,6 +98,26 @@ h1, h2, h3 {
     width: 100%;
     align-items: flex-start; /* Stack cards from top */
     height: 100%;
+    position: relative;
+}
+
+.tower-title {
+    text-align: center;
+    font-weight: bold;
+    background-color: #ffffff;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border: 2px solid transparent; /* Default border */
+    transition: border-color 0.3s ease;
+}
+
+.tower-title.highlight {
+    border-color: #c2a83e; /* Gold highlight */
+}
+
+.tower-title:hover {
+    border-color: #7ca982; /* Light green hover */
 }
 
 .tower {
@@ -129,10 +125,7 @@ h1, h2, h3 {
     flex-grow: 1;
     display: flex;
     flex-direction: column-reverse; /* Reverse stacking for cards */
-    position: relative;
     overflow: visible;
-    background: none; /* Removed background */
-    border: none; /* Removed border */
 }
 
 /* Cards */
@@ -157,6 +150,8 @@ h1, h2, h3 {
     flex-direction: column;
     gap: 10px;
     margin-top: 10px;
+    position: sticky; /* Ensure buttons never move */
+    top: 10px;
 }
 
 .deck-buttons button {
@@ -187,22 +182,11 @@ h1, h2, h3 {
 }
 
 .columns::before {
-    left: calc(40% + 5px); /* Adjust based on column sizes */
+    left: calc(40% + 10px); /* Adjust based on column sizes */
 }
 
 .columns::after {
-    right: calc(40% + 5px); /* Adjust based on column sizes */
-}
-
-/* Highlighted Towers */
-.tower.highlight {
-    border: 3px solid #c2a83e; /* Gold highlight */
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-}
-
-.tower.highlight:hover {
-    border-color: #7ca982; /* Light green hover */
+    right: calc(40% + 10px); /* Adjust based on column sizes */
 }
 
 /* Draw Instruction Text */

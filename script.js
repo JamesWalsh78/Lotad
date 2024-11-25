@@ -52,6 +52,7 @@ function hideDrawInstruction(feedback = "") {
     isDrawActive = false;
     document.querySelectorAll('.tower-title').forEach(title => {
         title.classList.remove("highlight");
+        title.replaceWith(title.cloneNode(true)); // Remove event listeners
     });
 }
 
@@ -60,7 +61,7 @@ function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
     const cardDiv = document.createElement('div');
     cardDiv.classList.add('card-container');
-    cardDiv.style.transform = `translateY(${tower.childElementCount * 50}%)`; // Overlap each card by 50%
+    cardDiv.style.transform = `translateY(${tower.childElementCount * 50}%)`; // Overlap cards by 50%
 
     const cardImage = document.createElement('img');
     cardImage.classList.add('card');
@@ -68,7 +69,7 @@ function updateTower(towerId, card) {
     cardImage.src = `assets/${card.toLowerCase()}.png`;
     cardDiv.appendChild(cardImage);
 
-    tower.appendChild(cardDiv);
+    tower.prepend(cardDiv); // Add to the top of the stack
 }
 
 // Handle tower title click

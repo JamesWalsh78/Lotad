@@ -156,3 +156,132 @@ body {
     margin-top: -20%; /* Overlap with 20% visibility of the card below */
     z-index: 1;
 }
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f7ed;
+    color: #333;
+}
+
+h2 {
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Columns Layout */
+.columns {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: calc(100vh - 80px); /* Subtract header height */
+    padding: 0 10px;
+    gap: 20px;
+}
+
+.player-section, .deck-section {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.player-section {
+    width: 40%;
+}
+
+.deck-section {
+    width: 20%;
+}
+
+/* Vertical Bars */
+.columns::before,
+.columns::after {
+    content: "";
+    width: 2px;
+    height: 60%;
+    background-color: #243e36;
+    position: absolute;
+    top: 20%;
+}
+
+.columns::before {
+    left: calc(40% + 5px); /* Adjust based on column sizes */
+}
+
+.columns::after {
+    right: calc(40% + 5px); /* Adjust based on column sizes */
+}
+
+/* Towers Layout */
+.towers {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: auto; /* Push to the bottom */
+}
+
+.tower {
+    width: 40%;
+    height: 80%;
+    background-color: #ffffff;
+    border: 2px solid #7ca982;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Deck Section */
+.deck-box {
+    width: 90%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 2px solid #243e36;
+    background-color: #ffffff;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.card-count p {
+    margin: 5px 0;
+}
+
+/* Buttons */
+.deck-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.deck-buttons button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #7ca982;
+    color: #f1f7ed;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.deck-buttons button:hover {
+    background-color: #243e36;
+}
+
+/* Cards */
+.card {
+    width: 80px;
+    height: auto;
+}

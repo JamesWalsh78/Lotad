@@ -25,29 +25,40 @@
         </div>
     </div>
     <main class="basic-game-page">
-        <!-- Top section: Title, Deck, and Buttons -->
-        <div class="top-section">
-            <h1>Lotad Card Game</h1>
-            <div id="game-output" class="output">Deck: (deck will appear here)</div>
-            <div class="top-buttons">
-                <button id="draw-button">Draw</button>
-                <button id="shuffle-button">Shuffle</button>
-                <button id="reset-button">Reset</button>
-            </div>
-        </div>
-
-        <!-- Player boards -->
-        <div class="board">
-            <!-- Player 1 -->
-            <div class="player">
+        <div class="columns">
+            <!-- Player 1 Section -->
+            <div class="player-section">
                 <h2>Player 1</h2>
                 <div class="towers">
                     <div class="tower" id="player-1-left"></div>
                     <div class="tower" id="player-1-right"></div>
                 </div>
             </div>
-            <!-- Player 2 -->
-            <div class="player">
+
+            <!-- Deck Section -->
+            <div class="deck-section">
+                <h2>Deck</h2>
+                <div class="deck-box" id="next-card">
+                    <h3>Next</h3>
+                    <img src="assets/back.png" alt="Next Card" class="card">
+                </div>
+                <div class="deck-box" id="remaining-cards">
+                    <h3>Remaining</h3>
+                    <div class="card-count">
+                        <p>Poocheyena: <span id="poocheyena-count">8</span></p>
+                        <p>Larvitar: <span id="larvitar-count">10</span></p>
+                        <p>Lotad: <span id="lotad-count">3</span></p>
+                    </div>
+                </div>
+                <div class="deck-buttons">
+                    <button id="draw-button">Draw</button>
+                    <button id="shuffle-button">Shuffle</button>
+                    <button id="reset-button">Reset</button>
+                </div>
+            </div>
+
+            <!-- Player 2 Section -->
+            <div class="player-section">
                 <h2>Player 2</h2>
                 <div class="towers">
                     <div class="tower" id="player-2-left"></div>

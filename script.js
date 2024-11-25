@@ -62,6 +62,7 @@ function drawCard() {
     const card = deck.shift(); // Remove the top card from the deck
     updateTower(towerChoice, card); // Add it to the selected tower
     displayDeck(); // Update the deck display
+	updateDeckDisplay();
 }
 
 // Reset the game
@@ -70,6 +71,7 @@ function resetGame() {
     shuffleDeck(deck);
     displayDeck();
     resetTowers();
+	updateDeckDisplay();
 }
 
 // Initialize the game
@@ -81,3 +83,12 @@ displayDeck();
 document.getElementById('draw-button').addEventListener('click', drawCard);
 document.getElementById('shuffle-button').addEventListener('click', () => shuffleDeck(deck));
 document.getElementById('reset-button').addEventListener('click', resetGame);
+
+function updateDeckDisplay() {
+    const nextCard = deck.length > 0 ? deck[0] : "back";
+    document.getElementById("next-card").querySelector("img").src = `assets/${nextCard.toLowerCase()}.png`;
+
+    document.getElementById("poocheyena-count").textContent = deck.filter(card => card === "Poocheyena").length;
+    document.getElementById("larvitar-count").textContent = deck.filter(card => card === "Larvitar").length;
+    document.getElementById("lotad-count").textContent = deck.filter(card => card === "Lotad").length;
+}

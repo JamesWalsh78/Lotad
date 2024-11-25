@@ -60,8 +60,8 @@ function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
     const cardDiv = document.createElement('div');
     cardDiv.classList.add('card-container');
-	cardDiv.style.setProperty('--card-index', tower.childElementCount); // Reverse stacking index
-	
+    cardDiv.style.setProperty('--card-index', tower.childElementCount);
+
     const cardImage = document.createElement('img');
     cardImage.classList.add('card');
     cardImage.alt = card;
@@ -85,7 +85,6 @@ function handleTowerClick(event) {
     updateTower(towerId, card);
     updateDeckDisplay();
 
-    // Provide feedback
     hideDrawInstruction(`${card} added to ${towerId.replace("-", " ")}`);
 }
 

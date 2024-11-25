@@ -1,5 +1,7 @@
 // Initialize the deck
 let deck = [];
+let isDrawActive = false;
+
 function createDeck() {
     deck = [];
     for (let i = 0; i < 8; i++) deck.push("Poocheyena");
@@ -26,6 +28,33 @@ function updateDeckDisplay() {
     document.getElementById("lotad-count").textContent = deck.filter(card => card === "Lotad").length;
 }
 
+// Show the draw instruction
+function showDrawInstruction() {
+    const drawInstruction = document.getElementById("draw-instruction");
+    drawInstruction.textContent = "Select a tower to place the next card.";
+    drawInstruction.style.display = "block";
+
+    // Enable tower clicks
+    isDrawActive = true;
+    document.querySelectorAll('.tower').forEach(tower => {
+        tower.classList.add("highlight");
+        tower.addEventListener('click', handleTowerClick, { once: true });
+    });
+}
+
+// Hide the draw instruction
+function hideDrawInstruction() {
+    const drawInstruction = document.getElementById("draw-instruction");
+    drawInstruction.textContent = "";
+    drawInstruction.style.display = "none";
+
+    // Disable tower highlights
+    isDrawActive = false;
+    document.querySelectorAll('.tower').forEach(tower => {
+        tower.classList.remove("highlight");
+    });
+}
+
 // Update a tower visually
 function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
@@ -41,21 +70,31 @@ function updateTower(towerId, card) {
     tower.appendChild(cardDiv);
 }
 
-// Reset towers
-function resetTowers() {
-    document.querySelectorAll('.tower').forEach(tower => (tower.innerHTML = ''));
-}
-
-// Handle card placement on tower click
+// Handle tower click
 function handleTowerClick(event) {
+    if (!isDrawActive) return;
+
     if (deck.length === 0) {
         alert("The deck is empty!");
+        hideDrawInstruction();
         return;
     }
+
     const towerId = event.currentTarget.id;
     const card = deck.shift();
     updateTower(towerId, card);
     updateDeckDisplay();
+
+    // Provide feedback
+    alert(`${card} added to ${towerId.replace("-", " ")}`);
+
+    // Hide the instruction after placing a card
+    hideDrawInstruction();
+}
+
+// Reset the towers
+function resetTowers() {
+    document.querySelectorAll('.tower').forEach(tower => (tower.innerHTML = ''));
 }
 
 // Reset the game
@@ -64,6 +103,7 @@ function resetGame() {
     shuffleDeck(deck);
     resetTowers();
     updateDeckDisplay();
+    hideDrawInstruction();
 }
 
 // Initialize the game
@@ -72,11 +112,7 @@ shuffleDeck(deck);
 updateDeckDisplay();
 resetTowers();
 
-// Add click listeners to towers
-document.querySelectorAll('.tower').forEach(tower => {
-    tower.addEventListener('click', handleTowerClick);
-});
-
 // Button event listeners
+document.getElementById('draw-button').addEventListener('click', showDrawInstruction);
 document.getElementById('shuffle-button').addEventListener('click', () => shuffleDeck(deck));
 document.getElementById('reset-button').addEventListener('click', resetGame);

@@ -1,40 +1,26 @@
-// Step 1: Create the deck
+// Initialize the deck
 let deck = [];
-
-// Add cards to the deck
-for (let i = 0; i < 8; i++) {
-    deck.push("Poocheyena");
-}
-for (let i = 0; i < 10; i++) {
-    deck.push("Larvitar");
-}
-for (let i = 0; i < 3; i++) {
-    deck.push("Lotad");
+function createDeck() {
+    deck = [];
+    for (let i = 0; i < 8; i++) deck.push("Poocheyena");
+    for (let i = 0; i < 10; i++) deck.push("Larvitar");
+    for (let i = 0; i < 3; i++) deck.push("Lotad");
 }
 
-// Step 2: Display the deck order
-function displayDeck(deck) {
-    const outputArea = document.getElementById('game-output');
-    outputArea.textContent = `Deck: ${deck.join(', ')}`;
-}
-
-// Initial display
-displayDeck(deck);
-
-// Shuffle function using Fisher-Yates algorithm
+// Shuffle the deck
 function shuffleDeck(deck) {
     for (let i = deck.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [deck[i], deck[j]] = [deck[j], deck[i]];
     }
-    displayDeck(deck);
 }
 
-// Add click functionality to the game box for shuffling
-const gameBox = document.getElementById('game-box');
-gameBox.addEventListener('click', () => {
-    shuffleDeck(deck);
-});
+// Display the current deck state
+function displayDeck() {
+    const outputArea = document.getElementById('game-output');
+    outputArea.textContent = `Deck: ${deck.join(', ')}`;
+}
+
 // Update a tower visually
 function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
@@ -45,7 +31,7 @@ function updateTower(towerId, card) {
 
 // Reset the towers
 function resetTowers() {
-    document.querySelectorAll('.tower').forEach(tower => tower.innerHTML = '');
+    document.querySelectorAll('.tower').forEach(tower => (tower.innerHTML = ''));
 }
 
 // Handle drawing a card
@@ -55,7 +41,9 @@ function drawCard() {
         return;
     }
 
-    const towerChoice = prompt("Choose a tower: 'player-1-left', 'player-1-right', 'player-2-left', or 'player-2-right'");
+    const towerChoice = prompt(
+        "Choose a tower: 'player-1-left', 'player-1-right', 'player-2-left', or 'player-2-right'"
+    );
     if (!['player-1-left', 'player-1-right', 'player-2-left', 'player-2-right'].includes(towerChoice)) {
         alert("Invalid choice! Please enter a valid tower ID.");
         return;

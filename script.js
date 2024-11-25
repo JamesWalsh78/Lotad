@@ -27,7 +27,10 @@ function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
     const cardDiv = document.createElement('div');
     cardDiv.textContent = card;
-    tower.prepend(cardDiv); // Add the card to the top
+    const cardCount = tower.childElementCount;
+    cardDiv.style.bottom = `${cardCount * 25}px`; // Adjust height based on stack
+    cardDiv.style.position = "absolute";
+    tower.appendChild(cardDiv);
 }
 
 // Reset the towers

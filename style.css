@@ -7,6 +7,17 @@ body {
     padding: 0;
 }
 
+:root {
+    --off-white: #f1f7ed;
+    --dark-green: #243e36;
+    --light-green: #7ca982;
+    --pale-green: #e0eec6;
+    --gold: #c2a83e;
+    --text-dark: #243e36;
+    --text-light: #f1f7ed;
+    --text-gray: #7a7a7a;
+}
+
 h1 {
     margin-top: 20px;
     color: #333;
@@ -125,37 +136,63 @@ button:hover {
     width: 80%;
     text-align: center;
 }
-/* Sidebar Styles */
-.sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 200px;
-    height: 100%;
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
+//* General reset */
+body, html {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.sidebar ul li {
-    margin: 15px 0;
+/* Banner styles */
+.banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    position: relative;
+    z-index: 1000;
 }
 
-.sidebar ul li a {
-    color: #fff;
+.banner-block {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    background-color: transparent;
+}
+
+.nav-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #243e36; /* Dark green from palette */
+}
+
+.nav-link {
     text-decoration: none;
     font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #f1f7ed; /* Off-white from palette */
+    transition: color 0.3s ease;
 }
 
-.sidebar ul li a:hover {
-    text-decoration: underline;
+.nav-link:hover {
+    color: #c2a83e; /* Gold from palette */
+}
+
+/* Colours for each banner block */
+#nav-home { background-color: #f1f7ed; }    /* Off-white */
+#nav-rules { background-color: #243e36; }  /* Dark green */
+.nav-title { background-color: #7ca982; }  /* Light green */
+#nav-basic { background-color: #e0eec6; }  /* Pale green */
+#nav-advanced { background-color: #c2a83e; } /* Gold */
+
+/* Highlight current page */
+.banner-block.active {
+    height: 110%; /* Extend height by 10% */
 }
 
 /* Main Content Styles */
@@ -268,4 +305,21 @@ main {
     height: auto;
     margin-top: -20%; /* Overlap with 20% visibility of the card below */
     z-index: 1;
+}
+/* Update existing elements */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--off-white);
+    color: var(--text-dark);
+}
+
+button {
+    background-color: var(--light-green);
+    color: var(--text-light);
+    border: 1px solid var(--dark-green);
+}
+
+button:hover {
+    background-color: var(--dark-green);
+    color: var(--text-light);
 }

@@ -182,6 +182,7 @@ h2 {
     height: calc(100vh - 80px); /* Subtract header height */
     padding: 0 10px;
     gap: 20px;
+	position: relative;
 }
 
 .player-section, .deck-section {
@@ -198,7 +199,8 @@ h2 {
 }
 
 .deck-section {
-    width: 20%;
+    width: 10%;
+	padding: 0;
 }
 
 /* Vertical Bars */
@@ -206,7 +208,7 @@ h2 {
 .columns::after {
     content: "";
     width: 2px;
-    height: 60%;
+    height: 100%;
     background-color: #243e36;
     position: absolute;
     top: 20%;
@@ -225,33 +227,43 @@ h2 {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    margin-top: auto; /* Push to the bottom */
+    flex-grow: 1;
+    align-items: flex-end; /* Align cards at the bottom */
 }
 
 .tower {
-    width: 40%;
-    height: 80%;
+    width: 80%;
+    height: 100%;
     background-color: #ffffff;
     border: 2px solid #7ca982;
     border-radius: 5px;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
-
+/* Reverse Card Placement in Towers */
+.tower .card-container {
+    margin: 0;
+    position: relative;
+    flex-grow: 1;
+    transform: translateY(calc(-100% * var(--card-index))); /* Reverse stacking */
+	
 /* Deck Section */
 .deck-box {
     width: 50%;
     margin: 10px 0;
-    padding: 10px;
-    border: 2px solid #243e36;
-    background-color: #ffffff;
+    padding: 10px 0;
+    border: none;
+    background: none;
     text-align: center;
-    border-radius: 5px;
 }
 
+.deck-box h3 {
+    margin: 0;
+    margin-bottom: 10px;
+	
 .card-count p {
     margin: 5px 0;
 }
@@ -282,7 +294,7 @@ h2 {
 
 /* Cards */
 .card {
-    width: 80px;
+    width: 120px;
     height: auto;
 }
 /* Highlight active towers */

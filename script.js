@@ -13,6 +13,7 @@ function shuffleDeck(deck) {
         const j = Math.floor(Math.random() * (i + 1));
         [deck[i], deck[j]] = [deck[j], deck[i]];
     }
+    displayDeck();
 }
 
 // Display the current deck state
@@ -26,7 +27,7 @@ function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
     const cardDiv = document.createElement('div');
     cardDiv.textContent = card;
-    tower.appendChild(cardDiv);
+    tower.prepend(cardDiv); // Add the card to the top
 }
 
 // Reset the towers
@@ -69,4 +70,5 @@ displayDeck();
 
 // Button event listeners
 document.getElementById('draw-button').addEventListener('click', drawCard);
+document.getElementById('shuffle-button').addEventListener('click', () => shuffleDeck(deck));
 document.getElementById('reset-button').addEventListener('click', resetGame);

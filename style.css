@@ -13,36 +13,32 @@ h1 {
 }
 
 h2 {
-    margin-bottom: 10px;
+    margin: 5px 0;
+    font-size: 18px;
 }
+
 /* Board layout */
 .board {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin: 20px auto;
     padding: 10px;
-}
-
-.player {
-    background-color: #e0e0e0;
-    padding: 20px;
-    border-radius: 10px;
-    width: 40%;
+    gap: 20px;
 }
 
 .tower {
-    margin: 10px;
-    padding: 20px;
     background-color: #ffffff;
     border: 2px solid #333;
     border-radius: 5px;
-    min-height: 100px;
+    width: 150px;
+    min-height: 200px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: column-reverse;
     align-items: center;
+    padding: 10px;
 }
 
+/* Cards in towers */
 .tower div {
     margin: 5px;
     padding: 5px;
@@ -71,24 +67,7 @@ button {
 button:hover {
     background-color: #005A9E;
 }
-/* Box styles */
-.box {
-    display: inline-block;
-    margin: 100px auto;
-    padding: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #0078D7;
-    border-radius: 10px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease;
-}
 
-.box:hover {
-    background-color: #005A9E;
-}
 /* Output area styling */
 .output {
     margin: 20px auto;
@@ -98,6 +77,4 @@ button:hover {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
-    width: 80%;
-    text-align: center;
-}
+    width:

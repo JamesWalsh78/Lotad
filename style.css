@@ -30,3 +30,15 @@ h1 {
 .box:hover {
     background-color: #005A9E;
 }
+/* Output area styling */
+.output {
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 18px;
+    color: #333;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 80%;
+    text-align: center;
+}

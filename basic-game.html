@@ -3,64 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotad Card Game</title>
+    <title>Lotad Card Game - Basic Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Lotad Card Game</h1>
-    <div id="game-output" class="output">Deck: (deck will appear here)</div>
-	
- <div class="sidebar">
+    <div class="sidebar">
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="basic-game.html">Basic Game</a></li>
             <li><a href="rules.html">Rules</a></li>
             <li><a href="advanced-game.html">Advanced Game</a></li>
         </ul>
-		
-    <!-- Player boards -->
-    <div class="board">
-        <!-- Player 1 -->
-        <div class="player">
-            <h2>Player 1</h2>
-            <div class="towers">
-                <div class="tower-section">
-                    <div class="tower-title">Left</div>
-                    <div class="tower" id="player-1-left"></div>
+    </div>
+    <main>
+        <h1>Lotad Card Game</h1>
+        <div id="game-output" class="output">Deck: (deck will appear here)</div>
+
+        <!-- Player boards -->
+        <div class="board">
+            <!-- Player 1 -->
+            <div class="player">
+                <h2>Player 1</h2>
+                <div class="towers">
+                    <div class="tower-section">
+                        <div class="tower-title">Left</div>
+                        <div class="tower" id="player-1-left"></div>
+                    </div>
+                    <div class="tower-section">
+                        <div class="tower-title">Right</div>
+                        <div class="tower" id="player-1-right"></div>
+                    </div>
                 </div>
-                <div class="tower-section">
-                    <div class="tower-title">Right</div>
-                    <div class="tower" id="player-1-right"></div>
+            </div>
+
+            <!-- Space between players -->
+            <div class="spacer"></div>
+
+            <!-- Player 2 -->
+            <div class="player">
+                <h2>Player 2</h2>
+                <div class="towers">
+                    <div class="tower-section">
+                        <div class="tower-title">Left</div>
+                        <div class="tower" id="player-2-left"></div>
+                    </div>
+                    <div class="tower-section">
+                        <div class="tower-title">Right</div>
+                        <div class="tower" id="player-2-right"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Space between players -->
-        <div class="spacer"></div>
-
-        <!-- Player 2 -->
-        <div class="player">
-            <h2>Player 2</h2>
-            <div class="towers">
-                <div class="tower-section">
-                    <div class="tower-title">Left</div>
-                    <div class="tower" id="player-2-left"></div>
-                </div>
-                <div class="tower-section">
-                    <div class="tower-title">Right</div>
-                    <div class="tower" id="player-2-right"></div>
-                </div>
-            </div>
+        <!-- Buttons -->
+        <div class="buttons">
+            <button id="draw-button">Draw</button>
+            <button id="shuffle-button">Shuffle</button>
+            <button id="reset-button">Reset</button>
         </div>
-    </div>
-
-    <!-- Buttons -->
-    <div class="buttons">
-        <button id="draw-button">Draw</button>
-        <button id="shuffle-button">Shuffle</button>
-        <button id="reset-button">Reset</button>
-    </div>
-
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

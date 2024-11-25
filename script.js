@@ -39,8 +39,6 @@ function updateTower(towerId, card) {
     tower.appendChild(cardDiv);
 }
 
-}
-
 // Reset the towers
 function resetTowers() {
     document.querySelectorAll('.tower').forEach(tower => (tower.innerHTML = ''));

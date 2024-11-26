@@ -18,7 +18,7 @@ body {
     align-items: center;
     height: 80px;
 	position: relative;
-	colour: c2a83e;
+	color: #c2a83e;
 }
 
 .nav-link {
@@ -45,19 +45,19 @@ body {
 }
 
 #nav-rules {
-	color:f1f7ed;
+	color:#f1f7ed;
 }
 
 #nav-basic {
-	color:243e36;
+	color:#243e36;
 }
 
 #nav-advanced {
-	color:e0eec6;
+	color:#e0eec6;
 }
 
 #nav-home {
-	color:7ca982;
+	color:#7ca982;
 }
 .lotad-title {
     font-size: 48px;
@@ -102,9 +102,10 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-evenly;
+	justify-content: center;
     width: 20%;
-	text-align: centre;
+	text-align: center;
+	gap: 20px;
 }
 
 .towers {
@@ -142,9 +143,10 @@ body {
 }
 
 #next-card img {
-	width: 60%; /*Resize the card in the deck*/
+	width: 0%; /*Resize the card in the deck*/
 	height: auto;
 	margin: 0 auto; /* Centre the image */
+	display: block;
 }
 
 .tower .card-container img {
@@ -160,6 +162,7 @@ body {
 .deck-buttons button {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 10px;
     width: 100px;
     padding: 10px;

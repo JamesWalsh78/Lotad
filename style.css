@@ -115,7 +115,7 @@ body {
 
 .card {
     width: 100%;
-    height: auto;
+    height: 50px;
 }
 
 .deck-buttons button {

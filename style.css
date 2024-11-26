@@ -72,7 +72,12 @@ body {
 }
 
 .deck-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
     width: 20%;
+	text-align: centre;
 }
 
 .towers {
@@ -115,7 +120,21 @@ body {
     height: auto;
 }
 
+#next-card img {
+	width: 80%; /*Resize the card in the deck*/
+	height: auto;
+	margin: 0 auto; /* Centre the image */
+}
+
+.tower .card-container img {
+	width: 50%;
+	height: auto;
+}
+	
 .deck-buttons button {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
     width: 100px;
     padding: 10px;
     font-size: 14px;

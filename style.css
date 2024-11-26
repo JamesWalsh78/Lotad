@@ -47,19 +47,19 @@ body {
 
 /* Individual Colours for Banner Links */
 #nav-home {
-    color: #7ca982;
+    background-color: #7ca982;
 }
 
 #nav-rules {
-    color: #f1f7ed;
+    background-color: #f1f7ed;
 }
 
 #nav-basic {
-    color: #243e36;
+    background-color: #243e36;
 }
 
 #nav-advanced {
-    color: #243e36;
+    background-color: #243e36;
 }
 
 .lotad-title span {
@@ -92,7 +92,7 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     height: calc(100vh - 80px);
-    padding: 20px;
+    padding: 5px;
 }
 
 /* Deck and Player Sections */
@@ -110,7 +110,7 @@ body {
 	align-items: center;
     width: 20%;
     text-align: center;
-    gap: 20px;
+    gap: 10px;
     justify-content: space-evenly;
 }
 
@@ -119,10 +119,6 @@ body {
     height: auto;
     margin: 0 auto;
     display: block;
-}
-
-#remaining-cards {
-    margin-top: 20px;
 }
 
 .card-count {
@@ -169,7 +165,7 @@ body {
     text-align: center;
     font-weight: bold;
     background-color: #ffffff;
-    padding: 5px 10px;
+    padding: 3px 3px;
     margin-bottom: 5px;
     border: 2px solid transparent;
     cursor: default;
@@ -181,6 +177,7 @@ body {
 }
 
 .tower .card-container img {
+	display: flex;
     width: 75%; /* Properly size cards inside towers */
     height: auto;
 	align-items: center;

@@ -38,7 +38,7 @@ body {
 .banner-block.active::after {
     content: "";
     position: absolute;
-    bottom: 0;
+    bottom: 50px;
     left: 0;
     width: 100%;
     height: 4px;
@@ -59,7 +59,7 @@ body {
 }
 
 #nav-advanced {
-    color: #e0eec6;
+    color: #243e36;
 }
 
 .lotad-title span {
@@ -71,6 +71,19 @@ body {
 /* Page Layout */
 .home-page, .rules-page, .advanced-game-page, .basic-game-page {
     padding: 20px;
+}
+
+/* Rules Layout */
+.rules-page .card-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.rules-page .rule-card {
+    width: 200px;
+    height: auto;
 }
 
 /* Column Layout */
@@ -87,10 +100,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+	width: 40%;
 }
 
 /* Deck Section */
 .deck-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
     width: 20%;
     text-align: center;
     gap: 20px;
@@ -109,7 +126,7 @@ body {
 }
 
 .card-count {
-    font-size: 14px;
+    font-size: 18px;
 }
 
 /* Buttons in Deck Section */
@@ -166,5 +183,11 @@ body {
 .tower .card-container img {
     width: 75%; /* Properly size cards inside towers */
     height: auto;
+	align-items: center;
 }
 
+.card-container {
+    position: absolute;
+    width: 100%;
+    transform: translateY(calc(var(--card-index) * 50%)); /* Correct overlap */
+}

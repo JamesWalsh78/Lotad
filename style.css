@@ -12,13 +12,20 @@ body {
     color: #333;
 }
 
+/* Banner and Navigation */
 .banner {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 80px;
-	position: relative;
-	color: #c2a83e;
+    position: relative;
+    background-color: #7ca982; /* Updated background for better contrast */
+}
+
+.banner-block {
+    flex: 1;
+    text-align: center;
+    position: relative;
 }
 
 .nav-link {
@@ -26,63 +33,47 @@ body {
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
-    color: #243e36;
-}
-.banner-block {
-	flex: 1;
-	text-align: center;
-	position: relative;
 }
 
-.banner-block.active::after{
-    content: ""; /* Adds a visual indicator */
+.banner-block.active::after {
+    content: "";
     position: absolute;
-    bottom: 0; /* Places the indicator at the very bottom of the block */
-    left: 0; /* Starts at the left edge of the block */
-    width: 100%; /* Spans the entire width of the block */
-    height: 4px; /* Thickness of the indicator */
-    background-color: #c2a83e; /* Golden colour for the active indicator */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #c2a83e;
+}
+
+/* Individual Colours for Banner Links */
+#nav-home {
+    color: #7ca982;
 }
 
 #nav-rules {
-	color:#f1f7ed;
+    color: #f1f7ed;
 }
 
 #nav-basic {
-	color:#243e36;
+    color: #243e36;
 }
 
 #nav-advanced {
-	color:#e0eec6;
+    color: #e0eec6;
 }
 
-#nav-home {
-	color:#7ca982;
-}
-.lotad-title {
+.lotad-title span {
     font-size: 48px;
     font-weight: bold;
     color: #243e36;
 }
 
-/* Pages */
+/* Page Layout */
 .home-page, .rules-page, .advanced-game-page, .basic-game-page {
     padding: 20px;
 }
 
-.rules-page .card-gallery {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.rules-page .rule-card {
-    width: 200px;
-    height: auto;
-}
-
-/* Basic Game Layout */
+/* Column Layout */
 .columns {
     display: flex;
     justify-content: space-between;
@@ -91,23 +82,59 @@ body {
     padding: 20px;
 }
 
-.player-section, .deck-section {
+/* Deck and Player Sections */
+.deck-section, .player-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 40%;
 }
 
+/* Deck Section */
 .deck-section {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
     width: 20%;
-	text-align: center;
-	gap: 20px;
+    text-align: center;
+    gap: 20px;
+    justify-content: space-evenly;
 }
 
+#next-card img {
+    width: 60%; /* Ensure the card image is visible and properly resized */
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+#remaining-cards {
+    margin-top: 20px;
+}
+
+.card-count {
+    font-size: 14px;
+}
+
+/* Buttons in Deck Section */
+.deck-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.deck-buttons button {
+    width: 100px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #7ca982;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deck-buttons button:hover {
+    background-color: #243e36;
+}
+
+/* Towers and Cards */
 .towers {
     display: flex;
     justify-content: space-between;
@@ -136,43 +163,8 @@ body {
     border-color: #c2a83e;
 }
 
-.card-container {
-    position: absolute;
-    width: 100%;
-    transform: translateY(calc(var(--card-index) * 50%)); /* Correct overlap */
-}
-
-#next-card img {
-	width: 0%; /*Resize the card in the deck*/
-	height: auto;
-	margin: 0 auto; /* Centre the image */
-	display: block;
-}
-
 .tower .card-container img {
-	display: flex;
-	align-items: center;
-	width: 75%;
-	height: auto;
-}
-.deck {
-	display: flex;
-	align-items: center;
-}
-.deck-buttons button {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 10px;
-    width: 100px;
-    padding: 10px;
-    font-size: 14px;
-    background-color: #7ca982;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    width: 75%; /* Properly size cards inside towers */
+    height: auto;
 }
 
-.deck-buttons button:hover {
-    background-color: #243e36;
-}

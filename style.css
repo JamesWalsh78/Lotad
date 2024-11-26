@@ -107,12 +107,13 @@ h1, h2, h3 {
     background-color: #ffffff;
     padding: 5px 10px;
     margin-bottom: 5px;
-    cursor: pointer;
     border: 2px solid transparent; /* Default border */
     transition: border-color 0.3s ease;
+    cursor: default; /* Non-clickable by default */
 }
 
 .tower-title.highlight {
+    cursor: pointer;
     border-color: #c2a83e; /* Gold highlight */
 }
 
@@ -129,10 +130,14 @@ h1, h2, h3 {
 }
 
 /* Cards */
+.card-container {
+    position: relative;
+    transform: translateY(-50%); /* Overlap cards by 50% */
+}
+
 .card {
     width: 120px; /* Increased size */
     height: auto;
-    margin-top: -10px; /* Overlap cards neatly */
 }
 
 /* Deck Section */

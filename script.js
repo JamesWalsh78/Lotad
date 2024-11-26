@@ -61,7 +61,6 @@ function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
     const cardDiv = document.createElement('div');
     cardDiv.classList.add('card-container');
-    cardDiv.style.transform = `translateY(${tower.childElementCount * 50}%)`; // Overlap cards by 50%
 
     const cardImage = document.createElement('img');
     cardImage.classList.add('card');
@@ -69,7 +68,7 @@ function updateTower(towerId, card) {
     cardImage.src = `assets/${card.toLowerCase()}.png`;
     cardDiv.appendChild(cardImage);
 
-    tower.prepend(cardDiv); // Add to the top of the stack
+    tower.appendChild(cardDiv); // Add the card to the tower
 }
 
 // Handle tower title click

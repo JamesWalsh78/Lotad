@@ -17,7 +17,8 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 80px;
-    background-color: #7ca982;
+	position: relative;
+	colour: c2a83e;
 }
 
 .nav-link {
@@ -27,11 +28,37 @@ body {
     text-transform: uppercase;
     color: #243e36;
 }
-
-.banner-block.active {
-    border-bottom: 4px solid #c2a83e;
+.banner-block {
+	flex: 1;
+	text-align: center;
+	position: relative;
 }
 
+.banner-block.active::after{
+    content: ""; /* Adds a visual indicator */
+    position: absolute;
+    bottom: 0; /* Places the indicator at the very bottom of the block */
+    left: 0; /* Starts at the left edge of the block */
+    width: 100%; /* Spans the entire width of the block */
+    height: 4px; /* Thickness of the indicator */
+    background-color: #c2a83e; /* Golden colour for the active indicator */
+}
+
+#nav-rules {
+	color:f1f7ed;
+}
+
+#nav-basic {
+	color:243e36;
+}
+
+#nav-advanced {
+	color:e0eec6;
+}
+
+#nav-home {
+	color:7ca982;
+}
 .lotad-title {
     font-size: 48px;
     font-weight: bold;
@@ -89,8 +116,7 @@ body {
 .tower {
     position: relative;
     width: 100px;
-    height: 300px;
-    border: 2px solid #243e36;
+    height: 500px;
     overflow: hidden;
 }
 
@@ -115,22 +141,22 @@ body {
     transform: translateY(calc(var(--card-index) * 50%)); /* Correct overlap */
 }
 
-.card {
-    width: 100%;
-    height: auto;
-}
-
 #next-card img {
-	width: 80%; /*Resize the card in the deck*/
+	width: 60%; /*Resize the card in the deck*/
 	height: auto;
 	margin: 0 auto; /* Centre the image */
 }
 
 .tower .card-container img {
-	width: 50%;
+	display: flex;
+	align-items: center;
+	width: 75%;
 	height: auto;
 }
-	
+.deck {
+	display: flex;
+	align-items: center;
+}
 .deck-buttons button {
 	display: flex;
 	flex-direction: column;

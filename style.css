@@ -43,10 +43,6 @@ body {
     padding: 20px;
 }
 
-.home-page h1, .rules-page h1, .advanced-game-page h1 {
-    font-size: 36px;
-}
-
 .rules-page .card-gallery {
     display: flex;
     justify-content: center;
@@ -114,7 +110,7 @@ body {
 .card-container {
     position: absolute;
     width: 100%;
-    transform: translateY(calc(var(--card-index) * 50%));
+    transform: translateY(calc(var(--card-index) * 50%)); /* Correct overlap */
 }
 
 .card {

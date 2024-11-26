@@ -10,7 +10,7 @@ body, html {
 body {
     font-family: Arial, sans-serif;
     background-color: #f1f7ed;
-    color: #333; /* Dark grey */
+    color: #333;
 }
 
 h1, h2, h3 {
@@ -96,7 +96,7 @@ h1, h2, h3 {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    align-items: flex-start; /* Stack cards from top */
+    align-items: flex-start;
     height: 100%;
     position: relative;
 }
@@ -108,45 +108,35 @@ h1, h2, h3 {
     padding: 5px 10px;
     margin-bottom: 5px;
     border: 2px solid transparent; /* Default border */
-    transition: border-color 0.3s ease;
-    cursor: default; /* Non-clickable by default */
-}
-
-.tower-title.highlight {
-    cursor: pointer;
-    border-color: #c2a83e; /* Gold highlight */
-}
-
-.tower-title:hover {
-    border-color: #7ca982; /* Light green hover */
 }
 
 .tower {
-    width: 80%; /* Increased width */
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column-reverse; /* Reverse stacking for cards */
-    overflow: visible;
+    width: 80%; /* Adjusted for larger card area */
+    height: 80%; /* Ensure full tower height is usable */
+    position: relative; /* Relative positioning for absolute child elements */
+    overflow: hidden; /* Prevent cards from exceeding tower area */
+    border: 2px solid #243e36; /* Visual border for tower */
+    background-color: #ffffff;
 }
 
-/* Cards */
+/* Card Placement */
 .card-container {
-    position: relative;
-    transform: translateY(-50%); /* Overlap cards by 50% */
+    position: absolute; /* Absolute positioning within the tower */
+    width: 100%; /* Ensure card fills the tower width */
+    top: 0; /* Start at the top of the tower */
+}
+
+.card-container:nth-child(1) {
+    top: 0; /* First card starts at the top */
+}
+
+.card-container:nth-child(n+2) {
+    top: calc((var(--card-index) * 50%) + 10px); /* Overlap each card by 50% */
 }
 
 .card {
-    width: 120px; /* Increased size */
+    width: 100%; /* Fit the card to the tower width */
     height: auto;
-}
-
-/* Deck Section */
-.deck-box {
-    text-align: center;
-}
-
-.deck-box h3 {
-    margin-bottom: 10px;
 }
 
 /* Buttons */

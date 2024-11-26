@@ -61,6 +61,7 @@ function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
     const cardDiv = document.createElement('div');
     cardDiv.classList.add('card-container');
+    cardDiv.style.setProperty('--card-index', tower.childElementCount);
 
     const cardImage = document.createElement('img');
     cardImage.classList.add('card');
@@ -68,7 +69,9 @@ function updateTower(towerId, card) {
     cardImage.src = `assets/${card.toLowerCase()}.png`;
     cardDiv.appendChild(cardImage);
 
-    tower.appendChild(cardDiv); // Add the card to the tower
+    // Place the card in the tower
+    tower.appendChild(cardDiv);
+}
 }
 
 // Handle tower title click

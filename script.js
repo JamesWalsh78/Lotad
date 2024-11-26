@@ -54,8 +54,20 @@ function handleTowerClick(event) {
     tower.appendChild(cardDiv);
 
     updateDeckDisplay();
-    document.getElementById("draw-instruction").style.display = "none";
+	
+    const drawInstruction = document.getElementById("draw-instruction");
+	const logEntry = `${card} was placed on ${towerId.replace("-", " ")}.`;
+	drawInstruction.textContent += `\n${logEntry}`; // Append the new entry
+	drawInstruction.style.display = "block"; // Ensure the log is visible
+
     isDrawActive = false;
+	
+	// Remove the 'highlight' class from all tower titles
+	document.querySelectorAll(".tower-title").forEach(title => {
+    title.classList.remove("highlight");
+    title.removeEventListener("click", handleTowerClick); // Remove the click event listeners
+});
+
 }
 
 function resetGame() {

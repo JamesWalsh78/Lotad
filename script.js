@@ -61,15 +61,13 @@ function updateTower(towerId, card) {
     const tower = document.getElementById(towerId);
     const cardDiv = document.createElement('div');
     cardDiv.classList.add('card-container');
-    cardDiv.style.setProperty('--card-index', tower.childElementCount);
+    cardDiv.style.setProperty('--card-index', tower.childElementCount); // Correct stacking
 
     const cardImage = document.createElement('img');
     cardImage.classList.add('card');
-    cardImage.alt = card;
-    cardImage.src = `assets/${card.toLowerCase()}.png`;
+    cardImage.src = `assets/${card.toLowerCase()}.png`; // Correct card source
     cardDiv.appendChild(cardImage);
 
-    // Place the card in the tower
     tower.appendChild(cardDiv);
 }
 }

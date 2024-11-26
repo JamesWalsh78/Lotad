@@ -123,7 +123,7 @@ h1, h2, h3 {
 .card-container {
     position: absolute; /* Absolute positioning within the tower */
     width: 100%; /* Ensure card fills the tower width */
-    top: 0; /* Start at the top of the tower */
+    top: calc(var(--card-index) * 50%); /* Overlap each card by 50% */
 }
 
 .card-container:nth-child(1) {

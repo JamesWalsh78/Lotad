@@ -17,7 +17,7 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 80px;
-    background-color: #f1f7ed;
+    background-color: #7ca982;
 }
 
 .nav-link {
@@ -39,7 +39,7 @@ body {
 }
 
 /* Pages */
-.home-page, .rules-page, .advanced-game-page {
+.home-page, .rules-page, .advanced-game-page, .basic-game-page {
     padding: 20px;
 }
 
@@ -53,8 +53,6 @@ body {
 .rules-page .rule-card {
     width: 200px;
     height: auto;
-    border: 1px solid #7ca982;
-    border-radius: 10px;
 }
 
 /* Basic Game Layout */
@@ -85,10 +83,9 @@ body {
 
 .tower {
     position: relative;
-    width: 45%;
+    width: 100px;
     height: 300px;
     border: 2px solid #243e36;
-    background-color: #fff;
     overflow: hidden;
 }
 
@@ -115,7 +112,7 @@ body {
 
 .card {
     width: 100%;
-    height: 50px;
+    height: auto;
 }
 
 .deck-buttons button {

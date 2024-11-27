@@ -21,7 +21,16 @@ export function takeTurn() {
   logEvent(`${player.name} drew a ${card.type}.`);
   updateDeckTally(); // Ensure tally updates after drawing
 
-  // Step 2: Prompt placement
+  // Handle item cards directly
+  if (card.colour === "Item") {
+    player.hand.push(card); // Add item card to the player's hand
+    logEvent(`${player.name} added ${card.type} to their hand.`);
+    updateHandUI(player); // Update the hand display
+    endTurn(); // End turn after adding item card
+    return;
+  }
+
+  // Step 2: Prompt placement for character cards
   promptPlacement(player, card);
 }
 
@@ -29,7 +38,9 @@ export function checkWin(player) {
   const towers = Object.values(player.towers);
 
   for (const tower of towers) {
-    let blackCount = 0, brownCount = 0, whiteCount = 0;
+    let blackCount = 0,
+      brownCount = 0,
+      whiteCount = 0;
 
     for (const card of tower) {
       if (card.colour === "Black") blackCount += card.value;
@@ -58,7 +69,6 @@ export function endTurn() {
   updateDeckTally();
   takeTurn(); // Start the next player's turn
 }
-
 
 // Update deck and discard tally
 function updateDeckTally() {

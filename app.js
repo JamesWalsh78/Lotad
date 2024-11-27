@@ -1,4 +1,4 @@
-import { setupDeck } from "./deck.js";
+import { setupDeck, deck } from "./deck.js";
 import { setupGame, takeTurn } from "./gameLogic.js";
 
 document.addEventListener("DOMContentLoaded", () => {

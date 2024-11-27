@@ -73,6 +73,11 @@ export function updateTowerTally(player, towerSide) {
 // Update the hand UI
 export function updateHandUI(player) {
   const handElement = document.querySelector(`#player-${player.name.split(" ")[1]}-zone .hand`);
+  if (!handElement) {
+    console.error(`Hand element for ${player.name} not found`);
+    return;
+  }
+
   handElement.innerHTML = ""; // Clear existing cards
 
   for (const card of player.hand) {
@@ -88,6 +93,7 @@ export function updateHandUI(player) {
     handElement.appendChild(cardElement);
   }
 }
+
 
 // Prompt the player to play an item card or end their turn
 function promptItemOrEndTurn(player) {

@@ -7,10 +7,9 @@ export let players = [];
 export let currentPlayerIndex = 0;
 
 export function setupGame() {
-  players = [new Player("1"), new Player("2")]; // "1" and "2" correspond to player numbers for easy UI mapping
-  players.forEach((player) => updateHandUI(player)); // Ensure hands are cleared
-  updateDeckTally();
-  takeTurn();
+  players = [new Player("1"), new Player("2")];
+  players.forEach((player) => updateHandUI(player)); // Update the hand for each player
+  updateDeckTally(); // Ensure deck count is displayed
 }
 
 export function takeTurn() {

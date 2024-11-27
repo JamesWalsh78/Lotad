@@ -1,5 +1,6 @@
 import { logEvent } from "./logger.js";
 import { endTurn } from "./gameLogic.js";
+import { discardPile } from "./deck.js";
 
 // Highlight towers and allow the player to place the card
 export function promptPlacement(player, card) {
@@ -16,6 +17,9 @@ export function promptPlacement(player, card) {
       // Place the card on the selected tower
       player.placeCard(card, towerSide);
       logEvent(`${player.name} placed ${card.type} on ${towerSide} tower.`);
+
+      // Check for discard logic
+      handleDiscard(player, towerSide);
 
       // Update the tower visually
       updateTowerUI(player, towerSide, card);
@@ -70,29 +74,40 @@ export function updateTowerTally(player, towerSide) {
   tallyElement.textContent = `Black: ${tally.Black}, Brown: ${tally.Brown}, White: ${tally.White}`;
 }
 
-// Update the hand UI
-export function updateHandUI(player) {
-  console.log(`Updating hand UI for player: ${player.name}`);
-  const handElement = document.querySelector(`#player-${player.name}-zone .hand`);
-  
-  if (!handElement) {
-    console.error(`Hand element for ${player.name} not found. Expected selector: #player-${player.name}-zone .hand`);
-    return;
+// Handle discard logic when placing cards
+function handleDiscard(player, towerSide) {
+  const tower = player.towers[towerSide];
+  let discardIndex = -1;
+
+  // Check if the top two cards trigger a discard
+  if (tower.length >= 2) {
+    const topCard = tower[tower.length - 1];
+    const secondCard = tower[tower.length - 2];
+
+    // Check if a "brown" card is placed on a "black" card or vice versa
+    if (
+      (topCard.colour === "Brown" && secondCard.colour === "Black") ||
+      (topCard.colour === "Black" && secondCard.colour === "Brown")
+    ) {
+      discardIndex = tower.length - 2; // Start discarding from the second-to-top card
+    }
   }
 
-  handElement.innerHTML = ""; // Clear existing cards
+  // Continue looking for the nearest block if a discard was triggered
+  for (let i = discardIndex; i >= 0; i--) {
+    const card = tower[i];
+    if (card.colour === "Blue") {
+      discardIndex = i; // Mark the index of the block
+      break; // Stop searching after finding the nearest block
+    }
+  }
 
-  for (const card of player.hand) {
-    const cardElement = document.createElement("div");
-    cardElement.textContent = card.type;
-    cardElement.style.backgroundColor = getCardColor(card.colour);
-    cardElement.style.color = "#000";
-    cardElement.style.padding = "5px";
-    cardElement.style.margin = "2px";
-    cardElement.style.textAlign = "center";
-    cardElement.style.border = "1px solid #333";
-    cardElement.style.borderRadius = "5px";
-    handElement.appendChild(cardElement);
+  if (discardIndex !== -1) {
+    // Discard all cards above and including the block
+    const discardedCards = tower.splice(discardIndex);
+    discardPile.push(...discardedCards);
+    logEvent(`Discarded cards from ${player.name}'s ${towerSide} tower: ${discardedCards.map(c => c.type).join(", ")}`);
+    updateDeckTally(); // Reflect the updated discard pile
   }
 }
 

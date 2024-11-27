@@ -8,14 +8,14 @@ export function promptPlacement(player, card) {
     tower.classList.add("highlight");
 
     // Add click event to place the card
-    tower.addEventListener("click", function handleClick() {
+    const handleClick = () => {
       const towerSide = tower.dataset.side; // Get "left" or "right"
 
       if (card.colour === "Item") {
         // Add to player's hand if it's an item card
         player.hand.push(card);
         updateHandUI(player);
-        logEvent(`${player.name} drew an item card: ${card.type}.`);
+        logEvent(`${player.name} added an item card to their hand: ${card.type}.`);
       } else {
         // Place character card on the tower
         player.placeCard(card, towerSide);
@@ -24,12 +24,13 @@ export function promptPlacement(player, card) {
         updateTowerTally(player, towerSide); // Update the tower tally
       }
 
+      // Clean up
       clearHighlights();
-      endTurn();
+      towers.forEach((t) => t.removeEventListener("click", handleClick)); // Remove listeners
+      endTurn(); // Proceed to the next player's turn
+    };
 
-      // Remove event listener after placing
-      tower.removeEventListener("click", handleClick);
-    });
+    tower.addEventListener("click", handleClick);
   });
 }
 

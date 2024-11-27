@@ -8,6 +8,7 @@ export let currentPlayerIndex = 0;
 
 export function setupGame() {
   players = [new Player("1"), new Player("2")]; // "1" and "2" correspond to player numbers for easy UI mapping
+  players.forEach((player) => updateHandUI(player)); // Ensure hands are cleared
   updateDeckTally();
   takeTurn();
 }
@@ -52,10 +53,12 @@ export function endTurn() {
     return;
   }
 
-  currentPlayerIndex = (currentPlayerIndex + 1) % players.length; // Alternate turns
+  // Alternate players
+  currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
   updateDeckTally();
-  takeTurn();
+  takeTurn(); // Start the next player's turn
 }
+
 
 // Update deck and discard tally
 function updateDeckTally() {

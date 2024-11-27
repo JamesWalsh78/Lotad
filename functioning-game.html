@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Tower Game</title>
+  <link rel="stylesheet" href="functioning-style.css">
+</head>
+<body>
+  <div id="game-container">
+    <!-- Deck Area -->
+    <div id="deck-area">
+      <button id="draw-button">Draw Card</button>
+      <div id="deck-tally">Deck: 0 | Discard: 0</div>
+    </div>
+
+    <!-- Player Zones -->
+    <div id="player-zones">
+      <!-- Player 1 -->
+      <div class="player-zone" id="player-1-zone">
+        <h2>Player 1</h2>
+        <div class="tower" data-side="left">P1 Left</div>
+        <div class="tower" data-side="right">P1 Right</div>
+      </div>
+
+      <!-- Player 2 -->
+      <div class="player-zone" id="player-2-zone">
+        <h2>Player 2</h2>
+        <div class="tower" data-side="left">P2 Left</div>
+        <div class="tower" data-side="right">P2 Right</div>
+      </div>
+    </div>
+
+    <!-- Game Log -->
+    <div id="log-container">
+      <h2>Game Log</h2>
+      <div id="log"></div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@ import { endTurn } from "./gameLogic.js";
 
 // Highlight towers and allow the player to place the card
 export function promptPlacement(player, card) {
-  const towers = document.querySelectorAll(`#player-${player.name.split(" ")[1]}-zone .tower`);
+  const towers = document.querySelectorAll(`#player-${player.name}-zone .tower`);
 
   // Highlight towers to prompt selection
   towers.forEach((tower) => {
@@ -16,7 +16,7 @@ export function promptPlacement(player, card) {
       // Place the card on the selected tower
       player.placeCard(card, towerSide);
       logEvent(`${player.name} placed ${card.type} on ${towerSide} tower.`);
-      
+
       // Update the tower visually
       updateTowerUI(player, towerSide, card);
       // Update the tower tally
@@ -42,7 +42,7 @@ function clearHighlights() {
 
 // Update the tower UI visually
 export function updateTowerUI(player, towerSide, card) {
-  const towerElement = document.querySelector(`#player-${player.name.split(" ")[1]}-zone .tower[data-side="${towerSide}"]`);
+  const towerElement = document.querySelector(`#player-${player.name}-zone .tower[data-side="${towerSide}"]`);
   const cardElement = document.createElement("div");
   cardElement.textContent = card.type;
   cardElement.style.backgroundColor = getCardColor(card.colour); // Helper function for colours
@@ -66,15 +66,17 @@ export function updateTowerTally(player, towerSide) {
     }
   }
 
-  const tallyElement = document.querySelector(`#player-${player.name.split(" ")[1]}-zone .${towerSide}-tally`);
+  const tallyElement = document.querySelector(`#player-${player.name}-zone .${towerSide}-tally`);
   tallyElement.textContent = `Black: ${tally.Black}, Brown: ${tally.Brown}, White: ${tally.White}`;
 }
 
 // Update the hand UI
 export function updateHandUI(player) {
-  const handElement = document.querySelector(`#player-${player.name.split(" ")[1]}-zone .hand`);
+  console.log(`Updating hand UI for player: ${player.name}`);
+  const handElement = document.querySelector(`#player-${player.name}-zone .hand`);
+  
   if (!handElement) {
-    console.error(`Hand element for ${player.name} not found`);
+    console.error(`Hand element for ${player.name} not found. Expected selector: #player-${player.name}-zone .hand`);
     return;
   }
 
@@ -94,12 +96,10 @@ export function updateHandUI(player) {
   }
 }
 
-
 // Prompt the player to play an item card or end their turn
 function promptItemOrEndTurn(player) {
   const logDiv = document.getElementById("log");
 
-  // Add a message to prompt the player
   const endTurnMessage = document.createElement("div");
   endTurnMessage.innerHTML = `
     <p>${player.name}, choose an action:</p>
@@ -108,17 +108,16 @@ function promptItemOrEndTurn(player) {
   `;
   logDiv.appendChild(endTurnMessage);
 
-  // Add event listeners for the buttons
   document.getElementById("play-item").addEventListener("click", () => {
     logEvent(`${player.name} chose to play an item card.`);
     // Logic for item card usage (future implementation)
-    endTurnMessage.remove(); // Remove prompt
+    endTurnMessage.remove();
   });
 
   document.getElementById("end-turn").addEventListener("click", () => {
     logEvent(`${player.name} ended their turn.`);
-    endTurnMessage.remove(); // Remove prompt
-    endTurn(); // Proceed to the next player's turn
+    endTurnMessage.remove();
+    endTurn();
   });
 }
 

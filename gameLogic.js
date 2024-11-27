@@ -20,11 +20,11 @@ export function takeTurn() {
   // Step 1: Draw a card
   const card = drawCard();
   logEvent(`${player.name} drew a ${card.type}.`);
+  updateDeckTally(); // Ensure tally updates after drawing
 
-  // Step 2: Prompt placement (uiController handles follow-up actions)
+  // Step 2: Prompt placement
   promptPlacement(player, card);
 }
-
 
 export function checkWin(player) {
   const towers = Object.values(player.towers);

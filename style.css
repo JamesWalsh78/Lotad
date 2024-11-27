@@ -81,7 +81,7 @@ body {
 }
 
 #character-cards .card-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 }
 
 #item-cards .card-grid {
@@ -97,10 +97,14 @@ body {
 }
 
 .rules-card img {
-    width: 100%;
+    width: auto;
     height: auto;
     max-width: 150px;
+	max-height: 150px;
     margin-bottom: 10px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .rules-card h3 {

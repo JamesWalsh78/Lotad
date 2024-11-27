@@ -1,7 +1,7 @@
 import { drawCard, discardPile, deck } from "./deck.js";
 import { Player } from "./player.js";
 import { logEvent } from "./logger.js";
-import { promptPlacement } from "./uiController.js";
+import { promptPlacement, updateTowerTally, updateHandUI } from "./uiController.js";
 
 export let players = [];
 export let currentPlayerIndex = 0;
@@ -9,11 +9,13 @@ export let currentPlayerIndex = 0;
 export function setupGame() {
   players = [new Player("1"), new Player("2")]; // "1" and "2" correspond to player numbers for easy UI mapping
   updateDeckTally();
+  takeTurn();
 }
 
 export function takeTurn() {
   const player = players[currentPlayerIndex];
-
+  logEvent(`${player.name}'s turn.`);
+  
   // Step 1: Draw a card
   const card = drawCard();
   logEvent(`${player.name} drew a ${card.type}.`);

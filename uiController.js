@@ -4,30 +4,30 @@ import { endTurn } from "./gameLogic.js";
 // Highlight towers and allow the player to place the card
 export function promptPlacement(player, card) {
   const towers = document.querySelectorAll(`#player-${player.name.split(" ")[1]}-zone .tower`);
+
+  // Highlight towers to prompt selection
   towers.forEach((tower) => {
     tower.classList.add("highlight");
 
     // Add click event to place the card
     const handleClick = () => {
-      const towerSide = tower.dataset.side; // Get "left" or "right"
+      const towerSide = tower.dataset.side; // "left" or "right"
 
-      if (card.colour === "Item") {
-        // Add to player's hand if it's an item card
-        player.hand.push(card);
-        updateHandUI(player);
-        logEvent(`${player.name} added an item card to their hand: ${card.type}.`);
-      } else {
-        // Place character card on the tower
-        player.placeCard(card, towerSide);
-        logEvent(`${player.name} placed ${card.type} on ${towerSide} tower.`);
-        updateTowerUI(player, towerSide, card); // Update the tower visually
-        updateTowerTally(player, towerSide); // Update the tower tally
-      }
+      // Place the card on the selected tower
+      player.placeCard(card, towerSide);
+      logEvent(`${player.name} placed ${card.type} on ${towerSide} tower.`);
+      
+      // Update the tower visually
+      updateTowerUI(player, towerSide, card);
+      // Update the tower tally
+      updateTowerTally(player, towerSide);
 
-      // Clean up
+      // Clean up: Remove highlights and listeners
       clearHighlights();
-      towers.forEach((t) => t.removeEventListener("click", handleClick)); // Remove listeners
-      endTurn(); // Proceed to the next player's turn
+      towers.forEach((t) => t.removeEventListener("click", handleClick));
+
+      // Prompt the player to play an item card or end their turn
+      promptItemOrEndTurn(player);
     };
 
     tower.addEventListener("click", handleClick);
@@ -87,6 +87,33 @@ export function updateHandUI(player) {
     cardElement.style.borderRadius = "5px";
     handElement.appendChild(cardElement);
   }
+}
+
+// Prompt the player to play an item card or end their turn
+function promptItemOrEndTurn(player) {
+  const logDiv = document.getElementById("log");
+
+  // Add a message to prompt the player
+  const endTurnMessage = document.createElement("div");
+  endTurnMessage.innerHTML = `
+    <p>${player.name}, choose an action:</p>
+    <button id="play-item">Play an Item Card</button>
+    <button id="end-turn">End Turn</button>
+  `;
+  logDiv.appendChild(endTurnMessage);
+
+  // Add event listeners for the buttons
+  document.getElementById("play-item").addEventListener("click", () => {
+    logEvent(`${player.name} chose to play an item card.`);
+    // Logic for item card usage (future implementation)
+    endTurnMessage.remove(); // Remove prompt
+  });
+
+  document.getElementById("end-turn").addEventListener("click", () => {
+    logEvent(`${player.name} ended their turn.`);
+    endTurnMessage.remove(); // Remove prompt
+    endTurn(); // Proceed to the next player's turn
+  });
 }
 
 // Helper function to get colours for card types

@@ -16,14 +16,15 @@ export function setupGame() {
 export function takeTurn() {
   const player = players[currentPlayerIndex];
   logEvent(`${player.name}'s turn.`);
-  
+
   // Step 1: Draw a card
   const card = drawCard();
   logEvent(`${player.name} drew a ${card.type}.`);
 
-  // Step 2: Prompt placement
+  // Step 2: Prompt placement (uiController handles follow-up actions)
   promptPlacement(player, card);
 }
+
 
 export function checkWin(player) {
   const towers = Object.values(player.towers);

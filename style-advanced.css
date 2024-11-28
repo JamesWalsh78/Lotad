@@ -90,13 +90,7 @@ body {
     width: 40%;
 }
 
-.towers {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
+/* Towers */
 .tower {
     position: relative;
     width: 100px;
@@ -106,18 +100,10 @@ body {
     background-color: #fff;
 }
 
-/* Hand Section */
-.hand-section {
-    margin-top: 10px;
-    width: 100%;
-}
-
-.hand {
-    display: flex;
-    overflow-x: auto;
-    height: 80px;
-    border: 1px solid #ccc;
-    background: #fff;
+.tower.highlight {
+    border-color: #c2a83e;
+    box-shadow: 0 0 5px 2px #c2a83e;
+    cursor: pointer;
 }
 
 /* Deck and Discard */
@@ -139,18 +125,18 @@ body {
     max-height: 150px;
     border: 1px solid #ccc;
     padding: 5px;
-    margin-top: 5px;
-    background: #fff;
-    width: 80%;
+    background-color: #fff;
+    width: 90%;
 }
 
 /* Log Section */
 .log-section {
-    width: 80%;
     border: 1px solid #ccc;
     padding: 10px;
     overflow-y: auto;
     height: 100px;
+    background-color: #fff;
+    font-size: 14px;
 }
 
 /* Buttons */

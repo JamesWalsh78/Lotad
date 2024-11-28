@@ -22,7 +22,11 @@ function updateDeckDisplay() {
     const deckImage = document.querySelector("#next-card img");
 
     if (deckImage) {
+        // Update the deck image with the top card or a placeholder if missing
         deckImage.src = `assets/${nextCard.toLowerCase()}.png`;
+        deckImage.onerror = () => {
+            deckImage.src = "assets/placeholder.png"; // Use placeholder if the card image is not found
+        };
     } else {
         console.error("Deck image element not found.");
     }

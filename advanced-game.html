@@ -8,14 +8,22 @@
 </head>
 <body>
     <div class="banner">
-        <!-- Banner Navigation -->
-        <div class="banner-block"><a href="index.html" class="nav-link">Home</a></div>
-        <div class="banner-block"><a href="rules.html" class="nav-link">Rules</a></div>
-        <div class="banner-block lotad-title"><span>Lotad</span></div>
-        <div class="banner-block"><a href="basic-game.html" class="nav-link">Basic Game</a></div>
-        <div class="banner-block active"><a href="advanced-game.html" class="nav-link">Advanced Game</a></div>
+        <div class="banner-block">
+            <a href="index.html" class="nav-link" id="nav-home">Home</a>
+        </div>
+        <div class="banner-block">
+            <a href="rules.html" class="nav-link" id="nav-rules">Rules</a>
+        </div>
+        <div class="banner-block lotad-title">
+            <span>Lotad</span>
+        </div>
+        <div class="banner-block">
+            <a href="basic-game.html" class="nav-link" id="nav-basic">Basic Game</a>
+        </div>
+        <div class="banner-block active">
+            <a href="advanced-game.html" class="nav-link" id="nav-advanced">Advanced Game</a>
+        </div>
     </div>
-
     <main class="advanced-game-page">
         <div class="columns">
             <!-- Player 1 Section -->
@@ -23,40 +31,37 @@
                 <h2>Player 1</h2>
                 <div class="towers">
                     <div>
-                        <div class="tower-title">Left</div>
+                        <div class="tower-title" id="player-1-left-title">Left</div>
                         <div class="tower scrollable" id="player-1-left"></div>
                     </div>
                     <div>
-                        <div class="tower-title">Right</div>
+                        <div class="tower-title" id="player-1-right-title">Right</div>
                         <div class="tower scrollable" id="player-1-right"></div>
                     </div>
                 </div>
-                <div class="hand-section">
-                    <h3>Hand</h3>
-                    <div class="hand scrollable" id="player-1-hand"></div>
-                </div>
-                <button class="action-button" id="draw-button-p1">Draw</button>
-                <button class="action-button" id="end-turn-p1">End Turn</button>
+                <button id="draw-button-p1" class="action-button">Draw</button>
             </div>
 
             <!-- Game State Section -->
             <div class="game-state">
                 <h2>Game State</h2>
                 <div class="deck-discard">
-                    <div>
+                    <div id="next-card">
                         <h3>Deck</h3>
-                        <img src="assets/back.png" alt="Deck" class="card">
-                        <div class="scrollable" id="deck-count">Total: 36<br>Poocheyena: 6</div>
+                        <img src="assets/back.png" alt="Deck Card" class="card">
+                        <div id="deck-count" class="scrollable">Total: 36<br>Poocheyena: 6<br>Larvitar: 10<br>Lotad: 3</div>
                     </div>
-                    <div>
+                    <div id="discard-section">
                         <h3>Discard</h3>
-                        <div class="discard-placeholder"></div>
-                        <div class="scrollable" id="discard-count">Total: 0</div>
+                        <img src="assets/placeholder.png" alt="Discard Pile" class="card">
+                        <div id="discard-count" class="scrollable">Total: 0</div>
                     </div>
                 </div>
-                <div class="log-section scrollable" id="log-box">Log:</div>
-                <button class="action-button" id="shuffle-button">Shuffle</button>
-                <button class="action-button" id="reset-button">Reset</button>
+                <div id="log-box" class="log-section">
+                    <h3>Log</h3>
+                </div>
+                <button id="shuffle-button" class="action-button">Shuffle</button>
+                <button id="reset-button" class="action-button">Reset</button>
             </div>
 
             <!-- Player 2 Section -->
@@ -64,24 +69,18 @@
                 <h2>Player 2</h2>
                 <div class="towers">
                     <div>
-                        <div class="tower-title">Left</div>
+                        <div class="tower-title" id="player-2-left-title">Left</div>
                         <div class="tower scrollable" id="player-2-left"></div>
                     </div>
                     <div>
-                        <div class="tower-title">Right</div>
+                        <div class="tower-title" id="player-2-right-title">Right</div>
                         <div class="tower scrollable" id="player-2-right"></div>
                     </div>
                 </div>
-                <div class="hand-section">
-                    <h3>Hand</h3>
-                    <div class="hand scrollable" id="player-2-hand"></div>
-                </div>
-                <button class="action-button" id="draw-button-p2">Draw</button>
-                <button class="action-button" id="end-turn-p2">End Turn</button>
+                <button id="draw-button-p2" class="action-button">Draw</button>
             </div>
         </div>
     </main>
-
     <script src="script-advanced.js"></script>
 </body>
 </html>

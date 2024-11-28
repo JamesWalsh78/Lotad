@@ -1,0 +1,221 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f7ed;
+    color: #333;
+}
+
+/* Banner and Navigation */
+.banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    position: relative;
+    background-color: #7ca982; /* Updated background for better contrast */
+}
+
+.banner-block {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.banner-block.active::after {
+    content: "";
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #c2a83e;
+}
+
+/* Individual Colours for Banner Links */
+#nav-home {
+    background-color: #7ca982;
+}
+
+#nav-rules {
+    background-color: #f1f7ed;
+}
+
+#nav-basic {
+    background-color: #243e36;
+}
+
+#nav-advanced {
+    background-color: #243e36;
+}
+
+.lotad-title span {
+    font-size: 48px;
+    font-weight: bold;
+    color: #243e36;
+}
+
+/* Page Layout */
+.home-page, .rules-page, .advanced-game-page, .basic-game-page {
+    padding: 20px;
+}
+
+/* Rules Layout */
+.card-grid {
+    display: grid;
+    gap: 20px;
+    justify-content: center;
+}
+
+#character-cards .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#item-cards .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.rules-card {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.rules-card img {
+    width: auto;
+    height: auto;
+    max-width: 150px;
+	max-height: 150px;
+    margin-bottom: 10px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.rules-card h3 {
+    font-size: 1.2em;
+    margin: 10px 0 5px;
+}
+
+.rules-card p {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Column Layout */
+.columns {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: calc(100vh - 80px);
+    padding: 5px;
+}
+
+/* Deck and Player Sections */
+.deck-section, .player-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+	width: 40%;
+}
+
+/* Deck Section */
+.deck-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    width: 20%;
+    text-align: center;
+    gap: 10px;
+    justify-content: space-evenly;
+}
+
+#next-card img {
+    width: 60%; /* Ensure the card image is visible and properly resized */
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+.card-count {
+    font-size: 18px;
+}
+
+/* Buttons in Deck Section */
+.deck-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.deck-buttons button {
+    width: 100px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #7ca982;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deck-buttons button:hover {
+    background-color: #243e36;
+}
+
+/* Towers and Cards */
+.towers {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.tower {
+    position: relative;
+    width: 100px;
+    height: 500px;
+    overflow: hidden;
+}
+
+.tower-title {
+    text-align: center;
+    font-weight: bold;
+    background-color: #ffffff;
+    padding: 3px 3px;
+    margin-bottom: 5px;
+    border: 2px solid transparent;
+    cursor: default;
+}
+
+.tower-title.highlight {
+    cursor: pointer;
+    border-color: #c2a83e;
+}
+
+.tower .card-container img {
+	display: flex;
+    width: 75%; /* Properly size cards inside towers */
+    height: auto;
+	align-items: center;
+}
+
+.card-container {
+    position: absolute;
+    width: 100%;
+    transform: translateY(calc(var(--card-index) * 50%)); /* Correct overlap */
+}

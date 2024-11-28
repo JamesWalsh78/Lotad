@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lotad Card Game - Advanced Game</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-advanced.css">
 </head>
 <body>
     <div class="banner">
@@ -24,9 +24,62 @@
             <a href="advanced-game.html" class="nav-link" id="nav-advanced">Advanced Game</a>
         </div>
     </div>
-    <main class="advanced-game-page">
-        <h1>Advanced Game</h1>
-        <p>Advanced Game content will go here. For now, this is placeholder text.</p>
+    <main class="basic-game-page">
+        <div class="columns">
+            <!-- Player 1 Section -->
+            <div class="player-section">
+                <h2>Player 1</h2>
+                <div class="towers">
+                    <div>
+                        <div class="tower-title" id="player-1-left-title">Left</div>
+                        <div class="tower" id="player-1-left"></div>
+                    </div>
+                    <div>
+                        <div class="tower-title" id="player-1-right-title">Right</div>
+                        <div class="tower" id="player-1-right"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deck Section -->
+            <div class="deck-section">
+                <h2>Deck</h2>
+                <div class="deck-box" id="next-card">
+                    <h3>Next</h3>
+                    <img src="assets/back.png" alt="Next Card" class="card">
+                </div>
+                <div class="deck-box" id="remaining-cards">
+                    <h3>Remaining</h3>
+                    <div class="card-count">
+                        <p>Poocheyena: <span id="poocheyena-count">8</span></p>
+                        <p>Larvitar: <span id="larvitar-count">10</span></p>
+                        <p>Lotad: <span id="lotad-count">3</span></p>
+                    </div>
+                </div>
+                <div class="deck-buttons">
+                    <button id="draw-button">Draw</button>
+                    <button id="shuffle-button">Shuffle</button>
+                    <button id="reset-button">Reset</button>
+                    <p id="draw-instruction" style="display: none; margin-top: 10px; font-size: 14px; color: #243e36;"></p>
+                </div>
+            </div>
+
+            <!-- Player 2 Section -->
+            <div class="player-section">
+                <h2>Player 2</h2>
+                <div class="towers">
+                    <div>
+                        <div class="tower-title" id="player-2-left-title">Left</div>
+                        <div class="tower" id="player-2-left"></div>
+                    </div>
+                    <div>
+                        <div class="tower-title" id="player-2-right-title">Right</div>
+                        <div class="tower" id="player-2-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+    <script src="script-advanced.js"></script>
 </body>
 </html>

@@ -19,20 +19,41 @@ function shuffleDeck() {
 
 function updateDeckDisplay() {
     const nextCard = deck.length > 0 ? deck[0] : "back";
-    document.querySelector("#deck-count").innerHTML = `Total: ${deck.length}<br>Poocheyena: ${deck.filter(c => c === "Poocheyena").length}<br>Larvitar: ${deck.filter(c => c === "Larvitar").length}<br>Lotad: ${deck.filter(c => c === "Lotad").length}`;
-    document.querySelector("#next-card img").src = `assets/${nextCard.toLowerCase()}.png`;
+    const deckImage = document.querySelector("#next-card img");
+
+    if (deckImage) {
+        deckImage.src = `assets/${nextCard.toLowerCase()}.png`;
+    } else {
+        console.error("Deck image element not found.");
+    }
+
+    const deckCountElement = document.querySelector("#deck-count");
+    if (deckCountElement) {
+        deckCountElement.innerHTML = `Total: ${deck.length}<br>Poocheyena: ${deck.filter(c => c === "Poocheyena").length}<br>Larvitar: ${deck.filter(c => c === "Larvitar").length}<br>Lotad: ${deck.filter(c => c === "Lotad").length}`;
+    } else {
+        console.error("Deck count element not found.");
+    }
 }
 
 function updateDiscardDisplay() {
-    document.querySelector("#discard-count").innerHTML = `Total: ${discard.length}`;
+    const discardCountElement = document.querySelector("#discard-count");
+    if (discardCountElement) {
+        discardCountElement.innerHTML = `Total: ${discard.length}`;
+    } else {
+        console.error("Discard count element not found.");
+    }
 }
 
 function appendToLog(message) {
     const logBox = document.querySelector("#log-box");
-    const logEntry = document.createElement("p");
-    logEntry.textContent = message;
-    logBox.appendChild(logEntry);
-    logBox.scrollTop = logBox.scrollHeight;
+    if (logBox) {
+        const logEntry = document.createElement("p");
+        logEntry.textContent = message;
+        logBox.appendChild(logEntry);
+        logBox.scrollTop = logBox.scrollHeight;
+    } else {
+        console.error("Log box element not found.");
+    }
 }
 
 function highlightTowers(playerId) {
@@ -72,15 +93,23 @@ function resetGame() {
     shuffleDeck();
     discard = [];
     document.querySelectorAll(".tower").forEach(tower => (tower.innerHTML = ""));
-    document.querySelector("#log-box").innerHTML = ""; // Clear log
+    const logBox = document.querySelector("#log-box");
+    if (logBox) logBox.innerHTML = ""; // Clear log
     updateDeckDisplay();
     updateDiscardDisplay();
 }
 
-document.getElementById("draw-button-p1").addEventListener("click", () => highlightTowers(1));
-document.getElementById("draw-button-p2").addEventListener("click", () => highlightTowers(2));
-document.getElementById("shuffle-button").addEventListener("click", shuffleDeck);
-document.getElementById("reset-button").addEventListener("click", resetGame);
+// Ensure DOM is fully loaded before attaching event listeners
+document.addEventListener("DOMContentLoaded", () => {
+    const drawButtonP1 = document.getElementById("draw-button-p1");
+    const drawButtonP2 = document.getElementById("draw-button-p2");
+    const shuffleButton = document.getElementById("shuffle-button");
+    const resetButton = document.getElementById("reset-button");
 
-// Initial Setup
-resetGame();
+    if (drawButtonP1) drawButtonP1.addEventListener("click", () => highlightTowers(1));
+    if (drawButtonP2) drawButtonP2.addEventListener("click", () => highlightTowers(2));
+    if (shuffleButton) shuffleButton.addEventListener("click", shuffleDeck);
+    if (resetButton) resetButton.addEventListener("click", resetGame);
+
+    resetGame();
+});

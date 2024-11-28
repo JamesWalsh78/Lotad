@@ -1,4 +1,5 @@
 let deck = [];
+let discard = [];
 let isDrawActive = false;
 
 function createDeck() {
@@ -18,67 +19,47 @@ function shuffleDeck() {
 
 function updateDeckDisplay() {
     const nextCard = deck.length > 0 ? deck[0] : "back";
-    document.getElementById("next-card").querySelector("img").src = `assets/${nextCard.toLowerCase()}.png`;
-
-    document.getElementById("poocheyena-count").textContent = deck.filter(card => card === "Poocheyena").length;
-    document.getElementById("larvitar-count").textContent = deck.filter(card => card === "Larvitar").length;
-    document.getElementById("lotad-count").textContent = deck.filter(card => card === "Lotad").length;
+    document.querySelector("#deck-count").innerHTML = `Total: ${deck.length}<br>Poocheyena: ${deck.filter(c => c === "Poocheyena").length}<br>Larvitar: ${deck.filter(c => c === "Larvitar").length}<br>Lotad: ${deck.filter(c => c === "Lotad").length}`;
 }
 
-function showDrawInstruction() {
-    const drawInstruction = document.getElementById("draw-instruction");
-    drawInstruction.textContent = "Select a tower to place the next card.";
-    drawInstruction.style.display = "block";
+function updateDiscardDisplay() {
+    document.querySelector("#discard-count").innerHTML = `Total: ${discard.length}`;
+}
+
+function showDrawInstruction(player) {
     isDrawActive = true;
-    document.querySelectorAll(".tower-title").forEach(title => {
-        title.classList.add("highlight");
-        title.addEventListener("click", handleTowerClick, { once: true });
-    });
+    console.log(`Player ${player} is drawing...`);
 }
 
-function handleTowerClick(event) {
-    if (!isDrawActive || deck.length === 0) return;
-
-    const towerId = event.target.id.replace("-title", "");
-    const tower = document.getElementById(towerId);
+function handleDraw(playerId) {
+    if (deck.length === 0) return;
     const card = deck.shift();
+    discard.push(card);
 
-    const cardDiv = document.createElement("div");
-    cardDiv.classList.add("card-container");
-    cardDiv.style.setProperty("--card-index", tower.childElementCount);
-
-    const cardImage = document.createElement("img");
-    cardImage.src = `assets/${card.toLowerCase()}.png`;
-    cardDiv.appendChild(cardImage);
-
-    tower.appendChild(cardDiv);
+    const hand = document.querySelector(`#player-${playerId}-hand`);
+    const cardImg = document.createElement("img");
+    cardImg.src = `assets/${card.toLowerCase()}.png`;
+    cardImg.classList.add("card");
+    hand.appendChild(cardImg);
 
     updateDeckDisplay();
-	
-    const drawInstruction = document.getElementById("draw-instruction");
-	const logEntry = `${card} was placed on ${towerId.replace("-", " ")}.`;
-	drawInstruction.textContent += `\n${logEntry}`; // Append the new entry
-	drawInstruction.style.display = "block"; // Ensure the log is visible
-
-    isDrawActive = false;
-	
-	// Remove the 'highlight' class from all tower titles
-	document.querySelectorAll(".tower-title").forEach(title => {
-    title.classList.remove("highlight");
-    title.removeEventListener("click", handleTowerClick); // Remove the click event listeners
-});
-
+    updateDiscardDisplay();
 }
 
 function resetGame() {
     createDeck();
     shuffleDeck();
+    discard = [];
     document.querySelectorAll(".tower").forEach(tower => (tower.innerHTML = ""));
+    document.querySelectorAll(".hand").forEach(hand => (hand.innerHTML = ""));
     updateDeckDisplay();
+    updateDiscardDisplay();
 }
 
-document.getElementById("draw-button").addEventListener("click", showDrawInstruction);
+document.getElementById("draw-button-p1").addEventListener("click", () => handleDraw(1));
+document.getElementById("draw-button-p2").addEventListener("click", () => handleDraw(2));
 document.getElementById("shuffle-button").addEventListener("click", shuffleDeck);
 document.getElementById("reset-button").addEventListener("click", resetGame);
 
+// Initial Setup
 resetGame();

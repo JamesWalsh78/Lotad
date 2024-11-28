@@ -90,23 +90,14 @@ body {
     width: 40%;
 }
 
-/* Towers */
-.tower {
-    position: relative;
-    width: 100px;
-    height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    background-color: #fff;
-}
-
-.tower.highlight {
-    border-color: #c2a83e;
-    box-shadow: 0 0 5px 2px #c2a83e;
-    cursor: pointer;
-}
-
 /* Deck and Discard */
+#next-card img {
+    width: 60%; /* Resize card image in the deck */
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
 .deck-discard {
     display: flex;
     justify-content: space-around;
@@ -127,6 +118,35 @@ body {
     padding: 5px;
     background-color: #fff;
     width: 90%;
+}
+
+/* Towers */
+.tower {
+    position: relative;
+    width: 100px;
+    height: 300px;
+    overflow-y: auto; /* Enable scrolling for excess cards */
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.tower.highlight {
+    border-color: #c2a83e;
+    box-shadow: 0 0 5px 2px #c2a83e;
+    cursor: pointer;
+}
+
+.tower .card-container img {
+    display: block;
+    width: 75%; /* Resize card images in towers */
+    height: auto;
+    margin: 0 auto;
+}
+
+.card-container {
+    position: absolute;
+    width: 100%;
+    transform: translateY(calc(var(--card-index) * 50%)); /* Implement overlap */
 }
 
 /* Log Section */

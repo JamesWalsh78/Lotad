@@ -62,7 +62,7 @@ body {
 	border-right: 5px solid #ccc;
 }
 
-.columns > div:last-child {
+.play-areas > div:last-child {
 	border-right: none;
 }
 
@@ -83,7 +83,7 @@ body {
 }
 
 /* Game State */
-.deck .log-buttons {
+.deck {
 	display: flex;
 	flex-direction: row;
 	height: 100%;
@@ -139,7 +139,7 @@ body {
 	margin-bottom: 5px;
 }
 
-.player-towers .player-buttons {
+.player-towers {
 	display: flex;
 	flex-direction: row;
 	gap: 50px;
@@ -155,8 +155,22 @@ body {
 	border: 2px solid #ccc;
 }
 
-/* ------ CARD CONTAINER ------ */
-/* ------ TOWER HIGHLIGHT ------ */
+.tower.highlight {
+	border-color: #c2a83e;
+	box-shadow: 0 0 5px 2px #c2a83e;
+	cursor: pointer;
+}
+
+.card-container img {
+	display: flex;
+	width: 75%;
+	height:auto;
+}
+
+.card-container {
+	position: absolute;
+	transform: translateY(calc(var(--card-index) * 50%));
+}
 
 /*Player Actions */
 .player-actions {

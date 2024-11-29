@@ -62,10 +62,9 @@ body {
 .columns {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     height: calc(100vh - 80px);
-    padding: 10px;
-    border-left: 2px solid #ccc;
-    border-right: 2px solid #ccc;
+    padding: 5px;
 }
 
 .columns > div {
@@ -80,14 +79,14 @@ body {
 .player-section, .game-state {
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: 40%;
     align-items: center;
     text-align: center;
     gap: 10px;
 }
 
 .game-state {
-    width: 40%;
+    width: 20%;
 }
 
 /* Deck and Discard */
@@ -101,46 +100,31 @@ body {
 .deck-discard {
     display: flex;
     justify-content: space-around;
-    width: 100%;
-    gap: 20px;
+    width: 60%;
+    gap: 50px;
 }
 
 .deck-discard div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap:10px;
 }
 
 .scrollable {
     overflow-y: auto;
-    max-height: 150px;
+    max-height: 200px;
     border: 1px solid #ccc;
     padding: 5px;
     background-color: #fff;
-    width: 90%;
+    width: 100%;
 }
 
 /* Towers */
-.tower {
-    position: relative;
-    width: 100px;
-    height: 300px;
-    overflow-y: auto; /* Enable scrolling for excess cards */
-    border: 1px solid #ccc;
-    background-color: #fff;
-}
-
 .tower.highlight {
     border-color: #c2a83e;
     box-shadow: 0 0 5px 2px #c2a83e;
     cursor: pointer;
-}
-
-.tower .card-container img {
-    display: block;
-    width: 75%; /* Resize card images in towers */
-    height: auto;
-    margin: 0 auto;
 }
 
 .card-container {
@@ -172,4 +156,34 @@ body {
 
 .action-button:hover {
     background-color: #243e36;
+}
+
+#discard-section img {
+    width: 60%; /* Resize card image in the deck */
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+.tower {
+    display:flex;
+    flex-wrap: wrap;
+    flex-directiom:row;
+    width:100px;
+    height:300px;
+    align-content: flex-start;
+}
+
+.tower {
+    position: relative;
+    width: 100px;
+    height: 500px;
+    overflow: hidden;
+}
+
+.tower .card-container img {
+	display: flex;
+    width: 75%; /* Properly size cards inside towers */
+    height: auto;
+	align-items: center;
 }

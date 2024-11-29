@@ -126,18 +126,6 @@ body {
     border: 2px solid #ccc;
 }
 
-/* Towers */
-.tower.highlight {
-    border-color: #c2a83e;
-    box-shadow: 0 0 5px 2px #c2a83e;
-    cursor: pointer;
-}
-
-.card-container {
-    position: absolute;
-    transform: translateY(calc(var(--card-index) * 50%)); /* Implement overlap */
-}
-
 /* Log Section */
 .log-section {
     border: 2px solid #ccc;
@@ -214,4 +202,16 @@ body {
     height: 100%; /* Full height of parent */
     border: 2px solid #ccc;
     background-color: #fff;
+}
+
+/* Towers */
+.tower.highlight {
+    border-color: #c2a83e;
+    box-shadow: 0 0 5px 2px #c2a83e;
+    cursor: pointer;
+}
+
+.card-container {
+    position: absolute;
+    transform: translateY(calc(var(--card-index) * 50%)); /* Implement overlap */
 }

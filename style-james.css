@@ -1,0 +1,177 @@
+/* General Styling */
+body, html {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f1f7ed;
+	color: #333;
+}
+
+/*Banner */
+.banner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 80px;
+	background-color: #7ca982;
+}
+
+.banner-block {
+	flex: 1;
+	text-align: center;
+}
+
+.nav-link {
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #091f16;
+}
+
+.banner-block.active::after {
+	content: "";
+	position: absolute;
+	top:80px;
+	right: 0;
+	width: 20%;
+	height: 6px;
+	background-color: #243e36;
+}
+
+.lotad-title span {
+	font-size: 60px;
+	font-weight: bold;
+	color: #243e36;
+	text-transform: uppercase;
+}
+
+/* Game Area */
+.play-areas {
+	display: flex;
+	justify-content: space-between;
+	height: calc(90vh);
+	padding: 5px;
+}
+
+.play-areas > div {
+	border-right: 5px solid #ccc;
+}
+
+.columns > div:last-child {
+	border-right: none;
+}
+
+.player-section .game-state {
+	display: flex;
+	flex-direction: column;
+	height:100%;
+	align-items: center;
+	text-align: center;
+}
+
+.player-section {
+	width:35%;
+}
+
+.game-state {
+	width:30%;
+}
+
+/* Game State */
+.deck .log-buttons {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	width: auto;
+	align-items: center;
+	text-align: center;
+}
+
+.next-card .discard .log{
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: auto;
+	align-items: center;
+	text-align: center;
+}
+
+#next-card #discard img {
+	width: 60%;
+	height: auto;
+}
+
+.info-box {
+	border: 2px solid #ccc;
+	padding: 10px;
+	width: 30%;
+	height: 10%;
+	overflow-y: auto;
+	font-size: 14px;
+}
+	
+.action-button {
+	width: 100px;
+	padding: 10px;
+	font-size: 14px;
+	background-color: #7ca982;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.action-button:hover {
+	background-color: #243e36;
+}
+
+/* Player Sections */
+/* Towers */
+.tower-title {
+	text-align: center;
+	font-weight: bold;
+	padding: 3px 3px;
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.player-towers .player-buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 50px;
+}
+
+.tower {
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+	width: 200px;
+	height: 500px;
+	overflow-y: auto;
+	border: 2px solid #ccc;
+}
+
+/* ------ CARD CONTAINER ------ */
+/* ------ TOWER HIGHLIGHT ------ */
+
+/*Player Actions */
+.player-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.hand {
+	display: flex;
+	flex-direction: row;
+	width: 400px;
+	height: 200px;
+	overflow-y: auto;
+	border: 2px solid #ccc;
+}
+
+

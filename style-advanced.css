@@ -173,10 +173,13 @@ body {
 
 .tower {
     display:flex;
-    flex-wrap: wrap;
-    flex-directiom:row;
+	flex-direction: column;
+	align-items: center;
+	justify-content:flex-start;
     width:200px;
     height:700px;
+	overflow-y: auto;
+	Position:relative;
 }
 
 .card-container img {
@@ -200,5 +203,7 @@ body {
     margin-bottom: 5px;
 
 .tower-scrollable {
-    border: 20px;
+    overflow-y: auto; /* Enable scrolling */
+    border: 2px solid #ccc; /* Fix invalid border rule */
+    padding: 5px; /* Add some padding for content */
 }

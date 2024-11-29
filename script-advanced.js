@@ -47,13 +47,6 @@ function updateDiscardDisplay() {
     } else {
         console.error("Discard count element not found.");
     }
-
-    if (discardImage) {
-        // Always set the discard pile image to placeholder
-        discardImage.src = "assets/placeholder.png";
-    } else {
-        console.error("Discard pile image element not found.");
-    }
 }
 
 function appendToLog(message) {
@@ -80,7 +73,12 @@ function highlightTowers(playerId) {
 function handleTowerClick(event, playerId) {
     if (!isDrawActive || deck.length === 0) return;
 
-    const tower = event.target;
+    const tower = event.target.closest(".tower-scrollable"); // Ensure the correct target
+    if (!tower) {
+        console.error("Tower not found.");
+        return;
+    }
+
     const card = deck.shift();
 
     const cardDiv = document.createElement("div");
@@ -89,16 +87,17 @@ function handleTowerClick(event, playerId) {
 
     const cardImage = document.createElement("img");
     cardImage.src = `assets/${card.toLowerCase()}.png`;
+    cardImage.alt = card; // Add alt text for accessibility
     cardDiv.appendChild(cardImage);
 
-    tower.appendChild(cardDiv);
+    tower.appendChild(cardDiv); // Append card to the tower
     appendToLog(`${card} was placed in ${tower.id}.`);
 
     updateDeckDisplay();
     updateDiscardDisplay();
     isDrawActive = false;
 
-    document.querySelectorAll(".tower").forEach(t => t.classList.remove("highlight"));
+    document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
 }
 
 function resetGame() {
@@ -114,6 +113,11 @@ function resetGame() {
 
 // Ensure DOM is fully loaded before attaching event listeners
 document.addEventListener("DOMContentLoaded", () => {
+    const towers = document.querySelectorAll(".tower-scrollable");
+    if (towers.length === 0) {
+        console.error("No towers found on the page.");
+    }
+
     const drawButtonP1 = document.getElementById("draw-button-p1");
     const drawButtonP2 = document.getElementById("draw-button-p2");
     const shuffleButton = document.getElementById("shuffle-button");
@@ -124,5 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (shuffleButton) shuffleButton.addEventListener("click", shuffleDeck);
     if (resetButton) resetButton.addEventListener("click", resetGame);
 
-    resetGame();
+    resetGame(); // Initialize game state
 });
+

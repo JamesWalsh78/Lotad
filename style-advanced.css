@@ -31,44 +31,45 @@ body {
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #091f16;
 }
 
 .banner-block.active::after {
     content: "";
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-color: #c2a83e;
-}
+    top: 80px;
+    right: 0;
+    width: 20%;
+    height: 6px;
+    background-color: #243e36;
+} 
 
 .lotad-title span {
-    font-size: 48px;
+    font-size: 60px;
     font-weight: bold;
     color: #243e36;
+    text-transform: uppercase;
 }
 
-/* Page Layout */
+/* Page Layout 
 .advanced-game-page {
-    display: flex;
     flex-direction: column;
     height: 100%;
     padding: 10px;
 }
+*/
 
 /* Column Layout */
 .columns {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    height: calc(100vh - 80px);
+    height: calc(90vh);
     padding: 5px;
 }
 
 .columns > div {
-    border-right: 2px solid #ccc;
+    border-right: 5px solid #ccc;
 }
 
 .columns > div:last-child {
@@ -76,22 +77,28 @@ body {
 }
 
 /* Player and Game State Sections */
-.player-section, .game-state {
+.game-state {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 30%;
+    height: 100%;
     align-items: center;
-    text-align: center;
     gap: 10px;
 }
 
-.game-state {
-    width: 20%;
-}
+.player-section {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+}    
 
 /* Deck and Discard */
 #next-card img {
-    width: 60%; /* Resize card image in the deck */
+    width: 60%;
     height: auto;
     margin: 0 auto;
     display: block;
@@ -113,11 +120,10 @@ body {
 
 .scrollable {
     overflow-y: auto;
-    max-height: 200px;
-    border: 1px solid #ccc;
+    max-height: 95%;
     padding: 5px;
-    background-color: #fff;
     width: 100%;
+    border: 2px solid #ccc;
 }
 
 /* Towers */
@@ -129,17 +135,17 @@ body {
 
 .card-container {
     position: absolute;
-    width: 100%;
     transform: translateY(calc(var(--card-index) * 50%)); /* Implement overlap */
 }
 
 /* Log Section */
 .log-section {
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     padding: 10px;
+    width: 500px;
     overflow-y: auto;
     height: 100px;
-    background-color: #fff;
+    background-color: #f1f7ed;
     font-size: 14px;
 }
 
@@ -159,7 +165,7 @@ body {
 }
 
 #discard-section img {
-    width: 60%; /* Resize card image in the deck */
+    width: 60%; 
     height: auto;
     margin: 0 auto;
     display: block;
@@ -169,21 +175,30 @@ body {
     display:flex;
     flex-wrap: wrap;
     flex-directiom:row;
-    width:100px;
-    height:300px;
-    align-content: flex-start;
+    width:200px;
+    height:700px;
 }
 
-.tower {
-    position: relative;
-    width: 100px;
-    height: 500px;
-    overflow: hidden;
-}
-
-.tower .card-container img {
+.card-container img {
 	display: flex;
-    width: 75%; /* Properly size cards inside towers */
+    width: 75%;
     height: auto;
-	align-items: center;
+}
+    
+.towers {
+    position:relative;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.tower-title {
+    text-align: center;
+    font-weight: bold;
+    padding: 3px 3px;
+    font-size: 20px;
+    margin-bottom: 5px;
+
+.tower-scrollable {
+    border: 20px;
 }

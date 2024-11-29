@@ -22,10 +22,9 @@ function updateDeckDisplay() {
     const deckImage = document.querySelector("#next-card img");
 
     if (deckImage) {
-        // Update the deck image with the top card or a placeholder if missing
         deckImage.src = `assets/${nextCard.toLowerCase()}.png`;
         deckImage.onerror = () => {
-            deckImage.src = "assets/placeholder.png"; // Use placeholder if the card image is not found
+            deckImage.src = "assets/placeholder.png";
         };
     } else {
         console.error("Deck image element not found.");
@@ -41,10 +40,19 @@ function updateDeckDisplay() {
 
 function updateDiscardDisplay() {
     const discardCountElement = document.querySelector("#discard-count");
+    const discardImage = document.querySelector("#discard-pile img");
+
     if (discardCountElement) {
         discardCountElement.innerHTML = `Total: ${discard.length}`;
     } else {
         console.error("Discard count element not found.");
+    }
+
+    if (discardImage) {
+        // Always set the discard pile image to placeholder
+        discardImage.src = "assets/placeholder.png";
+    } else {
+        console.error("Discard pile image element not found.");
     }
 }
 
@@ -87,6 +95,7 @@ function handleTowerClick(event, playerId) {
     appendToLog(`${card} was placed in ${tower.id}.`);
 
     updateDeckDisplay();
+    updateDiscardDisplay();
     isDrawActive = false;
 
     document.querySelectorAll(".tower").forEach(t => t.classList.remove("highlight"));

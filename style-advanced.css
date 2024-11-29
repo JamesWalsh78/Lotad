@@ -172,14 +172,17 @@ body {
 }
 
 .tower {
-    display:flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content:flex-start;
-    width:200px;
-    height:700px;
-	overflow-y: auto;
-	Position:relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 200px;
+    height: 700px;
+    overflow-y: auto;
+    position: relative; /* Fix incorrect property */
+    border: 2px solid #ccc;
+    background-color: #f9f9f9; /* Ensure visibility */
+    margin: 5px;
 }
 
 .card-container img {
@@ -201,9 +204,14 @@ body {
     padding: 3px 3px;
     font-size: 20px;
     margin-bottom: 5px;
+}
 
 .tower-scrollable {
+    display: flex;
+    flex-direction: column;
     overflow-y: auto; /* Enable scrolling */
-    border: 2px solid #ccc; /* Fix invalid border rule */
-    padding: 5px; /* Add some padding for content */
+    width: 100%; /* Full width of parent */
+    height: 100%; /* Full height of parent */
+    border: 2px solid #ccc;
+    background-color: #fff;
 }

@@ -64,16 +64,20 @@ function appendToLog(message) {
 function highlightTowers(playerId) {
     isDrawActive = true;
     const towers = document.querySelectorAll(`#player-${playerId}-left, #player-${playerId}-right`);
-    towers.forEach(tower => {
+    towers.forEach((tower) => {
         tower.classList.add("highlight");
-        tower.addEventListener("click", event => handleTowerClick(event, playerId), { once: true });
+        tower.addEventListener(
+            "click",
+            (event) => handleTowerClick(event, playerId),
+            { once: true }
+        );
     });
 }
 
 function handleTowerClick(event, playerId) {
     if (!isDrawActive || deck.length === 0) return;
 
-    const tower = event.target.closest(".tower-scrollable"); // Ensure the correct target
+    const tower = event.target.closest(".tower-scrollable"); // Ensure correct targeting
     if (!tower) {
         console.error("Tower not found.");
         return;

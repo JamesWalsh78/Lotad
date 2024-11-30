@@ -2,11 +2,16 @@ let deck = []
 let discard = []
 let isDrawActive = false;
 
+const towerTotals = {
+    player1: { black: 0, brown: 0 },
+    player2: { black: 0, brown: 0 }
+};
+
 function createDeck() {
-	deck = [];
-	for (let i=0; i<11; i++) deck.push("Poocheyena");
-	for (let i=0; i<11; i++) deck.push("Larvitar");
-	for (let i=0; i<2; i++) deck.push("Lotad");
+    deck = [];
+    for (let i = 0; i < 11; i++) deck.push({ name: "Poocheyena", colour: "Black", value: 1 });
+    for (let i = 0; i < 11; i++) deck.push({ name: "Larvitar", colour: "Brown", value: 1 });
+    for (let i = 0; i < 2; i++) deck.push({ name: "Lotad", colour: "Blue", value: 0 });
 }
 
 function shuffleDeck() {
@@ -93,7 +98,19 @@ function handleTowerClick(event, playerId) {
 	cardDiv.appendChild(cardImage);
 	
 	tower.appendChild(cardDiv);
-	appendToLog(`${card} was placed in ${tower.id}.`);
+	
+	if (card.colour === "Black") {
+        towerTotals[`player${playerId}`].black += card.value;
+    } else if (card.colour === "Brown") {
+        towerTotals[`player${playerId}`].brown += card.value;
+    }
+	appendToLog(`Player ${playerId} placed ${card.name} (${card.colour}) in ${tower.id}.`);
+	
+    if (towerTotals[`player${playerId}`].black >= 4) {
+        appendToLog(`Player ${playerId} has collected 4 Black cards and has won the game!`);
+    } else if (towerTotals[`player${playerId}`].brown >= 4) {
+        appendToLog(`Player ${playerId} has collected 4 Brown cards and has won the game!`);
+    }	
 	
 	updateDeckDisplay();
 	updateDiscardDisplay();
@@ -106,9 +123,15 @@ function resetGame() {
 	createDeck();
 	shuffleDeck();
 	discard = [];
+	towerTotals.player1 = { black: 0, brown: 0 };
+    towerTotals.player2 = { black: 0, brown: 0 };
 	document.querySelectorAll(".tower").forEach(tower => (tower.innerHTML = ""));
-	const logText = document.querySelector("log-text");
-	if (logText) logText.innerHTML = "";
+	const logText = document.querySelector("#log-text");
+    if (logText) {
+        logText.innerHTML = ""; // Clears the log
+    } else {
+        console.error("Log text element not found.");
+    }
 	updateDeckDisplay();
 	updateDiscardDisplay();
 }

@@ -18,8 +18,8 @@ function shuffleDeck() {
 }
 
 function updateDeckDisplay() {
-	const nextCard = deck.length >0 ? deck[0] : "back";
-	const deckImage = document.querySelector(".next-card img");
+	const nextCard = deck.length > 0 ? deck[0] : "back";
+	const deckImage = document.querySelector("#next-card img");
 	
 	if (deckImage) {
 		deckImage.src = `assets/${nextCard.toLowerCase()}.png`;
@@ -27,7 +27,7 @@ function updateDeckDisplay() {
 			deckImage.src = "assets/placeholder.png";
 		};
 	} else {
-		console.error("Deck image element not found")
+		console.error("Deck image element not found.")
 	}
 	
 	const deckCountElement = document.querySelector("#deck-count");
@@ -60,7 +60,7 @@ function appendToLog(message) {
 	}
 }
 
-function highlightTowers(playerID) {
+function highlightTowers(playerId) {
 	isDrawActive = true;
 	const towers = document.querySelectorAll(`#player-${playerId}-left, #player-${playerId}-right`);
 	towers.forEach((tower) => {
@@ -114,7 +114,7 @@ function resetGame() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-	const towers = document.querySelectorAll(".towers");
+	const towers = document.querySelectorAll(".tower");
 	if (towers.length === 0) {
 		console.error("No towers found on the page.")
 	}

@@ -66,7 +66,7 @@ body {
 	border-right: none;
 }
 
-.player-section .game-state {
+.player-section, .game-state {
 	display: flex;
 	flex-direction: column;
 	height:100%;
@@ -86,33 +86,27 @@ body {
 .deck {
 	display: flex;
 	flex-direction: row;
-	height: 100%;
-	width: auto;
-	align-items: center;
-	text-align: center;
+	gap:50px;
 }
 
-.next-card .discard .log{
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	width: auto;
-	align-items: center;
-	text-align: center;
-}
 
-#next-card #discard img {
-	width: 60%;
+#next-card img {
+	width: 30%;
 	height: auto;
+}
+
+#discard img {
+	width:30%;
+	height:auto;
 }
 
 .info-box {
 	border: 2px solid #ccc;
 	padding: 10px;
-	width: 30%;
-	height: 10%;
+	width: 200px;
+	height: 100px;
 	overflow-y: auto;
-	font-size: 14px;
+	font-size: 16px;
 }
 	
 .action-button {

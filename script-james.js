@@ -3,8 +3,14 @@ let discard = []
 let isDrawActive = false;
 
 const towerTotals = {
-    player1: { black: 0, brown: 0 },
-    player2: { black: 0, brown: 0 }
+    player1: {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    },
+    player2: {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    }
 };
 
 function createDeck() {
@@ -23,11 +29,11 @@ function shuffleDeck() {
 }
 
 function updateDeckDisplay() {
-	const nextCard = deck.length > 0 ? deck[0] : "back";
+	const nextCard = deck.length > 0 ? deck[0] : { name: "back" };
 	const deckImage = document.querySelector("#next-card img");
 	
 	if (deckImage) {
-		deckImage.src = `assets/${nextCard.toLowerCase()}.png`;
+		deckImage.src = nextCard.name ? `assets/${nextCard.name.toLowerCase()}.png` : "assets/back.png";
 		deckImage.onerror = () => {
 			deckImage.src = "assets/placeholder.png";
 		};
@@ -37,7 +43,11 @@ function updateDeckDisplay() {
 	
 	const deckCountElement = document.querySelector("#deck-count");
 	if (deckCountElement) {
-		deckCountElement.innerHTML = `Total: ${deck.length}<br>Poocheyena: ${deck.filter(c => c === "Poocheyena").length}<br>Larvitar: ${deck.filter(c => c === "Larvitar").length}<br>Lotad: ${deck.filter(c => c === "Lotad").length}`;
+		deckCountElement.innerHTML = `
+		Total: ${deck.length}<br>
+		Poocheyena: ${deck.filter(c => c.name === "Poocheyena").length}<br>
+		Larvitar: ${deck.filter(c => c.name === "Larvitar").length}<br>
+		Lotad: ${deck.filter(c => c.name === "Lotad").length}`;
 	} else {
 		console.error("Deck count element not found.");
 	}
@@ -67,10 +77,15 @@ function appendToLog(message) {
 
 function highlightTowers(playerId) {
     isDrawActive = true;
+
     const towers = document.querySelectorAll(`#player-${playerId}-left-tower, #player-${playerId}-right-tower`);
     towers.forEach((tower) => {
-        tower.classList.add("highlight");
-        tower.addEventListener(
+
+        const newTower = tower.cloneNode(true);
+        tower.parentNode.replaceChild(newTower, tower);
+
+        newTower.classList.add("highlight");
+        newTower.addEventListener(
             "click",
             (event) => handleTowerClick(event, playerId),
             { once: true }
@@ -79,52 +94,60 @@ function highlightTowers(playerId) {
 }
 
 function handleTowerClick(event, playerId) {
-	if (!isDrawActive || deck.length ===0) return;
-	
-	const tower = event.target.closest(".tower");
-	if (!tower) {
-		console.error("Tower not found.");
-		return;
-	}
-	
-	const card = deck.shift();
-	
-	const cardDiv = document.createElement("div");
-	cardDiv.classList.add("card-container");
-	cardDiv.style.setProperty("--card-index", tower.childElementCount);
-	
-	const cardImage = document.createElement("img");
-	cardImage.src = `assets/${card.toLowerCase()}.png`;
-	cardDiv.appendChild(cardImage);
-	
-	tower.appendChild(cardDiv);
-	
-	if (card.colour === "Black") {
-        towerTotals[`player${playerId}`].black += card.value;
-    } else if (card.colour === "Brown") {
-        towerTotals[`player${playerId}`].brown += card.value;
+    if (!isDrawActive || deck.length === 0) return;
+
+    const tower = event.target.closest(".tower");
+    if (!tower) {
+        console.error("Tower not found.");
+        return;
     }
-	appendToLog(`Player ${playerId} placed ${card.name} (${card.colour}) in ${tower.id}.`);
-	
-    if (towerTotals[`player${playerId}`].black >= 4) {
-        appendToLog(`Player ${playerId} has collected 4 Black cards and has won the game!`);
-    } else if (towerTotals[`player${playerId}`].brown >= 4) {
-        appendToLog(`Player ${playerId} has collected 4 Brown cards and has won the game!`);
-    }	
-	
-	updateDeckDisplay();
-	updateDiscardDisplay();
-	isDrawActive = false;
-	
-	document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
+
+    const towerId = tower.id.includes("left") ? "left" : "right";
+    const card = deck.shift();
+
+    const cardDiv = document.createElement("div");
+    cardDiv.classList.add("card-container");
+    cardDiv.style.setProperty("--card-index", tower.childElementCount);
+
+    const cardImage = document.createElement("img");
+    cardImage.src = `assets/${card.name.toLowerCase()}.png`;
+    cardDiv.appendChild(cardImage);
+
+    tower.appendChild(cardDiv);
+
+    if (card.colour === "Black") {
+        towerTotals[`player${playerId}`][towerId].black += card.value;
+    } else if (card.colour === "Brown") {
+        towerTotals[`player${playerId}`][towerId].brown += card.value;
+    }
+
+    appendToLog(`Player ${playerId} placed ${card.name} (${card.colour}) in ${towerId} tower.`);
+
+    if (towerTotals[`player${playerId}`][towerId].black >= 4) {
+        appendToLog(`Player ${playerId} has collected 4 Black cards in the ${towerId} tower and has won the game!`);
+    } else if (towerTotals[`player${playerId}`][towerId].brown >= 4) {
+        appendToLog(`Player ${playerId} has collected 4 Brown cards in the ${towerId} tower and has won the game!`);
+    }
+
+    updateDeckDisplay();
+    updateDiscardDisplay();
+    isDrawActive = false;
+
+    document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
 }
 
 function resetGame() {
 	createDeck();
 	shuffleDeck();
 	discard = [];
-	towerTotals.player1 = { black: 0, brown: 0 };
-    towerTotals.player2 = { black: 0, brown: 0 };
+	towerTotals.player1 = {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    };
+    towerTotals.player2 = {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    };
 	document.querySelectorAll(".tower").forEach(tower => (tower.innerHTML = ""));
 	const logText = document.querySelector("#log-text");
     if (logText) {
@@ -141,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (towers.length === 0) {
 		console.error("No towers found on the page.")
 	}
-	
 	const drawButtonP1 = document.getElementById("draw-button-p1");
 	const drawButtonP2 = document.getElementById("draw-button-p2");
 	const shuffleButton = document.getElementById("shuffle");

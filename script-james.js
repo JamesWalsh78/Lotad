@@ -61,16 +61,16 @@ function appendToLog(message) {
 }
 
 function highlightTowers(playerId) {
-	isDrawActive = true;
-	const towers = document.querySelectorAll(`#player-${playerId}-left, #player-${playerId}-right`);
-	towers.forEach((tower) => {
-		tower.classList.add("highlight");
-		tower.addEventListener(
-			"click",
-			(event) => handleTowerClick(event, playerId),
-			{ once: true }
-		);
-	});
+    isDrawActive = true;
+    const towers = document.querySelectorAll(`#player-${playerId}-left-tower, #player-${playerId}-right-tower`);
+    towers.forEach((tower) => {
+        tower.classList.add("highlight");
+        tower.addEventListener(
+            "click",
+            (event) => handleTowerClick(event, playerId),
+            { once: true }
+        );
+    });
 }
 
 function handleTowerClick(event, playerId) {
@@ -86,7 +86,7 @@ function handleTowerClick(event, playerId) {
 	
 	const cardDiv = document.createElement("div");
 	cardDiv.classList.add("card-container");
-	cardDiv.style.setProperty("--card-index". tower.childElementCount);
+	cardDiv.style.setProperty("--card-index", tower.childElementCount);
 	
 	const cardImage = document.createElement("img");
 	cardImage.src = `assets/${card.toLowerCase()}.png`;
@@ -121,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	const drawButtonP1 = document.getElementById("draw-button-p1");
 	const drawButtonP2 = document.getElementById("draw-button-p2");
-	const shuffleButton = document.getElementById("shuffle-button");
-	const resetButton = document.getElementById("reset-button");
+	const shuffleButton = document.getElementById("shuffle");
+	const resetButton = document.getElementById("reset");
 	
 	if (drawButtonP1) drawButtonP1.addEventListener("click", () => highlightTowers(1));
 	if (drawButtonP2) drawButtonP2.addEventListener("click", () => highlightTowers(2));

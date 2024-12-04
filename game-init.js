@@ -50,6 +50,9 @@ function resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog) {
 }
 
 export {
+	deck,
+	discard,
+	isDrawActive,
     createDeck,
     shuffleDeck,
     resetGame,

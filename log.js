@@ -1,6 +1,6 @@
 // log.js
 
-function appendToLog(message) {
+export function appendToLog(message) {
     const logText = document.querySelector("#log-text");
     if (logText) {
         const logEntry = document.createElement("p");

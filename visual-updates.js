@@ -1,6 +1,7 @@
 // visual-updates.js
+import { deck, discard } from './game-init.js';
 
-function updateDeckDisplay() {
+export function updateDeckDisplay() {
     const nextCard = deck.length > 0 ? deck[0] : { name: "back" };
     const deckImage = document.querySelector("#next-card img");
     if (deckImage) {
@@ -9,6 +10,7 @@ function updateDeckDisplay() {
             deckImage.src = "assets/placeholder.png";
         };
     }
+
     const deckCountElement = document.querySelector("#deck-count");
     if (deckCountElement) {
         deckCountElement.innerHTML = `
@@ -19,13 +21,12 @@ function updateDeckDisplay() {
     }
 }
 
-function updateDiscardDisplay() {
+export function updateDiscardDisplay() {
     const discardCountElement = document.querySelector("#discard-count");
     if (discardCountElement) discardCountElement.innerHTML = `Total: ${discard.length}`;
 }
 
-function highlightTowers(playerId) {
-    isDrawActive = true;
+export function highlightTowers(playerId, handleTowerClick) {
     const towers = document.querySelectorAll(`#player-${playerId}-left-tower, #player-${playerId}-right-tower`);
     towers.forEach((tower) => {
         const newTower = tower.cloneNode(true);

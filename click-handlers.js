@@ -18,7 +18,7 @@ function handleTowerClick(event, playerId) {
 
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("card-container");
-    cardDiv.dataset.colour = card.colour;
+    cardDiv.dataset.colour = card.colour; 
     cardDiv.style.setProperty("--card-index", tower.childElementCount);
 
     const cardImage = document.createElement("img");
@@ -27,15 +27,29 @@ function handleTowerClick(event, playerId) {
 
     tower.appendChild(cardDiv);
 
+    // Initialize the cards in the tower
     let cardsInTower = Array.from(tower.children).map(child => ({
         element: child,
-        colour: child.dataset.colour,
+        colour: child.dataset.colour
     }));
 
+    // Check and resolve conflicts recursively
     let conflictIndex = checkForConflict(cardsInTower.map(c => c.colour), card.colour);
     while (conflictIndex !== -1) {
-        cardsInTower = discardCards(tower, cardsInTower, conflictIndex, discard);
-        appendToLog(`Player ${playerId} discarded cards due to conflict.`);
+        const discardedCards = cardsInTower.slice(conflictIndex);
+        discard.push(...discardedCards.map(c => c.colour));
+        appendToLog(`Player ${playerId} discarded ${discardedCards.length} cards due to conflict.`);
+
+        // Remove the discarded cards from the DOM
+        discardedCards.forEach(card => card.element.remove());
+
+        // Update cardsInTower after removing discarded cards
+        cardsInTower = Array.from(tower.children).map(child => ({
+            element: child,
+            colour: child.dataset.colour
+        }));
+
+        // Check for new conflicts in the updated tower
         conflictIndex = checkForConflict(cardsInTower.map(c => c.colour), card.colour);
     }
 
@@ -44,16 +58,17 @@ function handleTowerClick(event, playerId) {
 
     appendToLog(`Player ${playerId} placed ${card.name} (${card.colour}) in ${towerId} tower.`);
 
-    if (checkWinCondition(playerId, towerId, appendToLog)) {
-        appendToLog("Game Over. Resetting game...");
-        setTimeout(() => resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog), 2000);
+    if (towerTotals[`player${playerId}`][towerId].black >= 4) {
+        appendToLog(`Player ${playerId} has collected 4 Black cards in the ${towerId} tower and has won the game!`);
+    } else if (towerTotals[`player${playerId}`][towerId].brown >= 4) {
+        appendToLog(`Player ${playerId} has collected 4 Brown cards in the ${towerId} tower and has won the game!`);
     }
 
     updateDeckDisplay();
     updateDiscardDisplay();
     isDrawActive = false;
 
-    document.querySelectorAll(".tower").forEach(t => t.classList.remove("highlight"));
+    document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
 }
 
 export { handleTowerClick };

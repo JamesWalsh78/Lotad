@@ -178,6 +178,29 @@ function updateTowerTally(playerId, towerId, remainingCards) {
     towerTotals[`player${playerId}`][towerId].brown = remainingCards.filter(c => c === "Brown").length;
 }
 
+function resetGame() {
+	createDeck();
+	shuffleDeck();
+	discard = [];
+	towerTotals.player1 = {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    };
+    towerTotals.player2 = {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    };
+	document.querySelectorAll(".tower").forEach(tower => (tower.innerHTML = ""));
+	const logText = document.querySelector("#log-text");
+    if (logText) {
+        logText.innerHTML = "";
+    } else {
+        console.error("Log text element not found.");
+    }
+	updateDeckDisplay();
+	updateDiscardDisplay();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 	const towers = document.querySelectorAll(".tower");
 	if (towers.length === 0) {

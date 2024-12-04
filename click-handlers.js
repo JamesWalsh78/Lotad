@@ -1,6 +1,6 @@
 // Updated "click-handlers.js"
 
-import { deck, discard, isDrawActive } from "./game-init.js";
+import { deck, discard, isDrawActive, shuffleDeck, resetGame } from "./game-init.js";
 import { updateDeckDisplay, updateDiscardDisplay, highlightTowers } from "./visual-updates.js";
 import { checkForConflict, discardCards } from "./discard-logic.js";
 import { updateTowerTally, checkWinCondition } from "./tally-win.js";

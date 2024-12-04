@@ -40,7 +40,9 @@ function resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog) {
         });
     });
 
-    document.querySelectorAll(".tower").forEach(tower => (tower.innerHTML = ""));
+    document.querySelectorAll(".tower").forEach(tower => {
+    tower.innerHTML = "";
+    tower.classList.remove("highlight");
     const logText = document.querySelector("#log-text");
     if (logText) logText.innerHTML = "";
 
@@ -48,6 +50,14 @@ function resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog) {
     updateDiscardDisplay();
     appendToLog("Game has been reset!");
 }
+
+import { setupClickHandlers } from './click-handlers.js';
+
+window.onload = () => {
+    setupClickHandlers();
+    resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog); // Initialise the game state
+};
+
 
 export {
 	deck,

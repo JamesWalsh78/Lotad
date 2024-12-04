@@ -39,15 +39,8 @@ function updateDiscardDisplay() {
 function highlightTowers(playerId) {
     const towers = document.querySelectorAll(`#player-${playerId}-left-tower, #player-${playerId}-right-tower`);
     towers.forEach((tower) => {
-        const newTower = tower.cloneNode(true);
-        tower.parentNode.replaceChild(newTower, tower);
-
-        newTower.classList.add("highlight");
-        newTower.addEventListener(
-            "click",
-            (event) => handleTowerClick(event, playerId),
-            { once: true }
-        );
+        tower.classList.add("highlight");
+        tower.addEventListener("click", (event) => handleTowerClick(event, playerId), { once: true });
     });
 }
 

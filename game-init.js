@@ -1,4 +1,4 @@
-// Add game initialization logic when the DOM is ready
+import { highlightTowers } from "./visual-updates.js";
 import { updateDeckDisplay, updateDiscardDisplay } from "./visual-updates.js";
 import { appendToLog } from "./log.js";
 
@@ -57,13 +57,20 @@ function resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog) {
     appendToLog("Game has been reset!");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const towers = document.querySelectorAll(".tower");
-    if (towers.length === 0) {
-        console.error("No towers found on the page.");
-    }
+function setupClickHandlers(highlightTowers, updateDeckDisplay, updateDiscardDisplay, appendToLog) {
+    const drawButtonP1 = document.getElementById("draw-button-p1");
+    const drawButtonP2 = document.getElementById("draw-button-p2");
+    const shuffleButton = document.getElementById("shuffle");
+    const resetButton = document.getElementById("reset");
 
-    setupClickHandlers();
+    if (drawButtonP1) drawButtonP1.addEventListener("click", () => highlightTowers(1));
+    if (drawButtonP2) drawButtonP2.addEventListener("click", () => highlightTowers(2));
+    if (shuffleButton) shuffleButton.addEventListener("click", shuffleDeck);
+    if (resetButton) resetButton.addEventListener("click", () => resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    setupClickHandlers(highlightTowers, updateDeckDisplay, updateDiscardDisplay, appendToLog);
     resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog);
 });
 

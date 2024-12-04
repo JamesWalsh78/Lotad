@@ -1,7 +1,5 @@
-// Updated "click-handlers.js"
-
-import { deck, discard, isDrawActive, shuffleDeck, resetGame } from "./game-init.js";
-import { updateDeckDisplay, updateDiscardDisplay, highlightTowers } from "./visual-updates.js";
+import { deck, discard, isDrawActive, resetGame } from "./game-init.js";
+import { updateDeckDisplay, updateDiscardDisplay } from "./visual-updates.js";
 import { checkForConflict, discardCards } from "./discard-logic.js";
 import { updateTowerTally, checkWinCondition } from "./tally-win.js";
 import { appendToLog } from "./log.js";
@@ -31,7 +29,7 @@ function handleTowerClick(event, playerId) {
 
     let cardsInTower = Array.from(tower.children).map(child => ({
         element: child,
-        colour: child.dataset.colour
+        colour: child.dataset.colour,
     }));
 
     let conflictIndex = checkForConflict(cardsInTower.map(c => c.colour), card.colour);
@@ -55,19 +53,7 @@ function handleTowerClick(event, playerId) {
     updateDiscardDisplay();
     isDrawActive = false;
 
-    document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
+    document.querySelectorAll(".tower").forEach(t => t.classList.remove("highlight"));
 }
 
-    const drawButtonP1 = document.getElementById("draw-button-p1");
-    const drawButtonP2 = document.getElementById("draw-button-p2");
-    const shuffleButton = document.getElementById("shuffle");
-    const resetButton = document.getElementById("reset");
-
-	if (drawButtonP1) drawButtonP1.addEventListener("click", () => highlightTowers(1));
-	if (drawButtonP2) drawButtonP2.addEventListener("click", () => highlightTowers(2));
-    if (shuffleButton) shuffleButton.addEventListener("click", shuffleDeck);
-    if (resetButton) resetButton.addEventListener("click", () => resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog));
-
-export {
-    handleTowerClick
-};
+export { handleTowerClick };

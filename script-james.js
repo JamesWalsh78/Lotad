@@ -105,10 +105,9 @@ function handleTowerClick(event, playerId) {
     const towerId = tower.id.includes("left") ? "left" : "right";
     const card = deck.shift();
 
-    // Create and append the card
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("card-container");
-    cardDiv.dataset.colour = card.colour; // Store card colour for conflict checks
+    cardDiv.dataset.colour = card.colour; 
     cardDiv.style.setProperty("--card-index", tower.childElementCount);
 
     const cardImage = document.createElement("img");
@@ -117,7 +116,6 @@ function handleTowerClick(event, playerId) {
 
     tower.appendChild(cardDiv);
 
-    // Detect conflict and discard if needed
     const cardsInTower = Array.from(tower.children).map(child => ({
         element: child,
         colour: child.dataset.colour
@@ -127,50 +125,55 @@ function handleTowerClick(event, playerId) {
 
     if (discardStartIndex !== -1) {
         const discardedCards = cardsInTower.slice(discardStartIndex);
-        discard.push(...discardedCards.map(c => c.colour)); // Add discarded cards to the discard pile
+        discard.push(...discardedCards.map(c => c.colour)); 
         appendToLog(`Player ${playerId} discarded ${discardedCards.length} cards due to conflict.`);
 
-        // Remove discarded cards from the DOM
         discardedCards.forEach(card => card.element.remove());
     }
 
-    // Update tower tallies based on remaining cards in the DOM
     const remainingCards = Array.from(tower.children).map(child => child.dataset.colour);
     updateTowerTally(playerId, towerId, remainingCards);
 
-    // Log placement
     appendToLog(`Player ${playerId} placed ${card.name} (${card.colour}) in ${towerId} tower.`);
 
-    // Check win condition
     if (towerTotals[`player${playerId}`][towerId].black >= 4) {
         appendToLog(`Player ${playerId} has collected 4 Black cards in the ${towerId} tower and has won the game!`);
-        resetGame();
     } else if (towerTotals[`player${playerId}`][towerId].brown >= 4) {
         appendToLog(`Player ${playerId} has collected 4 Brown cards in the ${towerId} tower and has won the game!`);
-        resetGame();
     }
 
     updateDeckDisplay();
     updateDiscardDisplay();
     isDrawActive = false;
 
-    // Remove highlighting from all towers
     document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
 }
 
 function checkForConflict(cards, newCardColour) {
+    let lastBlueIndex = -1; // Index of the last Blue card
+    let conflictIndex = -1; // Index where conflict starts
+
+    // Traverse the cards from top to bottom
     for (let i = cards.length - 1; i >= 0; i--) {
         if (cards[i] === "Blue") {
-            return -1; // Stop at Blue card
+            lastBlueIndex = i; // Update the index of the last Blue card
         }
         if (
             (newCardColour === "Black" && cards[i] === "Brown") ||
             (newCardColour === "Brown" && cards[i] === "Black")
         ) {
-            return i; // Conflict detected
+            conflictIndex = i; // Update conflict index when a conflict is detected
+            break; // Stop at the first conflict from the top
         }
     }
-    return -1; // No conflict
+
+    // If a conflict exists, discard down to the last Blue card or the conflict index
+    if (conflictIndex !== -1) {
+        return lastBlueIndex !== -1 ? lastBlueIndex : conflictIndex;
+    }
+
+    // If no conflict, return -1 (no discard needed)
+    return -1;
 }
 
 function updateTowerTally(playerId, towerId, remainingCards) {

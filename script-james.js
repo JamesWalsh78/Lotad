@@ -1,3 +1,6 @@
+console.log("checkForConflict function called!");
+
+
 let deck = []
 let discard = []
 let isDrawActive = false;
@@ -150,30 +153,33 @@ function handleTowerClick(event, playerId) {
 }
 
 function checkForConflict(cards, newCardColour) {
-    let lastBlueIndex = -1; // Index of the last Blue card
-    let conflictIndex = -1; // Index where conflict starts
+    console.log("Starting conflict check...");
+    console.log("Cards in tower:", cards);
+    console.log("New card colour:", newCardColour);
 
-    // Traverse the cards from top to bottom
+    // Traverse from top of the pile to bottom
     for (let i = cards.length - 1; i >= 0; i--) {
-        if (cards[i] === "Blue") {
-            lastBlueIndex = i; // Update the index of the last Blue card
+        const topCardColour = cards[i];
+        console.log(`Index: ${i}, Top Card Colour: ${topCardColour}`);
+
+        // Allow placement if the current card is not Black or Brown
+        if (topCardColour !== "Black" && topCardColour !== "Brown") {
+            console.log("No conflict detected: Non-conflicting colour found.");
+            return -1; // No conflict, placement allowed
         }
+
+        // Check for a conflict (Black vs Brown or Brown vs Black)
         if (
-            (newCardColour === "Black" && cards[i] === "Brown") ||
-            (newCardColour === "Brown" && cards[i] === "Black")
+            (newCardColour === "Black" && topCardColour === "Brown") ||
+            (newCardColour === "Brown" && topCardColour === "Black")
         ) {
-            conflictIndex = i; // Update conflict index when a conflict is detected
-            break; // Stop at the first conflict from the top
+            console.log(`Conflict detected at index: ${i}`);
+            return i; // Conflict detected
         }
     }
 
-    // If a conflict exists, discard down to the last Blue card or the conflict index
-    if (conflictIndex !== -1) {
-        return lastBlueIndex !== -1 ? lastBlueIndex : conflictIndex;
-    }
-
-    // If no conflict, return -1 (no discard needed)
-    return -1;
+    console.log("No conflict detected: Default return.");
+    return -1; // No conflict
 }
 
 function updateTowerTally(playerId, towerId, remainingCards) {

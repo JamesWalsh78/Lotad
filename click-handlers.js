@@ -64,14 +64,13 @@ function setupClickHandlers() {
     const shuffleButton = document.getElementById("shuffle");
     const resetButton = document.getElementById("reset");
 
-    if (drawButtonP1) drawButtonP1.addEventListener("click", () => handleDrawClick(1));
-    if (drawButtonP2) drawButtonP2.addEventListener("click", () => handleDrawClick(2));
+	if (drawButtonP1) drawButtonP1.addEventListener("click", () => highlightTowers(1));
+	if (drawButtonP2) drawButtonP2.addEventListener("click", () => highlightTowers(2));
     if (shuffleButton) shuffleButton.addEventListener("click", shuffleDeck);
     if (resetButton) resetButton.addEventListener("click", () => resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog));
 }
 
 export {
     handleTowerClick,
-    handleDrawClick,
     setupClickHandlers
 };

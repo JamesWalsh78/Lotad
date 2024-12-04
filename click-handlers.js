@@ -58,13 +58,6 @@ function handleTowerClick(event, playerId) {
     document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
 }
 
-function handleDrawClick(playerId) {
-    if (!isDrawActive && deck.length > 0) {
-        highlightTowers(playerId);
-        isDrawActive = true;
-    }
-}
-
 function setupClickHandlers() {
     const drawButtonP1 = document.getElementById("draw-button-p1");
     const drawButtonP2 = document.getElementById("draw-button-p2");

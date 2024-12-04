@@ -58,7 +58,6 @@ function handleTowerClick(event, playerId) {
     document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
 }
 
-function setupClickHandlers() {
     const drawButtonP1 = document.getElementById("draw-button-p1");
     const drawButtonP2 = document.getElementById("draw-button-p2");
     const shuffleButton = document.getElementById("shuffle");
@@ -68,9 +67,7 @@ function setupClickHandlers() {
 	if (drawButtonP2) drawButtonP2.addEventListener("click", () => highlightTowers(2));
     if (shuffleButton) shuffleButton.addEventListener("click", shuffleDeck);
     if (resetButton) resetButton.addEventListener("click", () => resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog));
-}
 
 export {
     handleTowerClick,
-    setupClickHandlers
 };

@@ -1,4 +1,3 @@
-// Updated "game-init.js"
 let deck = [];
 let discard = [];
 let isDrawActive = false;
@@ -6,12 +5,12 @@ let isDrawActive = false;
 const towerTotals = {
     player1: {
         left: { black: 0, brown: 0 },
-        right: { black: 0, brown: 0 }
+        right: { black: 0, brown: 0 },
     },
     player2: {
         left: { black: 0, brown: 0 },
-        right: { black: 0, brown: 0 }
-    }
+        right: { black: 0, brown: 0 },
+    },
 };
 
 function createDeck() {
@@ -33,6 +32,7 @@ function resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog) {
     shuffleDeck();
     discard = [];
     isDrawActive = false;
+
     Object.keys(towerTotals).forEach(player => {
         Object.keys(towerTotals[player]).forEach(tower => {
             towerTotals[player][tower].black = 0;
@@ -41,8 +41,10 @@ function resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog) {
     });
 
     document.querySelectorAll(".tower").forEach(tower => {
-    tower.innerHTML = "";
-    tower.classList.remove("highlight");
+        tower.innerHTML = "";
+        tower.classList.remove("highlight");
+    });
+
     const logText = document.querySelector("#log-text");
     if (logText) logText.innerHTML = "";
 
@@ -51,20 +53,27 @@ function resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog) {
     appendToLog("Game has been reset!");
 }
 
-import { setupClickHandlers } from './click-handlers.js';
+// Add game initialization logic when the DOM is ready
+import { setupClickHandlers } from "./click-handlers.js";
+import { updateDeckDisplay, updateDiscardDisplay } from "./visual-updates.js";
+import { appendToLog } from "./log.js";
 
-window.onload = () => {
+document.addEventListener("DOMContentLoaded", () => {
+    const towers = document.querySelectorAll(".tower");
+    if (towers.length === 0) {
+        console.error("No towers found on the page.");
+    }
+
     setupClickHandlers();
-    resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog); // Initialise the game state
-};
-
+    resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog);
+});
 
 export {
-	deck,
-	discard,
-	isDrawActive,
+    deck,
+    discard,
+    isDrawActive,
     createDeck,
     shuffleDeck,
     resetGame,
-    towerTotals
+    towerTotals,
 };

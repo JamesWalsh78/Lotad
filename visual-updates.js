@@ -1,5 +1,6 @@
 // Updated "visual-updates.js"
 import { deck, discard } from "./game-init.js";
+import { handleTowerClick } from "./click-handlers.js";
 
 function updateDeckDisplay() {
     const nextCard = deck.length > 0 ? deck[0] : { name: "back" };

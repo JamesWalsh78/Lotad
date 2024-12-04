@@ -69,5 +69,5 @@ function handleTowerClick(event, playerId) {
     if (resetButton) resetButton.addEventListener("click", () => resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog));
 
 export {
-    handleTowerClick,
+    handleTowerClick
 };

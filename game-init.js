@@ -1,3 +1,7 @@
+// Add game initialization logic when the DOM is ready
+import { updateDeckDisplay, updateDiscardDisplay } from "./visual-updates.js";
+import { appendToLog } from "./log.js";
+
 let deck = [];
 let discard = [];
 let isDrawActive = false;
@@ -52,11 +56,6 @@ function resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog) {
     updateDiscardDisplay();
     appendToLog("Game has been reset!");
 }
-
-// Add game initialization logic when the DOM is ready
-import { setupClickHandlers } from "./click-handlers.js";
-import { updateDeckDisplay, updateDiscardDisplay } from "./visual-updates.js";
-import { appendToLog } from "./log.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const towers = document.querySelectorAll(".tower");

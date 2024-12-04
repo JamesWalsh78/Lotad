@@ -1,6 +1,3 @@
-console.log("checkForConflict function called!");
-
-
 let deck = []
 let discard = []
 let isDrawActive = false;
@@ -119,19 +116,30 @@ function handleTowerClick(event, playerId) {
 
     tower.appendChild(cardDiv);
 
-    const cardsInTower = Array.from(tower.children).map(child => ({
+    // Initialize the cards in the tower
+    let cardsInTower = Array.from(tower.children).map(child => ({
         element: child,
         colour: child.dataset.colour
     }));
 
-    const discardStartIndex = checkForConflict(cardsInTower.map(c => c.colour), card.colour);
-
-    if (discardStartIndex !== -1) {
-        const discardedCards = cardsInTower.slice(discardStartIndex);
-        discard.push(...discardedCards.map(c => c.colour)); 
+    // Check and resolve conflicts recursively
+    let conflictIndex = checkForConflict(cardsInTower.map(c => c.colour), card.colour);
+    while (conflictIndex !== -1) {
+        const discardedCards = cardsInTower.slice(conflictIndex);
+        discard.push(...discardedCards.map(c => c.colour));
         appendToLog(`Player ${playerId} discarded ${discardedCards.length} cards due to conflict.`);
 
+        // Remove the discarded cards from the DOM
         discardedCards.forEach(card => card.element.remove());
+
+        // Update cardsInTower after removing discarded cards
+        cardsInTower = Array.from(tower.children).map(child => ({
+            element: child,
+            colour: child.dataset.colour
+        }));
+
+        // Check for new conflicts in the updated tower
+        conflictIndex = checkForConflict(cardsInTower.map(c => c.colour), card.colour);
     }
 
     const remainingCards = Array.from(tower.children).map(child => child.dataset.colour);

@@ -70,8 +70,13 @@ function setupClickHandlers(highlightTowers, updateDeckDisplay, updateDiscardDis
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM fully loaded and parsed.");
+    
     setupClickHandlers(highlightTowers, updateDeckDisplay, updateDiscardDisplay, appendToLog);
+    console.log("Click handlers set up.");
+
     resetGame(updateDeckDisplay, updateDiscardDisplay, appendToLog);
+    console.log("Game state reset.");
 });
 
 export {

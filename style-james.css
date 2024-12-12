@@ -171,6 +171,12 @@ body {
 	background-color: #243e36;
 }
 
+.action-button.disabled {
+    background-color: grey;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
 /* Player Sections */
 /* Towers */
 .tower-title {

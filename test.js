@@ -12,17 +12,26 @@ const cards = [
 
 //SET UP DECK
 function createDeck(cardsInput) {
-	deck = [];
-	cardsInput.forEach(({ name, count })=> {
-		const cardTemplate = cards.find(card => card.name === name);
-		if(cardTemplate) {
-			for (let i = 0; i < count; i++) {
-				deck.push({ ...cardTemplate })
-			}
-		}
-	});
-	return deck;
-};
+    deck = []; // Clear the existing deck
+
+    // Iterate over the user-provided cardsInput
+    cardsInput.forEach(({ name, count }) => {
+        // Find the template for the given card name
+        const cardTemplate = cards.find(card => card.name === name);
+        if (cardTemplate) {
+            // Add the correct number of copies of this card to the deck
+            for (let i = 0; i < count; i++) {
+                deck.push({ ...cardTemplate }); // Clone the cardTemplate to avoid reference issues
+            }
+        } else {
+            console.error(`Card template not found for: ${name}`);
+        }
+    });
+
+    console.log("Deck created:", deck);
+    return deck;
+}
+
 
 function shuffleDeck() {
 	for (let i =deck.length -1; i>0; i--) {

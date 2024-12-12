@@ -3,6 +3,18 @@ let deck = []
 let discard = []
 let isDrawActive = false;
 
+function setButtonState(button, enabled) {
+    if (!button) return; // Safeguard against null or undefined button references
+
+    if (enabled) {
+        button.disabled = false;
+        button.classList.remove("disabled"); // Ensure the disabled styling is removed
+    } else {
+        button.disabled = true;
+        button.classList.add("disabled"); // Add a disabled styling class
+    }
+}
+
 // CARD DATA
 const cards = [
 	{ name: "Poocheyena", 	colour: "Black", 	value: 1,	dfcount: 11},

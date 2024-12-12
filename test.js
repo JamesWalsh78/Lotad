@@ -109,31 +109,10 @@ function highlightTowers() {
 			{ once: true }
 		);
 	});
-}
-
-function setButtonState(button, enabled) {
-    if (enabled) {
-        button.disabled = false;
-        button.classList.remove("disabled");
-    } else {
-        button.disabled = true;
-        button.classList.add("disabled");
-    }
-}
-
-function setTowerState(clickable) {
-    const towers = document.querySelectorAll(".tower");
-    towers.forEach((tower) => {
-        if (clickable) {
-            tower.classList.add("clickable");
-        } else {
-            tower.classList.remove("clickable");
-        }
-    });
+	setTowerState(true);
 }
 
 //PLACEMENT LOGIC
-// Main function
 function handleTowerClick(event, playerId) {
     if (!isDrawActive || deck.length === 0) return;
 
@@ -228,7 +207,23 @@ function finaliseTurn(playerId, towerId, card, tower) {
 
     document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
 }
-	
+
+function setTowerState(enabled) {
+    const towers = document.querySelectorAll(".tower");
+
+    towers.forEach((tower) => {
+        if (enabled) {
+            tower.classList.add("highlight"); // Highlight the towers when enabled.
+        } else {
+            tower.classList.remove("highlight"); // Remove highlight when disabled.
+
+            // Remove event listeners by cloning and replacing the tower element.
+            const newTower = tower.cloneNode(true);
+            tower.parentNode.replaceChild(newTower, tower);
+        }
+    });
+}
+
 //DISCARD LOGIC
 function checkForConflict(cards, newCardColour, debug = false) {
     if (debug) {
@@ -391,4 +386,3 @@ function setupButtonListeners() {
 	if (shuffleButton) shuffleButton.addEventListener("click", shuffleDeck);
 	if (resetButton) resetButton.addEventListener("click", resetGame);
 }
-	

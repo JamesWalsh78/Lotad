@@ -3,8 +3,6 @@ let deck = []
 let discard = []
 let isDrawActive = false;
 
-
-
 //TALLY LOGIC
 const towerTotals = {
     player1: {

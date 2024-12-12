@@ -2,6 +2,7 @@
 let deck = []
 let discard = []
 let isDrawActive = false;
+let userSelectedCards = [];
 
 function setButtonState(button, enabled) {
     if (!button) return; // Safeguard against null or undefined button references
@@ -24,22 +25,17 @@ const cards = [
 
 //SET UP DECK
 function createDeck(cardsInput) {
-    deck = []; // Clear the existing deck
-
-    // Iterate over the user-provided cardsInput
+    deck = []; 
     cardsInput.forEach(({ name, count }) => {
-        // Find the template for the given card name
         const cardTemplate = cards.find(card => card.name === name);
         if (cardTemplate) {
-            // Add the correct number of copies of this card to the deck
             for (let i = 0; i < count; i++) {
-                deck.push({ ...cardTemplate }); // Clone the cardTemplate to avoid reference issues
+                deck.push({ ...cardTemplate }); 
             }
         } else {
             console.error(`Card template not found for: ${name}`);
         }
     });
-
     console.log("Deck created:", deck);
     return deck;
 }
@@ -50,6 +46,42 @@ function shuffleDeck() {
 		[deck[i], deck[j]] = [deck[j], deck[i]];
 	}
 	updateDeckDisplay();
+}
+
+//RESET GAME
+function resetGame() {
+	if (userSelectedCards.length === 0) {
+        console.error("No user-selected cards to reset. Using defaults.");
+        userSelectedCards = cards.map(card => ({ name: card.name, count: card.dfcount }));
+    }
+	createDeck(cardsInput);
+	shuffleDeck();
+	
+	discard = [];
+	towerTotals.player1 = {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    };
+    towerTotals.player2 = {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    };
+	
+	document.querySelectorAll(".tower").forEach(tower => (tower.innerHTML = ""));
+	const logText = document.querySelector("#log-text");
+    if (logText) {
+        logText.innerHTML = "";
+    } else {
+        console.error("Log text element not found.");
+    }
+	
+	updateDeckDisplay();
+    updateDiscardDisplay();
+    setTowerState(false); // Reset towers to unclickable
+    setButtonState(document.getElementById("draw-button-p1"), true);
+    setButtonState(document.getElementById("draw-button-p2"), false);
+    setButtonState(document.getElementById("end-turn-p1"), false);
+    setButtonState(document.getElementById("end-turn-p2"), false);
 }
 
 //TALLY LOGIC
@@ -269,34 +301,6 @@ function checkForConflict(cards, newCardColour, debug = false) {
     return -1; // No conflict
 }
 
-//RESET GAME
-function resetGame() {
-	const cardsInput = cards.map(card => ({ name: card.name, count: card.dfCount }));
-	createDeck(cardsInput);
-	shuffleDeck();
-	
-	discard = [];
-	towerTotals.player1 = {
-        left: { black: 0, brown: 0 },
-        right: { black: 0, brown: 0 }
-    };
-    towerTotals.player2 = {
-        left: { black: 0, brown: 0 },
-        right: { black: 0, brown: 0 }
-    };
-	
-	document.querySelectorAll(".tower").forEach(tower => (tower.innerHTML = ""));
-	const logText = document.querySelector("#log-text");
-    if (logText) {
-        logText.innerHTML = "";
-    } else {
-        console.error("Log text element not found.");
-    }
-	
-	updateDeckDisplay();
-	updateDiscardDisplay();
-}
-
 //EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", () => {
 	
@@ -328,10 +332,8 @@ function setupGameModal() {
         cardSelection.appendChild(optionDiv);
     });
 
-    // Show the modal
     modal.style.display = "flex";
 
-    // Handle form submission
     form.addEventListener("submit", (event) => {
         event.preventDefault();
         const cardsInput = cards.map(card => {
@@ -343,11 +345,9 @@ function setupGameModal() {
 		});
 		
 		console.log("Deck created with user input:", cardsInput);
-		
 		createDeck(cardsInput);
 		shuffleDeck();
 		resetGame();
-		
 		modal.style.display = "none";
 	});
 }	

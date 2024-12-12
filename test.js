@@ -32,7 +32,6 @@ function createDeck(cardsInput) {
     return deck;
 }
 
-
 function shuffleDeck() {
 	for (let i =deck.length -1; i>0; i--) {
 		const j = Math.floor(Math.random() * (i+1));
@@ -53,28 +52,35 @@ const towerTotals = {
     }
 };
 
-//GAME STATE DISPLAY -- Needs deck count
-
+//GAME STATE DISPLAY 
 function updateDeckDisplay() {
-	const nextCard = deck.length > 0 ? deck[0] : { name: "placeholder" };
-	const deckImage = document.querySelector("#next-card img");
-	
-	if (deckImage) {
-		deckImage.src = nextCard.name ? `assets/${nextCard.name.toLowerCase()}.png` : "assets/placeholder.png";
-	} else {
-		console.error("Deck image element not found.")
-	}
-	
-	const deckCountElement = document.querySelector("#deck-count");
-	if (deckCountElement) {
-		deckCountElement.innerHTML = `
-		Total: ${deck.length}<br>
-		Poocheyena: ${deck.filter(c => c.name === "Poocheyena").length}<br>
-		Larvitar: ${deck.filter(c => c.name === "Larvitar").length}<br>
-		Lotad: ${deck.filter(c => c.name === "Lotad").length}`;
-	} else {
-		console.error("Deck count element not found.");
-	}
+    const deckImage = document.querySelector("#next-card img");
+    const deckCountElement = document.querySelector("#deck-count");
+
+    if (deckImage) {
+        const nextCard = deck.length > 0 ? deck[0] : null;
+        deckImage.src = nextCard ? `assets/${nextCard.name.toLowerCase()}.png` : "assets/placeholder.png";
+    } else {
+        console.error("Deck image element not found.");
+    }
+
+    if (deckCountElement) {
+        // Count the number of cards for each type
+        const cardCounts = deck.reduce((counts, card) => {
+            counts[card.name] = (counts[card.name] || 0) + 1;
+            return counts;
+        }, {});
+
+        // Create a breakdown of card types
+        const cardDetails = Object.entries(cardCounts)
+            .map(([name, count]) => `${name}: ${count}`)
+            .join("<br>");
+
+        // Update the deck count display
+        deckCountElement.innerHTML = `Total: ${deck.length}<br>${cardDetails}`;
+    } else {
+        console.error("Deck count element not found.");
+    }
 }
 	
 function updateDiscardDisplay() {
@@ -103,6 +109,27 @@ function highlightTowers() {
 			{ once: true }
 		);
 	});
+}
+
+function setButtonState(button, enabled) {
+    if (enabled) {
+        button.disabled = false;
+        button.classList.remove("disabled");
+    } else {
+        button.disabled = true;
+        button.classList.add("disabled");
+    }
+}
+
+function setTowerState(clickable) {
+    const towers = document.querySelectorAll(".tower");
+    towers.forEach((tower) => {
+        if (clickable) {
+            tower.classList.add("clickable");
+        } else {
+            tower.classList.remove("clickable");
+        }
+    });
 }
 
 //PLACEMENT LOGIC
@@ -190,7 +217,11 @@ function finaliseTurn(playerId, towerId, card, tower) {
     } else if (towerTotals[`player${playerId}`][towerId].brown >= 4) {
         appendToLog(`Player ${playerId} has collected 4 Brown cards in the ${towerId} tower and has won the game!`);
     }
-
+	
+	setTowerState(false);
+    const endTurnButton = document.getElementById(`end-turn-p${playerId}`);
+    if (endTurnButton) setButtonState(endTurnButton, true);
+	
     updateDeckDisplay();
     updateDiscardDisplay();
     isDrawActive = false;
@@ -263,8 +294,13 @@ function resetGame() {
 document.addEventListener("DOMContentLoaded", () => {
 	
 	setupGameModal();
-	
 	setupButtonListeners();
+	setButtonState(document.getElementById("draw-button-p1"), true);
+    setButtonState(document.getElementById("draw-button-p2"), false);
+    setButtonState(document.getElementById("end-turn-p1"), false);
+    setButtonState(document.getElementById("end-turn-p2"), false);
+
+    setTowerState(false); // Disable towers at the start
 });
 
 function setupGameModal() {
@@ -316,11 +352,42 @@ function setupButtonListeners() {
 	}
 	const drawButtonP1 = document.getElementById("draw-button-p1");
 	const drawButtonP2 = document.getElementById("draw-button-p2");
+	const endTurnButtonP1 = document.getElementById("end-turn-p1");
+    const endTurnButtonP2 = document.getElementById("end-turn-p2");
 	const shuffleButton = document.getElementById("shuffle");
 	const resetButton = document.getElementById("reset");
 	
-	if (drawButtonP1) drawButtonP1.addEventListener("click", () => highlightTowers(1));
-	if (drawButtonP2) drawButtonP2.addEventListener("click", () => highlightTowers(2));
+	if (drawButtonP1) {
+        drawButtonP1.addEventListener("click", () => {
+            setButtonState(drawButtonP1, false);
+            setTowerState(true);
+            setButtonState(endTurnButtonP1, false);
+        });
+    }
+
+    if (drawButtonP2) {
+        drawButtonP2.addEventListener("click", () => {
+            setButtonState(drawButtonP2, false);
+            setTowerState(true);
+            setButtonState(endTurnButtonP2, false);
+        });
+    }
+
+    if (endTurnButtonP1) {
+        endTurnButtonP1.addEventListener("click", () => {
+            setTowerState(false);
+            setButtonState(endTurnButtonP1, false);
+            setButtonState(drawButtonP2, true);
+        });
+    }
+
+    if (endTurnButtonP2) {
+        endTurnButtonP2.addEventListener("click", () => {
+            setTowerState(false);
+            setButtonState(endTurnButtonP2, false);
+            setButtonState(drawButtonP1, true);
+        });
+    }
 	if (shuffleButton) shuffleButton.addEventListener("click", shuffleDeck);
 	if (resetButton) resetButton.addEventListener("click", resetGame);
 }

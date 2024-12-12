@@ -1,7 +1,9 @@
+// VARIABLES
 let deck = []
 let discard = []
 let isDrawActive = false;
 
+//TALLY LOGIC
 const towerTotals = {
     player1: {
         left: { black: 0, brown: 0 },
@@ -13,6 +15,12 @@ const towerTotals = {
     }
 };
 
+function updateTowerTally(playerId, towerId, remainingCards) {
+    towerTotals[`player${playerId}`][towerId].black = remainingCards.filter(c => c === "Black").length;
+    towerTotals[`player${playerId}`][towerId].brown = remainingCards.filter(c => c === "Brown").length;
+}
+
+//INITIAL SETUP
 function createDeck() {
     deck = [];
     for (let i = 0; i < 11; i++) deck.push({ name: "Poocheyena", colour: "Black", value: 1 });
@@ -28,6 +36,20 @@ function shuffleDeck() {
 	updateDeckDisplay();
 }
 
+//LOG
+function appendToLog(message) {
+	const logText = document.querySelector("#log-text");
+	if (logText) {
+		const logEntry = document.createElement("p");
+		logEntry.textContent = message;
+		logText.appendChild(logEntry);
+		logText.scrollTop = logText.scrollHeight;
+	} else {
+		console.error("Log text element not found.");
+	}
+}
+
+//GAME STATE DISPLAY
 function updateDeckDisplay() {
 	const nextCard = deck.length > 0 ? deck[0] : { name: "back" };
 	const deckImage = document.querySelector("#next-card img");
@@ -63,18 +85,7 @@ function updateDiscardDisplay() {
 	}
 }
 
-function appendToLog(message) {
-	const logText = document.querySelector("#log-text");
-	if (logText) {
-		const logEntry = document.createElement("p");
-		logEntry.textContent = message;
-		logText.appendChild(logEntry);
-		logText.scrollTop = logText.scrollHeight;
-	} else {
-		console.error("Log text element not found.");
-	}
-}
-
+//TOWER DISPLAY
 function highlightTowers(playerId) {
     isDrawActive = true;
 
@@ -93,6 +104,7 @@ function highlightTowers(playerId) {
     });
 }
 
+//PLACEMENT LOGIC
 function handleTowerClick(event, playerId) {
     if (!isDrawActive || deck.length === 0) return;
 
@@ -139,7 +151,7 @@ function handleTowerClick(event, playerId) {
         }));
 
         // Check for new conflicts in the updated tower
-        conflictIndex = checkForConflict(cardsInTower.map(c => c.colour), card.colour);
+        conflictIndex = checkForConflict(cardsInTower.map(c => c.colour), card.colour); //different function notation => here. Can refactor later
     }
 
     const remainingCards = Array.from(tower.children).map(child => child.dataset.colour);
@@ -160,6 +172,7 @@ function handleTowerClick(event, playerId) {
     document.querySelectorAll(".tower").forEach((t) => t.classList.remove("highlight"));
 }
 
+//DISCARD LOGIC
 function checkForConflict(cards, newCardColour) {
     console.log("Starting conflict check...");
     console.log("Cards in tower:", cards);
@@ -190,11 +203,7 @@ function checkForConflict(cards, newCardColour) {
     return -1; // No conflict
 }
 
-function updateTowerTally(playerId, towerId, remainingCards) {
-    towerTotals[`player${playerId}`][towerId].black = remainingCards.filter(c => c === "Black").length;
-    towerTotals[`player${playerId}`][towerId].brown = remainingCards.filter(c => c === "Brown").length;
-}
-
+//RESET GAME
 function resetGame() {
 	createDeck();
 	shuffleDeck();
@@ -218,6 +227,7 @@ function resetGame() {
 	updateDiscardDisplay();
 }
 
+//EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", () => {
 	const towers = document.querySelectorAll(".tower");
 	if (towers.length === 0) {
@@ -235,3 +245,4 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	resetGame();
 });
+	

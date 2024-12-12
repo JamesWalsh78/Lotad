@@ -10,19 +10,13 @@ const cards = [
 	{ name: "Lotad", 		colour: "Blue", 	value: 0,	dfcount: 2},
 ];
 
-//SELECT GAME CARDS
-let selectedCards = [
-	{ name: "Poocheyena", count: 11 },
-	{ name: "Larvitar", count: 11},
-	{ name: "Lotad", count: 2},
-];
-
 //SET UP DECK
-function createDeck(selectedCards) {
-	selectedCards.forEach(s => {
-		const cardTemplate = cards.find(card => card.name === s.name);
+function createDeck(cardsInput) {
+	deck = [];
+	cardsInput.forEach(({ name, count })=> {
+		const cardTemplate = cards.find(card => card.name === name);
 		if(cardTemplate) {
-			for (let i = 0; i < s.count; i++) {
+			for (let i = 0; i < count; i++) {
 				deck.push({ ...cardTemplate })
 			}
 		}
@@ -35,6 +29,7 @@ function shuffleDeck() {
 		const j = Math.floor(Math.random() * (i+1));
 		[deck[i], deck[j]] = [deck[j], deck[i]];
 	}
+	updateDeckDisplay();
 }
 
 //TALLY LOGIC
@@ -102,8 +97,6 @@ function highlightTowers() {
 }
 
 //PLACEMENT LOGIC
-
-
 // Main function
 function handleTowerClick(event, playerId) {
     if (!isDrawActive || deck.length === 0) return;
@@ -197,7 +190,7 @@ function finaliseTurn(playerId, towerId, card, tower) {
 }
 	
 //DISCARD LOGIC
-function checkForConflict(cards, newCardColour) {
+function checkForConflict(cards, newCardColour, debug = false) {
     if (debug) {
         console.log("Starting conflict check...");
         console.log("Cards in tower:", cards);
@@ -231,8 +224,10 @@ function checkForConflict(cards, newCardColour) {
 
 //RESET GAME
 function resetGame() {
-	createDeck(selectedCards);
+	const cardsInput = cards.map(card => ({ name: card.name, count: card.dfCount }));
+	createDeck(cardsInput);
 	shuffleDeck();
+	
 	discard = [];
 	towerTotals.player1 = {
         left: { black: 0, brown: 0 },
@@ -242,6 +237,7 @@ function resetGame() {
         left: { black: 0, brown: 0 },
         right: { black: 0, brown: 0 }
     };
+	
 	document.querySelectorAll(".tower").forEach(tower => (tower.innerHTML = ""));
 	const logText = document.querySelector("#log-text");
     if (logText) {
@@ -249,12 +245,20 @@ function resetGame() {
     } else {
         console.error("Log text element not found.");
     }
+	
 	updateDeckDisplay();
 	updateDiscardDisplay();
 }
 
 //EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", () => {
+	
+	setupGameModal();
+	
+	setupButtonListeners();
+});
+
+function setupGameModal() {
 	const modal = document.getElementById("setup-modal");
     const form = document.getElementById("setup-form");
 
@@ -266,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         optionDiv.innerHTML = `
             <label for="${card.name}-quantity">${card.name} (${card.colour})</label>
-            <input type="number" id="${card.name}-quantity" min="0" placeholder="Default: ${card["df-count"]}">
+            <input type="number" id="${card.name}-quantity" min="0" placeholder="Default: ${card["dfcount"]}">
         `;
 
         cardSelection.appendChild(optionDiv);
@@ -278,23 +282,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle form submission
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-        const selectedCards = [];
+        const cardsInput = cards.map(card => {
+			const quantityInput = document.getElementById(`${card.name}-quantity`);
+			return {
+				name: card.name,
+				count: parseInt(quantityInput.value) || card.dfCount,
+			};
+		});
+		
+		console.log("Deck created with user input:", cardsInput);
+		
+		createDeck(cardsInput);
+		shuffleDeck();
+		resetGame();
+		
+		modal.style.display = "none";
+	});
+}	
 
-        cards.forEach(card => {
-            const quantityInput = document.getElementById(`${card.name}-quantity`);
-            const count = parseInt(quantityInput.value) || card["df-count"];
-            selectedCards.push({ name: card.name, count });
-        });
-
-        console.log("Selected Cards:", selectedCards);
-
-        // Hide the modal and initialize the game
-        modal.style.display = "none";
-        createDeck(selectedCards);
-        shuffleDeck();
-        resetGame();
-    });
-	
+function setupButtonListeners() {
 	const towers = document.querySelectorAll(".tower");
 	if (towers.length === 0) {
 		console.error("No towers found on the page.")
@@ -308,5 +314,5 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (drawButtonP2) drawButtonP2.addEventListener("click", () => highlightTowers(2));
 	if (shuffleButton) shuffleButton.addEventListener("click", shuffleDeck);
 	if (resetButton) resetButton.addEventListener("click", resetGame);
-});
+}
 	

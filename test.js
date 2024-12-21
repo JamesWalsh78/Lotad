@@ -140,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	shuffleButton.addEventListener("click", shuffleDeck);
 	resetButton.addEventListener("click", setupGameModal);
 	drawButtonP1.addEventListener("click", () => highlightTowers(1));
-	drawButtonP2.addEventListener("click", () => highlightTowers(2));
 	setButtonState(drawButtonP1, true);
 	setButtonState(drawButtonP2, false);
 	setButtonState(endTurnButtonP1, false);
@@ -218,8 +217,10 @@ function resetTowerState() {
 	if (currentPlayer === 1) {
         setButtonState(drawButtonP1, true);
         setButtonState(drawButtonP2, false);
+		drawButtonP2.addEventListener("click", () => highlightTowers(2));
     } else {
         setButtonState(drawButtonP1, false);
         setButtonState(drawButtonP2, true);
+		drawButtonP2.addEventListener("click", () => highlightTowers(2));
     }
 }

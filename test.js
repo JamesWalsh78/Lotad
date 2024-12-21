@@ -246,6 +246,9 @@ function placeCardOnTower(tower, colour, name) {
 
     tower.appendChild(cardDiv);
 	
+	const placingPlayer = isPlayerOneTurn 
+							? "Player 1" 
+							: "Player 2";
 	const targetPlayer = tower.id.includes("1") 
 							? "Player 1" 
 							: "Player 2";
@@ -267,6 +270,9 @@ function placeCardInHand(hand, colour, name) {
 	
 	hand.appendChild(cardElement);
 	
+	const placingPlayer = isPlayerOneTurn 
+							? "Player 1" 
+							: "Player 2";
 	const targetPlayer = hand.id.includes("1") 
 							? "Player 1" 
 							: "Player 2";

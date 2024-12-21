@@ -347,7 +347,6 @@ function setupGameModal() {
         console.log("Deck reset:", cardsInput);
         createDeck(userSelectedCards);
         shuffleDeck();
-        resetGame();
         modal.style.display = "none"; // Hide modal on successful setup
     });
 }

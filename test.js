@@ -201,12 +201,12 @@ function highlightTowers(playerId) {
 
 function draw(event, playerId) {
     const tower = event.target.closest(".tower"); // Find nearest tower
-    const handDiv = document.querySelector(`.hand.player-${playerId}`); // Player-specific hand
+    const handDiv = document.querySelector(`player-${playerId}-hand`); // Player-specific hand
     const card = deck.shift(); // Remove top card from the deck
 
     // Call the specific card action
     if (card.action) {
-        if (card.colour.toLowerCase() === "item") {
+        if (card.colour === "Item") {
             card.action(handDiv);
         } else {
             card.action(tower);

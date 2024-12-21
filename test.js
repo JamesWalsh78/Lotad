@@ -23,7 +23,11 @@ function setupGameModal() {
 		
 		optionDiv.innerHTML = `
 			<label for="${card.name}-quantity">${card.name}</label>
-			<input type="number" id="${card.name}-quantity" min="0" placeholder="${card.dfcount}">
+			<input 
+				type="number" 
+				id="${card.name}-quantity" 
+				min="0" 
+				placeholder="${card.dfcount}">
 			`;
 			
 			cardSelection.appendChild(optionDiv); //adds the divs to the HTML
@@ -44,3 +48,14 @@ function setupGameModal() {
 	modal.style.display = "none";
 	});
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+	const modal = document.getElementById("setup-modal");
+	
+	if(modal) {
+		modal.style.display = 'flex';
+	} else {
+		console.error("Modal element not found");
+	}	
+	setupGameModal();
+});

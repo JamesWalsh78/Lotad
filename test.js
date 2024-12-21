@@ -344,8 +344,8 @@ function setupGameModal() {
             };
         });
 
-        console.log("Deck created with user input:", cardsInput);
-        createDeck(cardsInput);
+        console.log("Deck reset:", cardsInput);
+        createDeck(userSelectedCards);
         shuffleDeck();
         resetGame();
         modal.style.display = "none"; // Hide modal on successful setup

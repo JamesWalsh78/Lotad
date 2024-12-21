@@ -207,10 +207,9 @@ function draw(event, playerId) {
 function resetTowerState() {
     towers.forEach((tower) => {
         tower.classList.remove("highlight");
-        const newTower = tower.cloneNode(true);
-        tower.parentNode.replaceChild(newTower, tower);
     });
-
+	
+	setButtonState(shuffleButton, true);
 	currentPlayer = currentPlayer === 1 
 						? 2 
 						: 1;

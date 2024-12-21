@@ -1,7 +1,7 @@
 //VARIABLES
 let deck 				= [];
 let discard 			= [];
-let currentPlayer 		= 1;
+let isPlayerOneTurn		= true;
 const drawButtonP1 		= document.getElementById("draw-button-p1");
 const drawButtonP2 		= document.getElementById("draw-button-p2");
 const endTurnButtonP1 	= document.getElementById("end-turn-p1");
@@ -202,21 +202,23 @@ function draw(event, playerId) {
 		} 
 	}
 	resetTowerState();
+	updateDeckDisplay();
 }
 	
 function resetTowerState() {
     towers.forEach((tower) => {
         tower.classList.remove("highlight");
+		const newTower = tower.cloneNode(true);
+        tower.parentNode.replaceChild(newTower, tower);
     });
 	
 	setButtonState(shuffleButton, true);
-	currentPlayer = currentPlayer === 1 
-						? 2 
-						: 1;
-	if (currentPlayer === 1) {
+	isPlayerOneTurn = !isPlayerOneTurn;
+	
+	if (isPlayerOneTurn) {
         setButtonState(drawButtonP1, true);
         setButtonState(drawButtonP2, false);
-		drawButtonP2.addEventListener("click", () => highlightTowers(2));
+		drawButtonP2.addEventListener("click", () => highlightTowers(1));
     } else {
         setButtonState(drawButtonP1, false);
         setButtonState(drawButtonP2, true);

@@ -50,12 +50,5 @@ function setupGameModal() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-	const modal = document.getElementById("setup-modal");
-	
-	if(modal) {
-		modal.style.display = 'flex';
-	} else {
-		console.error("Modal element not found");
-	}	
 	setupGameModal();
 });

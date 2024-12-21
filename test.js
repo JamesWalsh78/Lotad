@@ -1,12 +1,13 @@
 //VARIABLES
 let deck = [];
 let discard = [];
-const drawButtonP1 = document.getElementById("draw-button-p1");
-const drawButtonP2 = document.getElementById("draw-button-p2");
-const endTurnButtonP1 = document.getElementById("end-turn-p1");
-const endTurnButtonP2 = document.getElementById("end-turn-p2");
-const shuffleButton = document.getElementById("shuffle");
-const resetButton = document.getElementById("reset");
+const drawButtonP1 		= document.getElementById("draw-button-p1");
+const drawButtonP2 		= document.getElementById("draw-button-p2");
+const endTurnButtonP1 	= document.getElementById("end-turn-p1");
+const endTurnButtonP2 	= document.getElementById("end-turn-p2");
+const shuffleButton 	= document.getElementById("shuffle");
+const resetButton 		= document.getElementById("reset");
+const towers 			= document.querySelectorAll(".tower");
 
 //CARD DATA
 const cards = [
@@ -14,6 +15,18 @@ const cards = [
 	{ name: "Larvitar", 	colour: "Brown", 	value: 1,	dfcount: 11},
 	{ name: "Lotad", 		colour: "Blue", 	value: 0,	dfcount: 2},
 ];
+
+//TALLY LOGIC
+const towerTotals = {
+    player1: {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    },
+    player2: {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    }
+};
 
 // INITIAL STATE FUNCTIONS
 //SET UP DECK
@@ -123,10 +136,80 @@ function setupGameModal() {
 document.addEventListener("DOMContentLoaded", () => {
 	setupGameModal();
 	shuffleButton.addEventListener("click", shuffleDeck);
-	shuffleButton.addEventListener("click", setupGameModal);
+	resetButton.addEventListener("click", setupGameModal);
+	drawButtonP1.addEventListener("click", highlightTowers);
 	setButtonState(drawButtonP1, true);
 	setButtonState(drawButtonP2, false);
 	setButtonState(endTurnButtonP1, false);
 	setButtonState(endTurnButtonP2, false);
 });
 
+//DRAW LOGIC
+function highlightTowers() {
+	towers.forEach((tower) => {
+		tower.classList.add("highlight");
+		const playerId = tower.closest(".player-section").querySelector("h2").textContent.split(" ")[1];
+		tower.addEventListener(
+			"click",
+			(event) => draw(event, playerId),
+			{ once: true }
+		);
+	});
+}
+
+function draw(event, playerId) {
+	setButtonState(shuffleButton, false);
+	setButtonState(drawButtonP1, false);
+    setButtonState(drawButtonP2, false);
+	
+	const tower = event.target.closest(".tower"); //find nearest tower
+	
+	const towerId = tower.id.includes("left") 
+						? "left" 
+						: "right"; //find tower side
+	const card = deck.shift(); //removes card from deck
+	
+	if (card.colour !== 'item') {
+		const cardDiv = document.createElement("div");
+		cardDiv.classList.add("card-container");
+		cardDiv.dataset.colour = card.colour;
+		cardDiv.style.setProperty("--card-index", tower.childElementCount);
+	
+		const cardImage = document.createElement("img");
+		cardImage.src = `assets/${card.name.toLowerCase()}.png`;
+		cardDiv.appendChild(cardImage);
+	
+		tower.appendChild(cardDiv);
+	
+		let cardsInTower = Array.from(tower.children).map(child => ({
+			element: child,
+			colour: child.dataset.colour
+		}));
+		
+	} else {
+		const handDiv = document.querySelector(".hand");
+		if (handDiv) {
+			const cardDiv = document.createElement("div");
+			cardDiv.classList.add("card-container");
+			cardDiv.dataset.colour = card.colour;
+	
+			const cardImage = document.createElement("img");
+			cardImage.src = `assets/${card.name.toLowerCase()}.png`;
+			cardDiv.appendChild(cardImage);
+	
+			handDiv.appendChild(cardDiv);
+		} 
+	}
+	resetTowerState();
+}
+	
+function resetTowerState() {
+    towers.forEach((tower) => {
+        tower.classList.remove("highlight");
+        const newTower = tower.cloneNode(true);
+        tower.parentNode.replaceChild(newTower, tower);
+    });
+
+    setButtonState(drawButtonP2, true);
+    setButtonState(drawButtonP1, false);
+}

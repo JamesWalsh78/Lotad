@@ -97,6 +97,7 @@ body {
 	justify-content: space-between;
 	height: calc(90vh);
 	padding: 5px;
+	gap: 20px;
 }
 
 .play-areas > div {
@@ -140,6 +141,10 @@ body {
 	height:auto;
 }
 
+#discard {
+	margin-right: 20px;
+}
+
 .info-box {
 	border: 2px solid #ccc;
 	padding: 10px;
@@ -148,14 +153,6 @@ body {
 	font-size: 16px;
 }
 
-.log {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 400px;
-	gap:10px;
-}
-	
 .action-button {
 	width: 100px;
 	padding: 10px;
@@ -235,12 +232,16 @@ body {
 	width: 400px;
 	height: 100px;
 	overflow-x: auto;
+	overflow-y: hidden;
 	border: 2px solid #ccc;
     align-items: center;
+	white-space:nowrap;
+	padding: 0;
+	gap:0;
 }
 
 .hand-card {
-	display:flex;
+	flex: 0 0 auto;
 	flex-direction: row;
 	overflow-x: auto;
 }

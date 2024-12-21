@@ -20,6 +20,14 @@ const cards = [
 		dfcount: 11,
 		action: function (target) {
 			placeCardOnTower(target, this.colour, this.name.toLowerCase());
+			const playerId = target.id.includes("1") 
+								? "player1" 
+								: "player2";
+            const towerId = target.id.includes("left") 
+								? "left" 
+								: "right";
+            towerTotals[playerId][towerId].black += 1;
+            console.log(`Updated Tally for ${playerId} ${towerId}:`, towerTotals[playerId][towerId]);
 		}
 	},
 	{
@@ -29,6 +37,14 @@ const cards = [
 		dfcount: 11,
 		action: function (target) {
 			placeCardOnTower(target, this.colour, this.name.toLowerCase());
+			const playerId = target.id.includes("1") 
+								? "player1" 
+								: "player2";
+            const towerId = target.id.includes("left") 
+								? "left" 
+								: "right";
+            towerTotals[playerId][towerId].brown += 1;
+            console.log(`Updated Tally for ${playerId} ${towerId}:`, towerTotals[playerId][towerId]);
 		}
 	},
 	{
@@ -205,7 +221,6 @@ function draw(event, playerId) {
     const hand = document.getElementById(`player-${towerId}-hand`);
     const card = deck.shift(); // Remove top card from the deck
 
-    // Call the specific card action
     if (card.action) {
         if (card.colour === "Item") {
             card.action(hand);
@@ -218,7 +233,7 @@ function draw(event, playerId) {
     updateDeckDisplay();
 }
 
-// Shared function for placing a card on a tower
+//SHARED PLACEMENT FUNCTIONS
 function placeCardOnTower(tower, colour, name) {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("card-container");
@@ -232,7 +247,6 @@ function placeCardOnTower(tower, colour, name) {
     tower.appendChild(cardDiv);
 }
 
-// Shared function for placing a card in the player's hand
 function placeCardInHand(hand, colour, name) {
 	// Create the card element for the hand
     const cardElement = document.createElement("div");
@@ -246,6 +260,7 @@ function placeCardInHand(hand, colour, name) {
 	hand.appendChild(cardElement);
 }
 
+//SWITCH TURNS
 function resetTowerState() {
     towers.forEach((tower) => {
         tower.classList.remove("highlight");

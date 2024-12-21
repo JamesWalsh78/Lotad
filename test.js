@@ -69,7 +69,6 @@ function createDeck(cardsInput) {
     });
     return deck;
 }
-}
 
 function shuffleDeck() {
 	for (let i =deck.length -1; i>0; i--) {

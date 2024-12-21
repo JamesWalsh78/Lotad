@@ -54,7 +54,7 @@ function resetGame() {
         console.error("No user-selected cards to reset. Using defaults.");
         userSelectedCards = cards.map(card => ({ name: card.name, count: card.dfcount }));
     }
-	createDeck(cardsInput);
+	createDeck(userSelectedCards);
 	shuffleDeck();
 	
 	discard = [];

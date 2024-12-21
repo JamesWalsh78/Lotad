@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function setupGameModal() {
-	const modal = document.getElementById("setup-modal");
+    const modal = document.getElementById("setup-modal");
     const form = document.getElementById("setup-form");
 
     // Populate card options
@@ -335,22 +335,22 @@ function setupGameModal() {
     modal.style.display = "flex";
 
     form.addEventListener("submit", (event) => {
-        event.preventDefault();
+        event.preventDefault(); // Prevent form submission
         const cardsInput = cards.map(card => {
-			const quantityInput = document.getElementById(`${card.name}-quantity`);
-			return {
-				name: card.name,
-				count: parseInt(quantityInput.value) || card.dfCount,
-			};
-		});
-		
-		console.log("Deck created with user input:", cardsInput);
-		createDeck(cardsInput);
-		shuffleDeck();
-		resetGame();
-		modal.style.display = "none";
-	});
-}	
+            const quantityInput = document.getElementById(`${card.name}-quantity`);
+            return {
+                name: card.name,
+                count: parseInt(quantityInput.value) || card.dfcount, // Use dfcount if input is empty
+            };
+        });
+
+        console.log("Deck created with user input:", cardsInput);
+        createDeck(cardsInput);
+        shuffleDeck();
+        resetGame();
+        modal.style.display = "none"; // Hide modal on successful setup
+    });
+}
 
 function setupButtonListeners() {
 	const towers = document.querySelectorAll(".tower");

@@ -194,7 +194,13 @@ function draw(event, playerId) {
     const card = deck.shift(); // Remove top card from the deck
 
     // Call the specific card action
-    card.action(tower, handDiv);
+    if (card.action) {
+        if (card.colour.toLowerCase() === "item") {
+            card.action(handDiv);
+        } else {
+            card.action(tower);
+		}
+	}
 	
     resetTowerState();
     updateDeckDisplay();

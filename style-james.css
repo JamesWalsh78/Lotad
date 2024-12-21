@@ -236,6 +236,8 @@ body {
 	height: 100px;
 	overflow-y: auto;
 	border: 2px solid #ccc;
+	overflow-x: auto;
+    align-items: center;
 }
 
 .button-row {

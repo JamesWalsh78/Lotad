@@ -211,14 +211,14 @@ body {
 
 .card-container img {
 	display: flex;
-	width: 75%;
+	width: 50%;
 	height:auto;
 }
 
 .card-container {
 	position: absolute;
 	transform: translateY(calc(var(--card-index) * 50%));
-		justify-content: center;
+	justify-content: center;
 	display:flex;
 }
 
@@ -234,7 +234,7 @@ body {
 	flex-direction: row;
 	width: 400px;
 	height: 100px;
-	overflow-y: auto;
+	overflow-x: auto;
 	border: 2px solid #ccc;
     align-items: center;
 }
@@ -247,8 +247,9 @@ body {
 
 .hand img {
 	display: flex;
-	width: 75%;
-	height:auto;
+	width: 70px;
+	height: auto;
+	margin: 1px;
 }
 
 .button-row {

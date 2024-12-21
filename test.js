@@ -245,6 +245,14 @@ function placeCardOnTower(tower, colour, name) {
     cardDiv.appendChild(cardImage);
 
     tower.appendChild(cardDiv);
+	
+	const targetPlayer = tower.id.includes("1") 
+							? "Player 1" 
+							: "Player 2";
+    const towerSide = tower.id.includes("left") 
+							? "left" 
+							: "right";
+    addToLog(`${placingPlayer} placed a ${name} card onto ${targetPlayer}'s ${towerSide} tower.`);
 }
 
 function placeCardInHand(hand, colour, name) {
@@ -258,6 +266,11 @@ function placeCardInHand(hand, colour, name) {
     cardElement.appendChild(cardImage);
 	
 	hand.appendChild(cardElement);
+	
+	const targetPlayer = hand.id.includes("1") 
+							? "Player 1" 
+							: "Player 2";
+    addToLog(`${placingPlayer} placed a ${name} card into ${targetPlayer}'s hand.`);
 }
 
 //SWITCH TURNS
@@ -278,4 +291,20 @@ function resetTowerState() {
         setButtonState(drawButtonP2, true);
 		drawButtonP2.addEventListener("click", () => highlightTowers(2));
     }
+}
+
+//LOG
+function addToLog(message) {
+    const logContainer = document.getElementById("log-text");
+    if (!logContainer) {
+        console.error("Log container not found.");
+        return;
+    }
+
+    const logEntry = document.createElement("div");
+    logEntry.textContent = message;
+    logContainer.appendChild(logEntry);
+
+    // Scroll to the latest log entry
+    logContainer.scrollTop = logContainer.scrollHeight;
 }

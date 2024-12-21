@@ -232,16 +232,21 @@ function placeCardOnTower(tower, colour, name) {
 }
 
 // Shared function for placing a card in the player's hand
-function placeCardInHand(handDiv, colour, name) {
-    const cardDiv = document.createElement("div");
-    cardDiv.classList.add("card-container");
-    cardDiv.dataset.colour = colour;
+function placeCardInHand(tower, colour, name) {
+    // Determine the closest hand based on the tower
+    const towerId = tower.id.includes("1") ? "1" : "2";
+    const handDiv = document.getElementById(`player-${towerId}-hand`);
+	
+	// Create the card element for the hand
+    const cardElement = document.createElement("div");
+    cardElement.classList.add("hand-card");
+    cardElement.dataset.colour = colour;
 
     const cardImage = document.createElement("img");
     cardImage.src = `assets/${name}.png`;
-    cardDiv.appendChild(cardImage);
-
-    handDiv.appendChild(cardDiv);
+    cardElement.appendChild(cardImage);
+	
+	handDiv.appendChild(cardElement);
 }
 
 function resetTowerState() {

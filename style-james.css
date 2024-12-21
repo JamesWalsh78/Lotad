@@ -236,8 +236,19 @@ body {
 	height: 100px;
 	overflow-y: auto;
 	border: 2px solid #ccc;
-	overflow-x: auto;
     align-items: center;
+}
+
+.hand-card {
+	display:flex;
+	flex-direction: row;
+	overflow-x: auto;
+}
+
+.hand img {
+	display: flex;
+	width: 75%;
+	height:auto;
 }
 
 .button-row {

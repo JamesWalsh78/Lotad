@@ -201,13 +201,13 @@ function highlightTowers(playerId) {
 
 function draw(event, playerId) {
     const tower = event.target.closest(".tower"); // Find nearest tower
-    const handDiv = document.querySelector(`player-${playerId}-hand`); // Player-specific hand
+    const hand = event.target.closest(".hand"); // Find nearest tower
     const card = deck.shift(); // Remove top card from the deck
 
     // Call the specific card action
     if (card.action) {
         if (card.colour === "Item") {
-            card.action(handDiv);
+            card.action(hand);
         } else {
             card.action(tower);
 		}
@@ -232,11 +232,7 @@ function placeCardOnTower(tower, colour, name) {
 }
 
 // Shared function for placing a card in the player's hand
-function placeCardInHand(tower, colour, name) {
-    // Determine the closest hand based on the tower
-    const towerId = tower.id.includes("1") ? "1" : "2";
-    const handDiv = document.getElementById(`player-${towerId}-hand`);
-	
+function placeCardInHand(hand, colour, name) {
 	// Create the card element for the hand
     const cardElement = document.createElement("div");
     cardElement.classList.add("hand-card");
@@ -246,7 +242,7 @@ function placeCardInHand(tower, colour, name) {
     cardImage.src = `assets/${name}.png`;
     cardElement.appendChild(cardImage);
 	
-	handDiv.appendChild(cardElement);
+	hand.appendChild(cardElement);
 }
 
 function resetTowerState() {

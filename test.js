@@ -171,6 +171,23 @@ document.addEventListener("DOMContentLoaded", () => {
 	setButtonState(endTurnButtonP2, false);
 });
 
+//DRAW LOGIC
+function highlightTowers(playerId) {
+	//remove existing listeners
+	activeTowerListeners.forEach(({ element, listener }) => {
+        element.removeEventListener("click", listener);
+    });
+    activeTowerListeners = [];
+	
+	//highlight towers and adds listeners
+	towers.forEach((tower) => {
+		tower.classList.add("highlight");
+		const listener = (event) => draw(event, playerId);
+        tower.addEventListener("click", listener, { once: true });
+		activeTowerListeners.push({ element: tower, listener });
+	});
+}
+
 function draw(event, playerId) {
     const tower = event.target.closest(".tower"); // Find nearest tower
     const handDiv = document.querySelector(`.hand.player-${playerId}`); // Player-specific hand

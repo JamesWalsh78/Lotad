@@ -59,10 +59,10 @@ const towerTotals = {
 //SET UP DECK
 function createDeck(cardsInput) {
     deck = []; 
-    cardsInput.forEach((name) => {
+    cardsInput.forEach(({ name, count}) => {
         const cardTemplate = cards.find(card => card.name === name);
         if (cardTemplate) {
-            for (let i = 0; i < cardTemplate.dfcount; i++) {
+            for (let i = 0; i < count; i++) {
                 deck.push({ name: cardTemplate.name, action: cardTemplate.action });
             }
         }

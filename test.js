@@ -1,6 +1,7 @@
 //VARIABLES
-let deck = [];
-let discard = [];
+let deck 				= [];
+let discard 			= [];
+let currentPlayer 		= 1;
 const drawButtonP1 		= document.getElementById("draw-button-p1");
 const drawButtonP2 		= document.getElementById("draw-button-p2");
 const endTurnButtonP1 	= document.getElementById("end-turn-p1");
@@ -14,6 +15,7 @@ const cards = [
 	{ name: "Poocheyena", 	colour: "Black", 	value: 1,	dfcount: 11},
 	{ name: "Larvitar", 	colour: "Brown", 	value: 1,	dfcount: 11},
 	{ name: "Lotad", 		colour: "Blue", 	value: 0,	dfcount: 2},
+	{ name: "Switch",		colour: "Item",		value: 0,	dfcount: 5},
 ];
 
 //TALLY LOGIC
@@ -137,7 +139,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	setupGameModal();
 	shuffleButton.addEventListener("click", shuffleDeck);
 	resetButton.addEventListener("click", setupGameModal);
-	drawButtonP1.addEventListener("click", highlightTowers);
+	drawButtonP1.addEventListener("click", () => highlightTowers(1));
+	drawButtonP2.addEventListener("click", () => highlightTowers(2));
 	setButtonState(drawButtonP1, true);
 	setButtonState(drawButtonP2, false);
 	setButtonState(endTurnButtonP1, false);
@@ -145,10 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //DRAW LOGIC
-function highlightTowers() {
+function highlightTowers(playerId) {
 	towers.forEach((tower) => {
 		tower.classList.add("highlight");
-		const playerId = tower.closest(".player-section").querySelector("h2").textContent.split(" ")[1];
 		tower.addEventListener(
 			"click",
 			(event) => draw(event, playerId),
@@ -169,7 +171,7 @@ function draw(event, playerId) {
 						: "right"; //find tower side
 	const card = deck.shift(); //removes card from deck
 	
-	if (card.colour !== 'item') {
+	if (card.colour !== 'Item') {
 		const cardDiv = document.createElement("div");
 		cardDiv.classList.add("card-container");
 		cardDiv.dataset.colour = card.colour;
@@ -210,6 +212,14 @@ function resetTowerState() {
         tower.parentNode.replaceChild(newTower, tower);
     });
 
-    setButtonState(drawButtonP2, true);
-    setButtonState(drawButtonP1, false);
+	currentPlayer = currentPlayer === 1 
+						? 2 
+						: 1;
+	if (currentPlayer === 1) {
+        setButtonState(drawButtonP1, true);
+        setButtonState(drawButtonP2, false);
+    } else {
+        setButtonState(drawButtonP1, false);
+        setButtonState(drawButtonP2, true);
+    }
 }

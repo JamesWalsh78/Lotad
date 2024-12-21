@@ -13,10 +13,34 @@ const towers 				= document.querySelectorAll(".tower");
 
 //CARD DATA
 const cards = [
-	{ name: "Poocheyena", 	colour: "Black", 	value: 1,	dfcount: 11},
-	{ name: "Larvitar", 	colour: "Brown", 	value: 1,	dfcount: 11},
-	{ name: "Lotad", 		colour: "Blue", 	value: 0,	dfcount: 2},
-	{ name: "Switch",		colour: "Item",		value: 0,	dfcount: 5},
+	{
+		name: "Poocheyena",
+		colour: "Black",
+		value: 1,
+		dfcount: 11,
+		action: (tower) => placeCardOnTower(tower, "Black", "poocheyena")
+	},
+	{
+		name: "Larvitar",
+		colour: "Brown",
+		value: 1,
+		dfcount: 11,
+		action: (tower) => placeCardOnTower(tower, "Brown", "larvitar")
+	},
+	{
+		name: "Lotad",
+		colour: "Blue",
+		value: 0,
+		dfcount: 2,
+		action: (tower) => placeCardOnTower(tower, "Blue", "lotad")
+	},
+	{
+		name: "Switch",
+		colour: "Item",
+		value: 0,
+		dfcount: 5,
+		action: (handDiv) => placeCardInHand(handDiv, "Item", "switch")
+	}
 ];
 
 //TALLY LOGIC
@@ -35,15 +59,16 @@ const towerTotals = {
 //SET UP DECK
 function createDeck(cardsInput) {
     deck = []; 
-    cardsInput.forEach(({ name, count }) => {
+    cardsInput.forEach((name) => {
         const cardTemplate = cards.find(card => card.name === name);
         if (cardTemplate) {
-            for (let i = 0; i < count; i++) {
-                deck.push({ ...cardTemplate }); 
+            for (let i = 0; i < cardTemplate.dfcount; i++) {
+                deck.push({ name: cardTemplate.name, action: cardTemplate.action });
             }
         }
     });
     return deck;
+}
 }
 
 function shuffleDeck() {
@@ -147,75 +172,48 @@ document.addEventListener("DOMContentLoaded", () => {
 	setButtonState(endTurnButtonP2, false);
 });
 
-//DRAW LOGIC
-function highlightTowers(playerId) {
-	//remove existing listeners
-	activeTowerListeners.forEach(({ element, listener }) => {
-        element.removeEventListener("click", listener);
-    });
-    activeTowerListeners = [];
+function draw(event, playerId) {
+    const tower = event.target.closest(".tower"); // Find nearest tower
+    const handDiv = document.querySelector(`.hand.player-${playerId}`); // Player-specific hand
+    const card = deck.shift(); // Remove top card from the deck
+
+    // Call the specific card action
+    card.action(tower, handDiv);
 	
-	//highlight towers and adds listeners
-	towers.forEach((tower) => {
-		tower.classList.add("highlight");
-		const listener = (event) => draw(event, playerId);
-        tower.addEventListener("click", listener, { once: true });
-		activeTowerListeners.push({ element: tower, listener });
-	});
+    resetTowerState();
+    updateDeckDisplay();
 }
 
-function draw(event, playerId) {
-	setButtonState(shuffleButton, false);
-	setButtonState(drawButtonP1, false);
-    setButtonState(drawButtonP2, false);
-	
-	const tower = event.target.closest(".tower"); //find nearest tower
-	
-	const towerId = tower.id.includes("left") 
-						? "left" 
-						: "right"; //find tower side
-	const card = deck.shift(); //removes card from deck
-	
-	if (card.colour !== 'Item') {
-		const cardDiv = document.createElement("div");
-		cardDiv.classList.add("card-container");
-		cardDiv.dataset.colour = card.colour;
-		cardDiv.style.setProperty("--card-index", tower.childElementCount);
-	
-		const cardImage = document.createElement("img");
-		cardImage.src = `assets/${card.name.toLowerCase()}.png`;
-		cardDiv.appendChild(cardImage);
-	
-		tower.appendChild(cardDiv);
-	
-		let cardsInTower = Array.from(tower.children).map(child => ({
-			element: child,
-			colour: child.dataset.colour
-		}));
-		
-	} else {
-		const handDiv = document.querySelector(".hand");
-		if (handDiv) {
-			const cardDiv = document.createElement("div");
-			cardDiv.classList.add("card-container");
-			cardDiv.dataset.colour = card.colour;
-	
-			const cardImage = document.createElement("img");
-			cardImage.src = `assets/${card.name.toLowerCase()}.png`;
-			cardDiv.appendChild(cardImage);
-	
-			handDiv.appendChild(cardDiv);
-		} 
-	}
-	resetTowerState();
-	updateDeckDisplay();
+// Shared function for placing a card on a tower
+function placeCardOnTower(tower, colour, name) {
+    const cardDiv = document.createElement("div");
+    cardDiv.classList.add("card-container");
+    cardDiv.dataset.colour = colour;
+    cardDiv.style.setProperty("--card-index", tower.childElementCount);
+
+    const cardImage = document.createElement("img");
+    cardImage.src = `assets/${name}.png`;
+    cardDiv.appendChild(cardImage);
+
+    tower.appendChild(cardDiv);
 }
-	
+
+// Shared function for placing a card in the player's hand
+function placeCardInHand(handDiv, colour, name) {
+    const cardDiv = document.createElement("div");
+    cardDiv.classList.add("card-container");
+    cardDiv.dataset.colour = colour;
+
+    const cardImage = document.createElement("img");
+    cardImage.src = `assets/${name}.png`;
+    cardDiv.appendChild(cardImage);
+
+    handDiv.appendChild(cardDiv);
+}
+
 function resetTowerState() {
     towers.forEach((tower) => {
         tower.classList.remove("highlight");
-		const newTower = tower.cloneNode(true);
-        tower.parentNode.replaceChild(newTower, tower);
     });
 	
 	setButtonState(shuffleButton, true);

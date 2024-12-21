@@ -1,14 +1,15 @@
 //VARIABLES
-let deck 				= [];
-let discard 			= [];
-let isPlayerOneTurn		= true;
-const drawButtonP1 		= document.getElementById("draw-button-p1");
-const drawButtonP2 		= document.getElementById("draw-button-p2");
-const endTurnButtonP1 	= document.getElementById("end-turn-p1");
-const endTurnButtonP2 	= document.getElementById("end-turn-p2");
-const shuffleButton 	= document.getElementById("shuffle");
-const resetButton 		= document.getElementById("reset");
-const towers 			= document.querySelectorAll(".tower");
+let deck 					= [];
+let discard 				= [];
+let isPlayerOneTurn			= true;
+let activeTowerListeners 	= [];
+const drawButtonP1 			= document.getElementById("draw-button-p1");
+const drawButtonP2 			= document.getElementById("draw-button-p2");
+const endTurnButtonP1 		= document.getElementById("end-turn-p1");
+const endTurnButtonP2 		= document.getElementById("end-turn-p2");
+const shuffleButton 		= document.getElementById("shuffle");
+const resetButton 			= document.getElementById("reset");
+const towers 				= document.querySelectorAll(".tower");
 
 //CARD DATA
 const cards = [
@@ -148,13 +149,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //DRAW LOGIC
 function highlightTowers(playerId) {
+	//remove existing listeners
+	activeTowerListeners.forEach(({ element, listener }) => {
+        element.removeEventListener("click", listener);
+    });
+    activeTowerListeners = [];
+	
+	//highlight towers and adds listeners
 	towers.forEach((tower) => {
 		tower.classList.add("highlight");
-		tower.addEventListener(
-			"click",
-			(event) => draw(event, playerId),
-			{ once: true }
-		);
+		const listener = (event) => draw(event, playerId);
+        tower.addEventListener("click", listener, { once: true });
+		activeTowerListeners.push({ element: tower, listener });
 	});
 }
 

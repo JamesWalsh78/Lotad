@@ -11,35 +11,43 @@ const shuffleButton 		= document.getElementById("shuffle");
 const resetButton 			= document.getElementById("reset");
 const towers 				= document.querySelectorAll(".tower");
 
-//CARD DATA
+///CARD DATA
 const cards = [
 	{
 		name: "Poocheyena",
 		colour: "Black",
 		value: 1,
 		dfcount: 11,
-		action: (tower) => placeCardOnTower(tower, "Black", "poocheyena")
+		action: function (target) {
+			placeCardOnTower(target, this.colour, this.name.toLowerCase());
+		}
 	},
 	{
 		name: "Larvitar",
 		colour: "Brown",
 		value: 1,
 		dfcount: 11,
-		action: (tower) => placeCardOnTower(tower, "Brown", "larvitar")
+		action: function (target) {
+			placeCardOnTower(target, this.colour, this.name.toLowerCase());
+		}
 	},
 	{
 		name: "Lotad",
 		colour: "Blue",
 		value: 0,
 		dfcount: 2,
-		action: (tower) => placeCardOnTower(tower, "Blue", "lotad")
+		action: function (target) {
+			placeCardOnTower(target, this.colour, this.name.toLowerCase());
+		}
 	},
 	{
 		name: "Switch",
 		colour: "Item",
 		value: 0,
 		dfcount: 5,
-		action: (handDiv) => placeCardInHand(handDiv, "Item", "switch")
+		action: function (target) {
+			placeCardInHand(target, this.colour, this.name.toLowerCase());
+		}
 	}
 ];
 
@@ -59,11 +67,14 @@ const towerTotals = {
 //SET UP DECK
 function createDeck(cardsInput) {
     deck = []; 
-    cardsInput.forEach(({ name, count}) => {
+    cardsInput.forEach(({ name, count }) => {
         const cardTemplate = cards.find(card => card.name === name);
         if (cardTemplate) {
             for (let i = 0; i < count; i++) {
-                deck.push({ name: cardTemplate.name, action: cardTemplate.action });
+                deck.push({ 
+				name: cardTemplate.name, 
+				action: cardTemplate.action.bind(cardTemplate), 
+				colour: cardTemplate.colour });
             }
         }
     });

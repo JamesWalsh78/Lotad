@@ -360,27 +360,22 @@ function addToLog(message) {
 
 //CONFLICT
 function conflict(tower) {
-    // Get all cards in the tower
     const cardsInTower = Array.from(tower.children);
 
-    // Find the index of the topmost block card
     const blockCardIndex = cardsInTower.findIndex((card) =>
         ["Blue", "Green", "Yellow"].includes(card.dataset.colour)
     );
 
-    // Determine cards to discard
-    const startIndex = blockCardIndex === -1 ? 0 : blockCardIndex; // If no block, start at bottom
+    const startIndex = blockCardIndex === -1 ? 0 : blockCardIndex;
     const cardsToDiscard = cardsInTower.slice(startIndex);
 
-    // Add discarded cards to the discard set
     cardsToDiscard.forEach((card) => {
         discard.push(card.dataset.colour);
-        card.remove(); // Remove from the DOM
+        card.remove();
     });
 
-    // Log the conflict
-    addToLog(`Conflict occurred! ${cardsToDiscard.length} cards discarded.`);
+    addToLog(`Conflict occurred! ${cardsToDiscard.length+1} cards discarded.`);
     
-    // Update discard display
     updateDiscardDisplay();
+	console.log(discard)
 }

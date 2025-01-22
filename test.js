@@ -18,7 +18,17 @@ const cards = [
 		colour: "Black",
 		value: 1,
 		dfcount: 11,
-		action: function (target) {
+		action: function (tower) {
+            const topCard = getTopCard(tower);
+            if (topCard && topCard.colour === "Brown") {
+                // Conflict logic for Poocheyena vs Brown
+                conflict(tower);
+            } else {
+                // No conflict, place the card
+                placeCardOnTower(tower, this.colour, this.name.toLowerCase());
+            }
+		}
+/*		action: function (target) {
 			placeCardOnTower(target, this.colour, this.name.toLowerCase());
 			const playerId = target.id.includes("1") 
 								? "player1" 
@@ -29,13 +39,23 @@ const cards = [
             towerTotals[playerId][towerId].black += 1;
             console.log(`Updated Tally for ${playerId} ${towerId}:`, towerTotals[playerId][towerId]);
 		}
-	},
+*/	},
 	{
 		name: "Larvitar",
 		colour: "Brown",
 		value: 1,
 		dfcount: 11,
-		action: function (target) {
+		action: function (tower) {
+            const topCard = getTopCard(tower);
+            if (topCard && topCard.colour === "Black") {
+                // Conflict logic for Larvitar vs Black
+                conflict(tower);
+            } else {
+                // No conflict, place the card
+                placeCardOnTower(tower, this.colour, this.name.toLowerCase());
+            }
+        }
+/*		action: function (target) {
 			placeCardOnTower(target, this.colour, this.name.toLowerCase());
 			const playerId = target.id.includes("1") 
 								? "player1" 
@@ -46,7 +66,7 @@ const cards = [
             towerTotals[playerId][towerId].brown += 1;
             console.log(`Updated Tally for ${playerId} ${towerId}:`, towerTotals[playerId][towerId]);
 		}
-	},
+*/	},
 	{
 		name: "Lotad",
 		colour: "Blue",
@@ -234,6 +254,13 @@ function draw(event, playerId) {
 }
 
 //SHARED PLACEMENT FUNCTIONS
+function getTopCard(tower) {
+    const cardsInTower = Array.from(tower.children);
+    if (cardsInTower.length === 0) return null;
+    const topCardElement = cardsInTower[cardsInTower.length - 1];
+    return { colour: topCardElement.dataset.colour, element: topCardElement };
+}
+
 function placeCardOnTower(tower, colour, name) {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("card-container");
@@ -259,7 +286,6 @@ function placeCardOnTower(tower, colour, name) {
 }
 
 function placeCardInHand(hand, colour, name) {
-	// Create the card element for the hand
     const cardElement = document.createElement("div");
     cardElement.classList.add("hand-card");
     cardElement.dataset.colour = colour;
@@ -313,4 +339,31 @@ function addToLog(message) {
 
     // Scroll to the latest log entry
     logContainer.scrollTop = logContainer.scrollHeight;
+}
+
+//CONFLICT
+function conflict(tower) {
+    // Get all cards in the tower
+    const cardsInTower = Array.from(tower.children);
+
+    // Find the index of the topmost block card
+    const blockCardIndex = cardsInTower.findIndex((card) =>
+        ["Blue", "Green", "Yellow"].includes(card.dataset.colour)
+    );
+
+    // Determine cards to discard
+    const startIndex = blockCardIndex === -1 ? 0 : blockCardIndex; // If no block, start at bottom
+    const cardsToDiscard = cardsInTower.slice(startIndex);
+
+    // Add discarded cards to the discard set
+    cardsToDiscard.forEach((card) => {
+        discard.push(card.dataset.colour);
+        card.remove(); // Remove from the DOM
+    });
+
+    // Log the conflict
+    appendToLog(`Conflict occurred! ${cardsToDiscard.length} cards discarded.`);
+    
+    // Update discard display
+    updateDiscardDisplay();
 }

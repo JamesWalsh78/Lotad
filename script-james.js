@@ -246,3 +246,66 @@ document.addEventListener("DOMContentLoaded", () => {
 	resetGame();
 });
 	
+//DRAW LOGIC
+function highlightTowers(playerId) {
+	//remove existing listeners
+	activeTowerListeners.forEach(({ element, listener }) => {
+        element.removeEventListener("click", listener);
+    });
+    activeTowerListeners = [];
+	
+	//highlight towers and adds listeners
+	towers.forEach((tower) => {
+		tower.classList.add("highlight");
+		const listener = (event) => draw(event, playerId);
+        tower.addEventListener("click", listener, { once: true });
+		activeTowerListeners.push({ element: tower, listener });
+	});
+}
+
+function draw(event, playerId) {
+	setButtonState(shuffleButton, false);
+	setButtonState(drawButtonP1, false);
+    setButtonState(drawButtonP2, false);
+	
+	const tower = event.target.closest(".tower"); //find nearest tower
+	
+	const towerId = tower.id.includes("left") 
+						? "left" 
+						: "right"; //find tower side
+	const card = deck.shift(); //removes card from deck
+	
+	if (card.colour !== 'Item') {
+		const cardDiv = document.createElement("div");
+		cardDiv.classList.add("card-container");
+		cardDiv.dataset.colour = card.colour;
+		cardDiv.style.setProperty("--card-index", tower.childElementCount);
+	
+		const cardImage = document.createElement("img");
+		cardImage.src = `assets/${card.name.toLowerCase()}.png`;
+		cardDiv.appendChild(cardImage);
+	
+		tower.appendChild(cardDiv);
+	
+		let cardsInTower = Array.from(tower.children).map(child => ({
+			element: child,
+			colour: child.dataset.colour
+		}));
+		
+	} else {
+		const handDiv = document.querySelector(".hand");
+		if (handDiv) {
+			const cardDiv = document.createElement("div");
+			cardDiv.classList.add("card-container");
+			cardDiv.dataset.colour = card.colour;
+	
+			const cardImage = document.createElement("img");
+			cardImage.src = `assets/${card.name.toLowerCase()}.png`;
+			cardDiv.appendChild(cardImage);
+	
+			handDiv.appendChild(cardDiv);
+		} 
+	}
+	resetTowerState();
+	updateDeckDisplay();
+}

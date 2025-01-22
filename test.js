@@ -22,7 +22,7 @@ const cards = [
             const topCard = getTopCard(tower);
             if (topCard && topCard.colour === "Brown") {
                 // Conflict logic for Poocheyena vs Brown
-                conflict(tower);
+                conflict(tower, this.name);
             } else {
                 // No conflict, place the card
                 placeCardOnTower(tower, this.colour, this.name.toLowerCase());
@@ -49,7 +49,7 @@ const cards = [
             const topCard = getTopCard(tower);
             if (topCard && topCard.colour === "Black") {
                 // Conflict logic for Larvitar vs Black
-                conflict(tower);
+                conflict(tower, this.name);
             } else {
                 // No conflict, place the card
                 placeCardOnTower(tower, this.colour, this.name.toLowerCase());
@@ -359,7 +359,7 @@ function addToLog(message) {
 }
 
 //CONFLICT
-function conflict(tower) {
+function conflict(tower, card) {
     const cardsInTower = Array.from(tower.children);
 
     const blockCardIndex = cardsInTower.findIndex((card) =>
@@ -370,11 +370,12 @@ function conflict(tower) {
     const cardsToDiscard = cardsInTower.slice(startIndex);
 
     cardsToDiscard.forEach((card) => {
-        discard.push(card.dataset.colour);
+        discard.push(card.dataset.name);
         card.remove();
     });
-
-    addToLog(`Conflict occurred! ${cardsToDiscard.length+1} cards discarded.`);
+	discard.push(card);
+	
+    addToLog(`Conflict occurred! ${cardsToDiscard.length} cards discarded.`);
     
     updateDiscardDisplay();
 	console.log(discard)

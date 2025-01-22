@@ -163,9 +163,9 @@ function updateDiscardDisplay() {
 			return counts;
 		}, {});
 		
-		const cardDetails = cards
-		.map(card => `${card.name}: ${cardCounts[card.name] || 0}`)
-		.join("<br>");
+		const cardDetails = Object.entries(cardCounts)
+            .map(([name, count]) => `${name}: ${count}`)
+            .join("<br>");
 		
 		discardCountElement.innerHTML = `Total: ${discard.length}<br>{cardDetails}`;
 	}
@@ -359,7 +359,7 @@ function addToLog(message) {
 }
 
 //CONFLICT
-function conflict(tower, card) {
+function conflict(tower, attemptingCardName) {
     const cardsInTower = Array.from(tower.children);
 
     const blockCardIndex = cardsInTower.findIndex((card) =>
@@ -370,10 +370,15 @@ function conflict(tower, card) {
     const cardsToDiscard = cardsInTower.slice(startIndex);
 
     cardsToDiscard.forEach((card) => {
-        discard.push(card.dataset.name);
+        discard.push({
+			name: card.name, 
+			action: card.action.bind(card), 
+			colour: card.colour,
+		});
         card.remove();
     });
-	discard.push(card);
+	const attemptingCard = cards.find((card) => card.name === attemptingCardName);
+	discard.push(attemptingCard);
 	
     addToLog(`Conflict occurred! ${cardsToDiscard.length} cards discarded.`);
     

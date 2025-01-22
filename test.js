@@ -372,7 +372,6 @@ function conflict(tower, attemptingCardName) {
     cardsToDiscard.forEach((card) => {
         discard.push({
 			name: card.name, 
-			action: card.action.bind(card), 
 			colour: card.colour,
 		});
         card.remove();

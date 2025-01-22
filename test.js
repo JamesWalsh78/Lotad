@@ -169,6 +169,7 @@ function updateDiscardDisplay() {
 		
 		discardCountElement.innerHTML = `Total: ${discard.length}<br>{cardDetails}`;
 	}
+}
 
 function setButtonState(button, enabled) {
     if (!button) return;

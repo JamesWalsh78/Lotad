@@ -154,6 +154,22 @@ function updateDeckDisplay() {
     } 
 }
 
+function updateDiscardDisplay() {
+	const discardCountElement = document.querySelector("#discard-count");
+	
+	if (discardCountElement) {
+		const cardCounts = discard.reduce((counts, card) => {
+			counts[card.name] = (counts[card.name] || 0) + 1;
+			return counts;
+		}, {});
+		
+		const cardDetails = cards
+		.map(card => `${card.name}: ${cardCounts[card.name] || 0}`)
+		.join("<br>");
+		
+		discardCountElement.innerHTML = `Total: ${discard.length}<br>{cardDetails}`;
+	}
+
 function setButtonState(button, enabled) {
     if (!button) return;
 
@@ -362,7 +378,7 @@ function conflict(tower) {
     });
 
     // Log the conflict
-    appendToLog(`Conflict occurred! ${cardsToDiscard.length} cards discarded.`);
+    addToLog(`Conflict occurred! ${cardsToDiscard.length} cards discarded.`);
     
     // Update discard display
     updateDiscardDisplay();

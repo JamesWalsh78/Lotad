@@ -11,6 +11,16 @@ const shuffleButton 		= document.getElementById("shuffle");
 const resetButton 			= document.getElementById("reset");
 const towers 				= document.querySelectorAll(".tower");
 
+const hands = {
+    player1: [],
+    player2: []
+};
+
+const playerTowers = {
+    player1: { left: [], right: [] },
+    player2: { left: [], right: [] }
+};
+
 ///CARD DATA
 const cards = [
 	{
@@ -23,21 +33,10 @@ const cards = [
             if (topCard && topCard.colour === "Brown") {
                 conflict(tower, this.name);
             } else {
-                placeCardOnTower(tower, this.colour, this.name.toLowerCase());
+                placeCardOnTower(tower, this.name);
             }
 		}
-/*		action: function (target) {
-			placeCardOnTower(target, this.colour, this.name.toLowerCase());
-			const playerId = target.id.includes("1") 
-								? "player1" 
-								: "player2";
-            const towerId = target.id.includes("left") 
-								? "left" 
-								: "right";
-            towerTotals[playerId][towerId].black += 1;
-            console.log(`Updated Tally for ${playerId} ${towerId}:`, towerTotals[playerId][towerId]);
-		}
-*/	},
+	},
 	{
 		name: "Foravore",
 		colour: "Brown",
@@ -51,18 +50,7 @@ const cards = [
                 placeCardOnTower(tower, this.colour, this.name.toLowerCase());
             }
         }
-/*		action: function (target) {
-			placeCardOnTower(target, this.colour, this.name.toLowerCase());
-			const playerId = target.id.includes("1") 
-								? "player1" 
-								: "player2";
-            const towerId = target.id.includes("left") 
-								? "left" 
-								: "right";
-            towerTotals[playerId][towerId].brown += 1;
-            console.log(`Updated Tally for ${playerId} ${towerId}:`, towerTotals[playerId][towerId]);
-		}
-*/	},
+	},
 	{
 		name: "Toadl",
 		colour: "Blue",
@@ -274,10 +262,10 @@ function getTopCard(tower) {
     return { colour: topCardElement.dataset.colour, element: topCardElement };
 }
 
-function placeCardOnTower(tower, colour, name) {
+function placeCardOnTower(tower, name) {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("card-container");
-    cardDiv.dataset.colour = colour;
+//    cardDiv.dataset.colour = colour;
     cardDiv.style.setProperty("--card-index", tower.childElementCount);
 
     const cardImage = document.createElement("img");
@@ -287,15 +275,19 @@ function placeCardOnTower(tower, colour, name) {
     tower.appendChild(cardDiv);
 	
 	const placingPlayer = isPlayerOneTurn 
-							? "Player 1" 
-							: "Player 2";
+							? "player1" 
+							: "player2";
 	const targetPlayer = tower.id.includes("1") 
-							? "Player 1" 
-							: "Player 2";
+							? "player1" 
+							: "player2";
     const towerSide = tower.id.includes("left") 
 							? "left" 
 							: "right";
     addToLog(`${placingPlayer} placed a ${name} card onto ${targetPlayer}'s ${towerSide} tower.`);
+	
+	const attemptingCard = cards.find((card) => card.name === attemptingCardName);
+	playerTowers[targetPlayer][towerSide].push(attemptingCard);
+	console.log(playerTowers);
 }
 
 function placeCardInHand(hand, colour, name) {
@@ -310,12 +302,16 @@ function placeCardInHand(hand, colour, name) {
 	hand.appendChild(cardElement);
 	
 	const placingPlayer = isPlayerOneTurn 
-							? "Player 1" 
-							: "Player 2";
+							? "player1" 
+							: "player2";
 	const targetPlayer = hand.id.includes("1") 
-							? "Player 1" 
-							: "Player 2";
+							? "player1" 
+							: "player2";
     addToLog(`${placingPlayer} placed a ${name} card into ${targetPlayer}'s hand.`);
+	
+	const attemptingCard = cards.find((card) => card.name === attemptingCardName);
+	hands[targetPlayer].push(attemptingCard);
+	console.log(hands);
 }
 
 //SWITCH TURNS

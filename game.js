@@ -33,7 +33,7 @@ const cards = [
             if (topCard && topCard.colour === "Brown") {
                 conflict(tower, this.name);
             } else {
-                placeCardOnTower(tower, this.name);
+                placeCardOnTower(tower, this.color, this.name);
             }
 		}
 	},
@@ -47,7 +47,7 @@ const cards = [
             if (topCard && topCard.colour === "Black") {
                 conflict(tower, this.name);
             } else {
-                placeCardOnTower(tower, this.colour, this.name.toLowerCase());
+                placeCardOnTower(tower, this.color, this.name);
             }
         }
 	},
@@ -57,7 +57,7 @@ const cards = [
 		value: 0,
 		dfcount: 2,
 		action: function (target) {
-			placeCardOnTower(target, this.colour, this.name.toLowerCase());
+			placeCardOnTower(target, this.color, this.name);
 		}
 	},
 	{
@@ -66,7 +66,7 @@ const cards = [
 		value: 0,
 		dfcount: 5,
 		action: function (target) {
-			placeCardInHand(target, this.colour, this.name.toLowerCase());
+			placeCardInHand(target, this.color, this.name);
 		}
 	}
 ];
@@ -262,10 +262,10 @@ function getTopCard(tower) {
     return { colour: topCardElement.dataset.colour, element: topCardElement };
 }
 
-function placeCardOnTower(tower, name) {
+function placeCardOnTower(tower, colour, name) {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("card-container");
-//    cardDiv.dataset.colour = colour;
+    cardDiv.dataset.colour = colour;
     cardDiv.style.setProperty("--card-index", tower.childElementCount);
 
     const cardImage = document.createElement("img");
@@ -285,7 +285,7 @@ function placeCardOnTower(tower, name) {
 							: "right";
     addToLog(`${placingPlayer} placed a ${name} card onto ${targetPlayer}'s ${towerSide} tower.`);
 	
-	const attemptingCard = cards.find((card) => card.name === attemptingCardName);
+	const attemptingCard = cards.find((card) => card.name === name);
 	playerTowers[targetPlayer][towerSide].push(attemptingCard);
 	console.log(playerTowers);
 }
@@ -309,7 +309,7 @@ function placeCardInHand(hand, colour, name) {
 							: "player2";
     addToLog(`${placingPlayer} placed a ${name} card into ${targetPlayer}'s hand.`);
 	
-	const attemptingCard = cards.find((card) => card.name === attemptingCardName);
+	const attemptingCard = cards.find((card) => card.name === name);
 	hands[targetPlayer].push(attemptingCard);
 	console.log(hands);
 }

@@ -50,6 +50,50 @@ body {
 	text-transform: uppercase;
 }
 
+/* Rules Layout */
+.card-grid {
+    display: grid;
+    gap: 20px;
+    justify-content: center;
+}
+
+#character-cards .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#item-cards .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.rules-card {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.rules-card img {
+    width: auto;
+    height: auto;
+    max-width: 150px;
+	max-height: 150px;
+    margin-bottom: 10px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.rules-card h3 {
+    font-size: 1.2em;
+    margin: 10px 0 5px;
+}
+
+.rules-card p {
+    font-size: 0.9em;
+    color: #666;
+}
+
 /* Modal */
 .modal {
 	display: none;

@@ -14,17 +14,15 @@ const towers 				= document.querySelectorAll(".tower");
 ///CARD DATA
 const cards = [
 	{
-		name: "Poocheyena",
+		name: "Scruffle",
 		colour: "Black",
 		value: 1,
 		dfcount: 11,
 		action: function (tower) {
             const topCard = getTopCard(tower);
             if (topCard && topCard.colour === "Brown") {
-                // Conflict logic for Poocheyena vs Brown
                 conflict(tower, this.name);
             } else {
-                // No conflict, place the card
                 placeCardOnTower(tower, this.colour, this.name.toLowerCase());
             }
 		}
@@ -41,17 +39,15 @@ const cards = [
 		}
 */	},
 	{
-		name: "Larvitar",
+		name: "Foravore",
 		colour: "Brown",
 		value: 1,
 		dfcount: 11,
 		action: function (tower) {
             const topCard = getTopCard(tower);
             if (topCard && topCard.colour === "Black") {
-                // Conflict logic for Larvitar vs Black
                 conflict(tower, this.name);
             } else {
-                // No conflict, place the card
                 placeCardOnTower(tower, this.colour, this.name.toLowerCase());
             }
         }
@@ -68,7 +64,7 @@ const cards = [
 		}
 */	},
 	{
-		name: "Lotad",
+		name: "Toadl",
 		colour: "Blue",
 		value: 0,
 		dfcount: 2,

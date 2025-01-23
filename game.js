@@ -33,7 +33,7 @@ const cards = [
             if (topCard && topCard.colour === "Brown") {
                 conflict(tower, this.name);
             } else {
-                placeCardOnTower(tower, this.color, this.name);
+                placeCardOnTower(tower, this.color, this.name.toLowerCase());
             }
 		}
 	},
@@ -47,7 +47,7 @@ const cards = [
             if (topCard && topCard.colour === "Black") {
                 conflict(tower, this.name);
             } else {
-                placeCardOnTower(tower, this.color, this.name);
+                placeCardOnTower(tower, this.color, this.name.toLowerCase());
             }
         }
 	},
@@ -57,7 +57,7 @@ const cards = [
 		value: 0,
 		dfcount: 2,
 		action: function (target) {
-			placeCardOnTower(target, this.color, this.name);
+			placeCardOnTower(target, this.color, this.name.toLowerCase());
 		}
 	},
 	{
@@ -66,7 +66,7 @@ const cards = [
 		value: 0,
 		dfcount: 5,
 		action: function (target) {
-			placeCardInHand(target, this.color, this.name);
+			placeCardInHand(target, this.color, this.name.toLowerCase());
 		}
 	}
 ];

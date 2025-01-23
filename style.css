@@ -1,221 +1,264 @@
-/* General Reset */
-body, html {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 /* General Styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f1f7ed;
-    color: #333;
+body, html {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-/* Banner and Navigation */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f1f7ed;
+	color: #333;
+}
+
+/*Banner */
 .banner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
-    position: relative;
-    background-color: #7ca982; /* Updated background for better contrast */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 70px;
+	background-color: #7ca982;
 }
 
 .banner-block {
-    flex: 1;
-    text-align: center;
-    position: relative;
+	flex: 1;
+	text-align: center;
 }
 
 .nav-link {
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #091f16;
 }
 
 .banner-block.active::after {
-    content: "";
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-color: #c2a83e;
+	content: "";
+	position: absolute;
+	top:70px;
+	right: 0;
+	width: 20%;
+	height: 6px;
+	background-color: #243e36;
 }
 
-/* Individual Colours for Banner Links */
-#nav-home {
-    background-color: #7ca982;
+.toadl-title span {
+	font-size: 60px;
+	font-weight: bold;
+	color: #243e36;
+	text-transform: uppercase;
 }
 
-#nav-rules {
-    background-color: #f1f7ed;
+/* Modal */
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.5);
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
 }
 
-#nav-basic {
-    background-color: #243e36;
+.modal-content {
+	background: white;
+	padding: 20px;
+	border-radius: 8px;
+	width: 50%;
+	text-align: center;
 }
 
-#nav-advanced {
-    background-color: #243e36;
-}
-
-.lotad-title span {
-    font-size: 48px;
-    font-weight: bold;
-    color: #243e36;
-}
-
-/* Page Layout */
-.home-page, .rules-page, .advanced-game-page, .basic-game-page {
-    padding: 20px;
-}
-
-/* Rules Layout */
-.card-grid {
-    display: grid;
-    gap: 20px;
-    justify-content: center;
-}
-
-#character-cards .card-grid {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-#item-cards .card-grid {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.rules-card {
-    text-align: center;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.rules-card img {
-    width: auto;
-    height: auto;
-    max-width: 150px;
-	max-height: 150px;
-    margin-bottom: 10px;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.rules-card h3 {
-    font-size: 1.2em;
-    margin: 10px 0 5px;
-}
-
-.rules-card p {
-    font-size: 0.9em;
-    color: #666;
-}
-
-/* Column Layout */
-.columns {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    height: calc(100vh - 80px);
-    padding: 5px;
-}
-
-/* Deck and Player Sections */
-.deck-section, .player-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-	width: 40%;
-}
-
-/* Deck Section */
-.deck-section {
+#card-selection {
 	display: flex;
 	flex-direction: column;
+	gap: 15px;
+	margin-bottom: 20px;
+}
+
+.card-option {
+	display: flex;
 	align-items: center;
-    width: 20%;
-    text-align: center;
-    gap: 10px;
-    justify-content: space-evenly;
+	gap: 10px;
+	justify-content: space-between;
+}
+
+.card-option input[type="number"] {
+	width: 60px;
+	padding: 5px;
+}
+
+/* Game Area */
+.play-areas {
+	display: flex;
+	justify-content: space-between;
+	height: calc(90vh);
+	padding: 5px;
+	gap: 20px;
+}
+
+.play-areas > div {
+	border-right: 5px solid #ccc;
+}
+
+.play-areas > div:last-child {
+	border-right: none;
+}
+
+.player-section, .game-state {
+	display: flex;
+	flex-direction: column;
+	height:100%;
+	align-items: center;
+	text-align: center;
+}
+
+.player-section {
+	width:35%;
+}
+
+.game-state {
+	width:30%;
+}
+
+/* Game State */
+.deck {
+	display: flex;
+	flex-direction: row;
+	gap:50px;
 }
 
 #next-card img {
-    width: 60%; /* Ensure the card image is visible and properly resized */
-    height: auto;
-    margin: 0 auto;
-    display: block;
+	width: 30%;
+	height: auto;
+	margin-right: 20px;
 }
 
-.card-count {
-    font-size: 18px;
+#discard img {
+	width:30%;
+	height:auto;
+	margin-right: 20px;
 }
 
-/* Buttons in Deck Section */
-.deck-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+#discard {
+	margin-right: 20px;
 }
 
-.deck-buttons button {
-    width: 100px;
-    padding: 10px;
-    font-size: 14px;
-    background-color: #7ca982;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.info-box {
+	border: 2px solid #ccc;
+	padding: 10px;
+	height: 100px;
+	overflow-y: auto;
+	font-size: 16px;
+	margin-right: 20px;
+	margin-bottom: 5px;
 }
 
-.deck-buttons button:hover {
-    background-color: #243e36;
+.action-button {
+	width: 100px;
+	padding: 10px;
+	font-size: 14px;
+	background-color: #7ca982;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
-/* Towers and Cards */
-.towers {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+.action-button:hover {
+	background-color: #243e36;
+}
+
+.action-button.disabled {
+    background-color: grey;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Player Sections */
+/* Towers */
+.tower-title {
+	text-align: center;
+	font-weight: bold;
+	padding: 3px 3px;
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.player-towers {
+	display: flex;
+	flex-direction: row;
+	gap: 50px;
 }
 
 .tower {
-    position: relative;
-    width: 100px;
-    height: 500px;
-    overflow: hidden;
-}
-
-.tower-title {
-    text-align: center;
-    font-weight: bold;
-    background-color: #ffffff;
-    padding: 3px 3px;
-    margin-bottom: 5px;
-    border: 2px solid transparent;
-    cursor: default;
-}
-
-.tower-title.highlight {
-    cursor: pointer;
-    border-color: #c2a83e;
-}
-
-.tower .card-container img {
-	display: flex;
-    width: 75%; /* Properly size cards inside towers */
-    height: auto;
+	display:flex;
+	flex-direction: column;
 	align-items: center;
+	position: relative;
+	width: 200px;
+	height: 300px;
+	overflow-y: scroll;
+	border: 2px solid #ccc;
+}
+
+.tower.highlight {
+	border-color: #c2a83e;
+	box-shadow: 0 0 5px 2px #c2a83e;
+	cursor: pointer;
+}
+
+.card-container img {
+	display: flex;
+	width: 50%;
+	height:auto;
 }
 
 .card-container {
-    position: absolute;
-    width: 100%;
-    transform: translateY(calc(var(--card-index) * 50%)); /* Correct overlap */
+	position: absolute;
+	transform: translateY(calc(var(--card-index) * 50%));
+	justify-content: center;
+	display:flex;
+}
+
+/*Player Actions */
+.player-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.hand {
+	display: flex;
+	flex-direction: row;
+	width: 400px;
+	height: 100px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	border: 2px solid #ccc;
+    align-items: center;
+	white-space:nowrap;
+	padding: 0;
+	gap:0;
+}
+
+.hand-card {
+	flex: 0 0 auto;
+	flex-direction: row;
+	overflow-x: auto;
+}
+
+.hand img {
+	display: flex;
+	width: 70px;
+	height: auto;
+	margin: 1px;
+}
+
+.button-row {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
 }

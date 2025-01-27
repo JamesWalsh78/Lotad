@@ -351,26 +351,49 @@ function addToLog(message) {
 
 //CONFLICT
 function conflict(tower, attemptingCardName) {
-    const cardsInTower = Array.from(tower.children);
+	
+	const placingPlayer = isPlayerOneTurn 
+							? "player1" 
+							: "player2";
+	const targetPlayer = tower.id.includes("1") 
+							? "player1" 
+							: "player2";
+    const towerSide = tower.id.includes("left") 
+							? "left" 
+							: "right";
+	
+    const cardsInTower = playerTowers[targetPlayer][towerSide];
 
     const blockCardIndex = cardsInTower.findIndex((card) =>
-        ["Blue", "Green", "Yellow"].includes(card.dataset.colour)
+        ["Blue", "Green", "Yellow"].includes(card.colour)
     );
 
     const startIndex = blockCardIndex === -1 ? 0 : blockCardIndex;
-    const cardsToDiscard = cardsInTower.slice(startIndex);
+    const cardsToDiscard = cardsInTower.splice(startIndex);
 
     cardsToDiscard.forEach((card) => {
-        discard.push({
-			name: card.name, 
-			colour: card.colour,
+        discard.push(card);
 		});
-        card.remove();
-    });
+//        card.remove();
+//    });
 	const attemptingCard = cards.find((card) => card.name === attemptingCardName);
 	discard.push(attemptingCard);
 	
-    addToLog(`Conflict occurred! ${cardsToDiscard.length} cards discarded.`);
+	const towerElement = document.getElementById(tower.id);
+    towerElement.innerHTML = "";
+    playerTowers[targetPlayer][towerSide].forEach((card) => {
+        const cardDiv = document.createElement("div");
+        cardDiv.classList.add("card-container");
+        cardDiv.dataset.colour = card.colour;
+
+        const cardImage = document.createElement("img");
+        cardImage.src = `assets/${card.name.toLowerCase()}.png`;
+        cardDiv.appendChild(cardImage);
+
+        towerElement.appendChild(cardDiv);
+    });
+	
+    addToLog(`Conflict occurred! ${placingPlayer} placed a ${attemptingCardName} onto ${targetPlayer}'s ${towerSide} tower. ${cardsToDiscard.length} cards discarded.`);
     
     updateDiscardDisplay();
 	console.log(discard)

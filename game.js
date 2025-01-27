@@ -427,7 +427,6 @@ function conflict(tower, attemptingCardName) {
     });    
 
 */
-}
 
 //CONSOLE LOG
 function logger() {

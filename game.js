@@ -10,15 +10,23 @@ const endTurnButtonP2 		= document.getElementById("end-turn-p2");
 const shuffleButton 		= document.getElementById("shuffle");
 const resetButton 			= document.getElementById("reset");
 const towers 				= document.querySelectorAll(".tower");
-
 const hands = {
     player1: [],
     player2: []
 };
-
 const playerTowers = {
     player1: { left: [], right: [] },
     player2: { left: [], right: [] }
+};
+const towerTotals = {
+    player1: {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    },
+    player2: {
+        left: { black: 0, brown: 0 },
+        right: { black: 0, brown: 0 }
+    }
 };
 
 ///CARD DATA
@@ -31,7 +39,7 @@ const cards = [
 		action: function (tower) {
             const topCard = getTopCard(tower);
             if (topCard && topCard.colour === "Brown") {
-                conflict(tower, this.name);
+                conflict(tower, this.name, this.colour);
             } else {
                 placeCardOnTower(tower, this.color, this.name.toLowerCase());
             }
@@ -45,7 +53,7 @@ const cards = [
 		action: function (tower) {
             const topCard = getTopCard(tower);
             if (topCard && topCard.colour === "Black") {
-                conflict(tower, this.name);
+                conflict(tower, this.name, this.colour);
             } else {
                 placeCardOnTower(tower, this.color, this.name.toLowerCase());
             }
@@ -71,21 +79,9 @@ const cards = [
 	}
 ];
 
-//TALLY LOGIC
-const towerTotals = {
-    player1: {
-        left: { black: 0, brown: 0 },
-        right: { black: 0, brown: 0 }
-    },
-    player2: {
-        left: { black: 0, brown: 0 },
-        right: { black: 0, brown: 0 }
-    }
-};
-
 // INITIAL STATE FUNCTIONS
 //SET UP DECK
-function createDeck(cardsInput) {
+/*function createDeck(cardsInput) {
     deck = []; 
     cardsInput.forEach(({ name, count }) => {
         const cardTemplate = cards.find(card => card.name === name);
@@ -99,6 +95,17 @@ function createDeck(cardsInput) {
         }
     });
     return deck;
+}
+*/
+
+function createDeck(cardsInput) {
+	cardsInput.forEach(({ name, count }) => {
+		const cardTemplate = cards.find(card => card.name === name);
+			for (let i = 0; i < count; i++) {
+				deck.push({...cardTemplate });
+				}
+			});
+	return deck;
 }
 
 function shuffleDeck() {
@@ -255,6 +262,7 @@ function draw(event, playerId) {
 }
 
 //SHARED PLACEMENT FUNCTIONS
+// to be updated
 function getTopCard(tower) {
     const cardsInTower = Array.from(tower.children);
     if (cardsInTower.length === 0) return null;
@@ -287,22 +295,9 @@ function placeCardOnTower(tower, colour, name) {
 	
 	const attemptingCard = cards.find((card) => card.name === name);
 	
-	playerTowers[targetPlayer][towerSide].push(attemptingCard);
-	console.log("Player Towers:", {
-		player1: {
-			left: playerTowers.player1.left.map((card) => card.name),
-			right: playerTowers.player1.right.map((card) => card.name),
-		},
-		player2: {
-			left: playerTowers.player2.left.map((card) => card.name),
-			right: playerTowers.player2.right.map((card) => card.name),
-		},
-	});
+	playerTowers[targetPlayer][towerSide].push({...attemptingCard});
 	
-	console.log("Player Hands:", {
-		player1: hands.player1.map((card) => card.name),
-		player2: hands.player2.map((card) => card.name),
-	});
+	resetTowerState();
 }
 
 function placeCardInHand(hand, colour, name) {
@@ -325,23 +320,9 @@ function placeCardInHand(hand, colour, name) {
     addToLog(`${placingPlayer} placed a ${name} card into ${targetPlayer}'s hand.`);
 	
 	const attemptingCard = cards.find((card) => card.name === name);
-	hands[targetPlayer].push(attemptingCard);
+	hands[targetPlayer].push({...attemptingCard});
 	
-	console.log("Player Towers:", {
-		player1: {
-			left: playerTowers.player1.left.map((card) => card.name),
-			right: playerTowers.player1.right.map((card) => card.name),
-		},
-		player2: {
-			left: playerTowers.player2.left.map((card) => card.name),
-			right: playerTowers.player2.right.map((card) => card.name),
-		},
-	});
-	
-	console.log("Player Hands:", {
-		player1: hands.player1.map((card) => card.name),
-		player2: hands.player2.map((card) => card.name),
-	});
+	resetTowerState();
 }
 
 //SWITCH TURNS
@@ -362,6 +343,8 @@ function resetTowerState() {
         setButtonState(drawButtonP2, true);
 		drawButtonP2.addEventListener("click", () => highlightTowers(2));
     }
+	
+	logger();
 }
 
 //LOG
@@ -392,14 +375,19 @@ function conflict(tower, attemptingCardName) {
 							? "left" 
 							: "right";
 
-   // Splice cards causing the conflict
-    const cardsToDiscard = playerTowers[targetPlayer][towerSide].splice(0);
-    discard.push(...cardsToDiscard);
-
-    // Add the conflicting card to discard
-    const attemptingCard = cards.find((card) => card.name === attemptingCardName);
+	const cardsInTower = playerTowers[targetPlayer][towerSide];
+    const blockCardIndex = cardsInTower.findIndex((card) =>
+        ["Blue", "Green", "Yellow"].includes(card.colour)
+    );
+    const startIndex = blockCardIndex === -1 ? 0 : blockCardIndex;
+	const cardsToDiscard = cardsInTower.splice(startIndex);
+	discard.push(...cardsToDiscard);
+	
+	const attemptingCard = cards.find((card) => card.name === attemptingCardName);
     discard.push(attemptingCard);
 	
+	addToLog(`Conflict occurred! ${placingPlayer} placed a ${attemptingCardName} onto ${targetPlayer}'s ${towerSide} tower. ${cardsToDiscard.length+1} cards discarded.`);
+
 	// Re-render the remaining tower cards visually
     playerTowers[targetPlayer][towerSide].forEach((card) => {
         const cardDiv = document.createElement("div");
@@ -413,24 +401,9 @@ function conflict(tower, attemptingCardName) {
         tower.appendChild(cardDiv);
     });
 	
-	addToLog(`Conflict occurred! ${placingPlayer} placed a ${attemptingCardName} onto ${targetPlayer}'s ${towerSide} tower. ${cardsToDiscard.length} cards discarded.`);
-    updateDiscardDisplay();
-	
-	logGameState()
-	
-/*    const cardsInTower = playerTowers[targetPlayer][towerSide];
-
-    const blockCardIndex = cardsInTower.findIndex((card) =>
-        ["Blue", "Green", "Yellow"].includes(card.colour)
-    );
-
-    const startIndex = blockCardIndex === -1 ? 0 : blockCardIndex;
-	
-	
-    const cardsToDiscard = cardsInTower.splice(startIndex);
-
-	discard.push(...cardsToDiscard);
-	
+	resetTowerState();
+}
+/*    	
     cardsToDiscard.forEach((card) => {
         discard.push(card);
 		});
@@ -453,41 +426,13 @@ function conflict(tower, attemptingCardName) {
         towerElement.appendChild(cardDiv);
     });    
 
-	console.log("Player Towers:", {
-		player1: {
-			left: playerTowers.player1.left.map((card) => card.name),
-			right: playerTowers.player1.right.map((card) => card.name),
-		},
-		player2: {
-			left: playerTowers.player2.left.map((card) => card.name),
-			right: playerTowers.player2.right.map((card) => card.name),
-		},
-	});
-	
-	console.log("Player Hands:", {
-		player1: hands.player1.map((card) => card.name),
-		player2: hands.player2.map((card) => card.name),
-	});
-	
-	console.log("Discard pile:", discard.map((card) => card.name));
 */
 }
 
-//LOG GAME STATE
-function logGameState() {
-    console.log("Player Towers:", {
-        player1: {
-            left: playerTowers.player1.left.map((card) => card.name),
-            right: playerTowers.player1.right.map((card) => card.name),
-        },
-        player2: {
-            left: playerTowers.player2.left.map((card) => card.name),
-            right: playerTowers.player2.right.map((card) => card.name),
-        },
-    });
-    console.log("Player Hands:", {
-        player1: hands.player1.map((card) => card.name),
-        player2: hands.player2.map((card) => card.name),
-    });
-    console.log("Discard pile:", discard.map((card) => card.name));
+//CONSOLE LOG
+function logger() {
+console.log("Deck: ", deck.map(card => card.name));
+console.log("Discard: ", discard.map(card => card.name));
+console.log("PlayerTowers: ", playerTowers);
+console.log("Hands: ", hands);
 }

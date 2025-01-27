@@ -391,24 +391,52 @@ function conflict(tower, attemptingCardName) {
     const towerSide = tower.id.includes("left") 
 							? "left" 
 							: "right";
+
+   // Splice cards causing the conflict
+    const cardsToDiscard = playerTowers[targetPlayer][towerSide].splice(0);
+    discard.push(...cardsToDiscard);
+
+    // Add the conflicting card to discard
+    const attemptingCard = cards.find((card) => card.name === attemptingCardName);
+    discard.push(attemptingCard);
 	
-    const cardsInTower = playerTowers[targetPlayer][towerSide];
+	// Re-render the remaining tower cards visually
+    playerTowers[targetPlayer][towerSide].forEach((card) => {
+        const cardDiv = document.createElement("div");
+        cardDiv.classList.add("card-container");
+        cardDiv.dataset.colour = card.colour;
+
+        const cardImage = document.createElement("img");
+        cardImage.src = `assets/${card.name.toLowerCase()}.png`;
+        cardDiv.appendChild(cardImage);
+
+        tower.appendChild(cardDiv);
+    });
+	
+	addToLog(`Conflict occurred! ${placingPlayer} placed a ${attemptingCardName} onto ${targetPlayer}'s ${towerSide} tower. ${cardsToDiscard.length} cards discarded.`);
+    updateDiscardDisplay();
+	
+	logGameState()
+	
+/*    const cardsInTower = playerTowers[targetPlayer][towerSide];
 
     const blockCardIndex = cardsInTower.findIndex((card) =>
         ["Blue", "Green", "Yellow"].includes(card.colour)
     );
 
     const startIndex = blockCardIndex === -1 ? 0 : blockCardIndex;
+	
+	
     const cardsToDiscard = cardsInTower.splice(startIndex);
 
 	discard.push(...cardsToDiscard);
 	
-/*    cardsToDiscard.forEach((card) => {
+    cardsToDiscard.forEach((card) => {
         discard.push(card);
 		});
         card.remove();
     });
-*/	const attemptingCard = cards.find((card) => card.name === attemptingCardName);
+	const attemptingCard = cards.find((card) => card.name === attemptingCardName);
 	discard.push(attemptingCard);
 	
 	const towerElement = document.getElementById(tower.id);
@@ -423,11 +451,7 @@ function conflict(tower, attemptingCardName) {
         cardDiv.appendChild(cardImage);
 
         towerElement.appendChild(cardDiv);
-    });
-	
-    addToLog(`Conflict occurred! ${placingPlayer} placed a ${attemptingCardName} onto ${targetPlayer}'s ${towerSide} tower. ${cardsToDiscard.length} cards discarded.`);
-    
-    updateDiscardDisplay();
+    });    
 
 	console.log("Player Towers:", {
 		player1: {
@@ -446,4 +470,24 @@ function conflict(tower, attemptingCardName) {
 	});
 	
 	console.log("Discard pile:", discard.map((card) => card.name));
+*/
+}
+
+//LOG GAME STATE
+function logGameState() {
+    console.log("Player Towers:", {
+        player1: {
+            left: playerTowers.player1.left.map((card) => card.name),
+            right: playerTowers.player1.right.map((card) => card.name),
+        },
+        player2: {
+            left: playerTowers.player2.left.map((card) => card.name),
+            right: playerTowers.player2.right.map((card) => card.name),
+        },
+    });
+    console.log("Player Hands:", {
+        player1: hands.player1.map((card) => card.name),
+        player2: hands.player2.map((card) => card.name),
+    });
+    console.log("Discard pile:", discard.map((card) => card.name));
 }
